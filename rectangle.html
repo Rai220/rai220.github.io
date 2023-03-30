@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Заполнение прямоугольниками</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -28,6 +27,7 @@
     <script>
         const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
         let stopFlag = false;
 
         let rectCount = 0;
@@ -70,7 +70,7 @@
     let newFilledPixels = 0;
     const imageData = ctx.getImageData(0, 0, fieldSize, fieldSize);
     for (let i = 0; i < imageData.data.length; i += 4) {
-        if (imageData.data[i + 3] === 255) {
+        if (imageData.data[i + 3] >= 128) {
             newFilledPixels++;
         }
     }
