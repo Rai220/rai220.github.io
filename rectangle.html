@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Заполнение прямоугольниками</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <br>
+    Текущий процент заполнения: <span id="currentFillPercent">0</span>%
+    <br>
+    Количество прямоугольников: <span id="rectCount">0</span>
+    <br>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <br>
+    Размер поля: <input type="number" id="fieldSize" value="500">
+    <br>
+    Ширина прямоугольника: <input type="number" id="rectWidth" value="50" min="2">
+    <br>
+    Высота прямоугольника: <input type="number" id="rectHeight" value="2" min="2">
+    <br>
+    Процент заполнения: <input type="number" id="fillPercent" value="74">
+    <br>
+    <button onclick="start()">Запуск</button>
+    <button onclick="stop()">Остановка</button>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        let stopFlag = false;
+
+        let rectCount = 0;
+
+        function updateRectCount() {
+            document.getElementById('rectCount').textContent = rectCount;
+        }
+
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        function drawRotatedRectangle(x, y, width, height, angle) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.fillRect(-width / 2, -height / 2, width, height);
+            ctx.restore();
+        }
+
+        function fillCanvasStep(fieldSize, rectWidth, rectHeight, fillPercent, filledPixels = 0) {
+    if (stopFlag) return;
+
+    const totalPixels = fieldSize * fieldSize;
+    const targetFillPixels = Math.floor(totalPixels * fillPercent / 100);
+
+    if (filledPixels >= targetFillPixels) return;
+
+    const xPos = randomInRange(-rectWidth / 2, fieldSize - rectWidth / 2);
+    const yPos = randomInRange(-rectHeight / 2, fieldSize - rectHeight / 2);
+    const angle = randomInRange(0, 2 * Math.PI);
+
+    ctx.fillStyle = 'black';
+    drawRotatedRectangle(xPos + rectWidth / 2, yPos + rectHeight / 2, rectWidth, rectHeight, angle);
+
+    rectCount++;
+    updateRectCount();
+
+    let newFilledPixels = 0;
+    const imageData = ctx.getImageData(0, 0, fieldSize, fieldSize);
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        if (imageData.data[i + 3] === 255) {
+            newFilledPixels++;
+        }
+    }
+
+    filledPixels = newFilledPixels;
+
+    const currentPercent = (filledPixels / totalPixels) * 100;
+    updateFillIndicator(currentPercent);
+
+    setTimeout(() => fillCanvasStep(fieldSize, rectWidth, rectHeight, fillPercent, filledPixels), 1);
+}
+
+
+        function start() {
+            stopFlag = false;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const fieldSize = parseInt(document.getElementById('fieldSize').value);
+            const rectWidth = parseInt(document.getElementById('rectWidth').value);
+            const rectHeight = parseInt(document.getElementById('rectHeight').value);
+            const fillPercent = parseInt(document.getElementById('fillPercent').value);
+
+            canvas.width = fieldSize;
+            canvas.height = fieldSize;
+
+            fillCanvasStep(fieldSize, rectWidth, rectHeight, fillPercent);
+        }
+
+        function stop() {
+            stopFlag = true;
+        }
+
+
+        function updateFillIndicator(currentPercent) {
+            document.getElementById('currentFillPercent').textContent = currentPercent.toFixed(2);
+        }
+    </script>
+</body>
+
+</html>
