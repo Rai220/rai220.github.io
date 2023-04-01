@@ -37,12 +37,76 @@
             font-size: 24px;
             cursor: pointer;
         }
+
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 200px;
+        }
+
+        #controls button {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        #gameOverModal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #gameOver {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        #gameOver h2 {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        #gameOver p {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        #gameOver button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
-    <!-- ... добавьте разметку из предыдущих шагов ... -->
+    <div id="gameOverModal">
+        <div id="gameOver">
+            <h2>Игра окончена</h2>
+            <p>Ваш счет: <span id="finalScore"></span></p>
+            <button id="restartBtn">Начать заново</button>
+        </div>
+    </div>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="controls">
+        <button id="moveLeft">&larr;</button>
+        <button id="moveRight">&rarr;</button>
+    </div>
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -80,6 +144,38 @@
 
         let lastBulletTime = 0;
         const bulletDelay = 300;
+
+        document.getElementById('moveLeft').addEventListener('touchstart', () => {
+            keys['ArrowLeft'] = true;
+        });
+
+        document.getElementById('moveLeft').addEventListener('touchend', () => {
+            keys['ArrowLeft'] = false;
+        });
+
+        document.getElementById('moveLeft').addEventListener('mousedown', () => {
+            keys['ArrowLeft'] = true;
+        });
+
+        document.getElementById('moveLeft').addEventListener('mouseup', () => {
+            keys['ArrowLeft'] = false;
+        });
+
+        document.getElementById('moveRight').addEventListener('touchstart', () => {
+            keys['ArrowRight'] = true;
+        });
+
+        document.getElementById('moveRight').addEventListener('touchend', () => {
+            keys['ArrowRight'] = false;
+        });
+
+        document.getElementById('moveRight').addEventListener('mousedown', () => {
+            keys['ArrowRight'] = true;
+        });
+
+        document.getElementById('moveRight').addEventListener('mouseup', () => {
+            keys['ArrowRight'] = false;
+        });
 
         function movePlayer() {
             if (keys['ArrowLeft'] && player.x > 0) {
@@ -318,7 +414,9 @@
         setInterval(createStar, 200);
 
         function gameOver() {
-            const gameOverModal = document.getElementById('gameOverModal');
+            const gameOverModal = document.getElementById('gameOver');
+            const finalScore = document.getElementById('finalScore');
+            finalScore.textContent = player.score;
             gameOverModal.style.display = 'block';
         }
 
@@ -333,6 +431,10 @@
         canvas.addEventListener('click', fireBullet);
 
         setInterval(createEnemy, 250 + Math.random() * 250);
+
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            location.reload();
+        });
 
         update();
     </script>
