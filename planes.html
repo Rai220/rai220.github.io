@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Игра на JavaScript</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black;
+        }
+
+        canvas {
+            border: 2px solid black;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        #gameOver {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 48px;
+            color: white;
+        }
+
+        #gameOver button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ... добавьте разметку из предыдущих шагов ... -->
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let player = {
+            x: canvas.width / 2 - 25,
+            y: canvas.height - 60,
+            width: 50,
+            height: 50,
+            speed: 5,
+            lives: 3,
+            score: 0,
+            blinking: false,
+            lastBlinkTime: 0,
+            blinkDuration: 1000
+        };
+
+        let bullets = [];
+        let enemies = [];
+        let enemyBullets = [];
+
+        let keys = {};
+
+        const planeImage = new Image();
+        planeImage.src = 'plane.png';
+
+        const enemyImages = [
+            new Image(),
+            new Image(),
+            new Image()
+        ];
+        enemyImages[0].src = 'enemy1.png';
+        enemyImages[1].src = 'enemy2.png';
+        enemyImages[2].src = 'enemy3.png';
+
+        let lastBulletTime = 0;
+        const bulletDelay = 300;
+
+        function movePlayer() {
+            if (keys['ArrowLeft'] && player.x > 0) {
+                player.x -= player.speed;
+            }
+            if (keys['ArrowRight'] && player.x + player.width < canvas.width) {
+                player.x += player.speed;
+            }
+        }
+
+        function drawPlayer() {
+            const currentTime = Date.now();
+            ctx.globalCompositeOperation = 'source-over';
+            if (player.blinking) {
+                if (currentTime - player.lastBlinkTime < player.blinkDuration) {
+                    if (Math.floor((currentTime - player.lastBlinkTime) / 100) % 2 === 0) {
+                        ctx.drawImage(planeImage, player.x, player.y, player.width, player.height);
+                    }
+                } else {
+                    player.blinking = false;
+                }
+            } else {
+                ctx.drawImage(planeImage, player.x, player.y, player.width, player.height);
+            }
+        }
+
+
+        function fireBullet() {
+            bullets.push({
+                x: player.x + player.width / 2 - 2.5,
+                y: player.y,
+                width: 5,
+                height: 10,
+                speed: 7
+            });
+        }
+
+        function drawBullets() {
+            ctx.fillStyle = 'white';
+            bullets.forEach((bullet) => {
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            });
+        }
+
+        function updateBullets() {
+            const currentTime = Date.now();
+            if (currentTime - lastBulletTime > bulletDelay) {
+                fireBullet();
+                lastBulletTime = currentTime;
+            }
+
+            bullets.forEach((bullet, index) => {
+                bullet.y -= bullet.speed;
+                if (bullet.y < -bullet.height) {
+                    bullets.splice(index, 1);
+                }
+            });
+        }
+
+
+        function createEnemy() {
+            const enemy = {
+                x: Math.random() * (canvas.width - 30),
+                y: -30,
+                width: 50,
+                height: 50,
+                isShooter: Math.random() < 0.2,
+                speed: Math.random() * 2 + 1,
+                angle: 0,
+                sprite: enemyImages[Math.floor(Math.random() * 3)]
+            };
+            enemies.push(enemy);
+        }
+
+        // function drawEnemies() {
+        //     //ctx.globalCompositeOperation = 'source-over';
+        //     enemies.forEach((enemy) => {
+        //         ctx.drawImage(enemy.sprite, enemy.x, enemy.y, enemy.width, enemy.height);
+        //     });
+        // }
+
+
+        function drawEnemies() {
+            enemies.forEach((enemy, index) => {
+                const enemyImage = enemyImages[index % 3];
+                ctx.drawImage(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
+            });
+        }
+
+        function updateEnemies() {
+            enemies.forEach((enemy, index) => {
+                if (enemy.isShooter) {
+                    // enemy.y += enemy.speed / 2;
+                    // if (Math.random() < 0.05) {
+                    //     fireEnemyBullet(enemy);
+                    // }
+                } else {
+                    enemy.angle += 0.05;
+                    enemy.y += enemy.speed;
+                    enemy.x += 10 *
+                        Math.sin(enemy.angle);
+                }
+
+                if (enemy.y > canvas.height) {
+                    enemies.splice(index, 1);
+                }
+            });
+        }
+
+        function fireEnemyBullet(enemy) {
+            enemyBullets.push({
+                x: enemy.x + enemy.width / 2 - 2.5,
+                y: enemy.y + enemy.height,
+                width: 5,
+                height: 10,
+                speed: 5
+            });
+        }
+
+        function drawEnemyBullets() {
+            ctx.fillStyle = 'purple';
+            enemyBullets.forEach(bullet => {
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            });
+        }
+
+        function updateEnemyBullets() {
+            enemyBullets.forEach((bullet, index) => {
+                bullet.y += bullet.speed;
+                if (bullet.y > canvas.height) {
+                    enemyBullets.splice(index, 1);
+                }
+            });
+        }
+
+        function isColliding(a, b) {
+            return (
+                a.x < b.x + b.width &&
+                a.x + a.width > b.x &&
+                a.y < b.y + b.height &&
+                a.y + a.height > b.y
+            );
+        }
+
+        function checkCollisions() {
+            enemies.forEach((enemy, eIndex) => {
+                if (isColliding(player, enemy) && !player.blinking) {
+                    player.lives--;
+                    player.blinking = true;
+                    player.lastBlinkTime = Date.now();
+                    enemies.splice(eIndex, 1);
+                }
+
+                bullets.forEach((bullet, bIndex) => {
+                    if (isColliding(bullet, enemy)) {
+                        player.score++;
+                        bullets.splice(bIndex, 1);
+                        enemies.splice(eIndex, 1);
+                    }
+                });
+            });
+
+            enemyBullets.forEach((bullet, index) => {
+                if (isColliding(player, bullet)) {
+                    player.lives--;
+                    enemyBullets.splice(index, 1);
+                }
+            });
+        }
+
+        function drawScore() {
+            ctx.font = '20px Arial';
+            ctx.fillStyle = 'white';
+            ctx.fillText('Очки: ' + player.score, 10, 30);
+        }
+
+        function drawLives() {
+            ctx.font = '20px Arial';
+            ctx.fillStyle = 'white';
+            ctx.fillText('Жизни: ' + player.lives, 10, 60);
+        }
+
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            movePlayer();
+            drawStars();
+            updateStars();
+            drawPlayer();
+            drawBullets();
+            updateBullets();
+            drawEnemies();
+            updateEnemies();
+            checkCollisions();
+            drawScore();
+            drawLives();
+            drawEnemyBullets();
+            updateEnemyBullets();
+
+            if (player.lives <= 0) {
+                gameOver();
+                return;
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        const stars = [];
+
+        function createStar() {
+            const star = {
+                x: Math.random() * canvas.width,
+                y: -10,
+                size: Math.random() * 3 + 1,
+                speed: Math.random() * 2 + 1
+            };
+            stars.push(star);
+        }
+
+        function drawStars() {
+            ctx.fillStyle = 'white';
+            stars.forEach((star) => {
+                ctx.fillRect(star.x, star.y, star.size, star.size);
+            });
+        }
+
+        function updateStars() {
+            stars.forEach((star, index) => {
+                star.y += star.speed;
+                if (star.y > canvas.height) {
+                    stars.splice(index, 1);
+                }
+            });
+        }
+
+        setInterval(createStar, 200);
+
+        function gameOver() {
+            const gameOverModal = document.getElementById('gameOverModal');
+            gameOverModal.style.display = 'block';
+        }
+
+        window.addEventListener('keydown', (e) => {
+            keys[e.code] = true;
+        });
+
+        window.addEventListener('keyup', (e) => {
+            keys[e.code] = false;
+        });
+
+        canvas.addEventListener('click', fireBullet);
+
+        setInterval(createEnemy, 250 + Math.random() * 250);
+
+        update();
+    </script>
+</body>
+
+</html>
