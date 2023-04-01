@@ -4,6 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Заполнение прямоугольниками</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,6 +37,18 @@
     <br>
     <button onclick="start()">Запуск</button>
     <button onclick="stop()">Остановка</button>
+    <button onclick="continueFilling()">Продолжить</button>
+    <br>
+    <table id="resultsTable">
+        <thead>
+            <tr>
+                <th>Процент заполнения</th>
+                <th>Количество прямоугольников</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
     <script>
         const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');
@@ -31,11 +56,12 @@
         let stopFlag = false;
 
         let rectCount = 0;
+        let filledPixels = 0;
+        let addedPercents = new Set();
 
         function updateRectCount() {
             document.getElementById('rectCount').textContent = rectCount;
         }
-
 
         function randomInRange(min, max) {
             return Math.random() * (max - min) + min;
@@ -49,42 +75,43 @@
             ctx.restore();
         }
 
-        function fillCanvasStep(fieldSize, rectWidth, rectHeight, fillPercent, filledPixels = 0) {
-    if (stopFlag) return;
+        function fillCanvasStep(fieldSize, rectWidth, rectHeight, fillPercent) {
+            if (stopFlag) return;
 
-    const totalPixels = fieldSize * fieldSize;
-    const targetFillPixels = Math.floor(totalPixels * fillPercent / 100);
+            const totalPixels = fieldSize * fieldSize;
+            const targetFillPixels = Math.floor(totalPixels * fillPercent / 100);
 
-    if (filledPixels >= targetFillPixels) return;
+            if (filledPixels >= targetFillPixels) return;
 
-    const xPos = randomInRange(-rectWidth / 2, fieldSize - rectWidth / 2);
-    const yPos = randomInRange(-rectHeight / 2, fieldSize - rectHeight / 2);
-    const angle = randomInRange(0, 2 * Math.PI);
+            const xPos = randomInRange(-rectWidth / 2, fieldSize - rectWidth / 2);
+            const yPos = randomInRange(-rectHeight / 2, fieldSize - rectHeight / 2);
+            const angle = randomInRange(0, 2 * Math.PI);
+            ctx.fillStyle = 'black';
+            drawRotatedRectangle(xPos + rectWidth / 2, yPos + rectHeight / 2, rectWidth, rectHeight, angle);
 
-    ctx.fillStyle = 'black';
-    drawRotatedRectangle(xPos + rectWidth / 2, yPos + rectHeight / 2, rectWidth, rectHeight, angle);
+            rectCount++;
+            updateRectCount();
 
-    rectCount++;
-    updateRectCount();
+            let newFilledPixels = 0;
+            const imageData = ctx.getImageData(0, 0, fieldSize, fieldSize);
+            for (let i = 0; i < imageData.data.length; i += 4) {
+                if (imageData.data[i + 3] >= 128) {
+                    newFilledPixels++;
+                }
+            }
 
-    let newFilledPixels = 0;
-    const imageData = ctx.getImageData(0, 0, fieldSize, fieldSize);
-    for (let i = 0; i < imageData.data.length; i += 4) {
-        if (imageData.data[i + 3] >= 128) {
-            newFilledPixels++;
+            filledPixels = newFilledPixels;
+
+            const currentPercent = (filledPixels / totalPixels) * 100;
+            updateFillIndicator(currentPercent);
+            updateResultsTable(currentPercent);
+
+            setTimeout(() => fillCanvasStep(fieldSize, rectWidth, rectHeight, fillPercent), 1);
         }
-    }
-
-    filledPixels = newFilledPixels;
-
-    const currentPercent = (filledPixels / totalPixels) * 100;
-    updateFillIndicator(currentPercent);
-
-    setTimeout(() => fillCanvasStep(fieldSize, rectWidth, rectHeight, fillPercent, filledPixels), 1);
-}
-
 
         function start() {
+            rectCount = 0;
+            filledPixels = 0;
             stopFlag = false;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -96,6 +123,7 @@
             canvas.width = fieldSize;
             canvas.height = fieldSize;
 
+            clearResultsTable();
             fillCanvasStep(fieldSize, rectWidth, rectHeight, fillPercent);
         }
 
@@ -103,11 +131,49 @@
             stopFlag = true;
         }
 
+        function continueFilling() {
+            stopFlag = false;
+            const fieldSize = parseInt(document.getElementById('fieldSize').value);
+            const rectWidth = parseInt(document.getElementById('rectWidth').value);
+            const rectHeight = parseInt(document.getElementById('rectHeight').value);
+            const fillPercent = parseInt(document.getElementById('fillPercent').value);
+
+            fillCanvasStep(fieldSize, rectWidth, rectHeight, fillPercent);
+        }
 
         function updateFillIndicator(currentPercent) {
             document.getElementById('currentFillPercent').textContent = currentPercent.toFixed(2);
         }
+
+        function updateResultsTable(currentPercent) {
+            const table = document.getElementById("resultsTable");
+            const tbody = table.querySelector("tbody");
+
+            const nearestMultipleOfFive = Math.round(currentPercent / 5) * 5;
+            const tolerance = 0.1;
+
+            if (nearestMultipleOfFive > 0) {
+                if (Math.abs(currentPercent - nearestMultipleOfFive) <= tolerance && !addedPercents.has(nearestMultipleOfFive)) {
+                    const newRow = tbody.insertRow();
+                    newRow.insertCell().textContent = nearestMultipleOfFive.toFixed(2);
+                    newRow.insertCell().textContent = rectCount;
+                    addedPercents.add(nearestMultipleOfFive);
+                }
+            }
+        }
+
+        function clearResultsTable() {
+            const table = document.getElementById("resultsTable");
+            const tbody = table.querySelector("tbody");
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+            addedPercents.clear();
+        }
     </script>
+    <footer>
+        <p>Программа разработана искусственным интеллектом под руководством Константина Крестникова.</p>
+    </footer>
 </body>
 
 </html>
