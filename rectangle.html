@@ -3,8 +3,24 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Заполнение прямоугольниками</title>
+    <title>Компьютерная модель заполнения поля частицами</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        input,
+        button {
+            margin-top: 5px;
+        }
+
         table {
             border-collapse: collapse;
             margin-bottom: 20px;
@@ -16,10 +32,43 @@
             padding: 5px;
             text-align: center;
         }
+
+        footer {
+            font-size: 0.8em;
+            text-align: center;
+        }
+
+        canvas {
+            display: block;
+            background-color: #f0f0f0;
+            margin-bottom: 10px;
+        }
+
+        input,
+        button {
+            margin-top: 5px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        button {
+            background-color: lightblue;
+            border: none;
+            border-radius: 5px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: deepskyblue;
+        }
     </style>
+    <script src="jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
+    <h1>Компьютерная модель заполнения поля частицами</h1>
     <br>
     Текущий процент заполнения: <span id="currentFillPercent">0</span>%
     <br>
@@ -172,7 +221,7 @@
         }
     </script>
     <footer>
-        <p>Программа разработана искусственным интеллектом под руководством Константина Крестникова.</p>
+        <p>Программа разработана с помощью ChatGPT под руководством Константина Крестникова.</p>
     </footer>
 </body>
 
