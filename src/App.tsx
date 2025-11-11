@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 interface GitHubRepo {
   id: number
   name: string
+  full_name: string
   description: string
   html_url: string
   stargazers_count: number
@@ -10,6 +11,8 @@ interface GitHubRepo {
   topics: string[]
   created_at: string
   updated_at: string
+  pypi_downloads?: number
+  pypi_rank?: string
 }
 
 interface GitHubUser {
@@ -21,38 +24,261 @@ interface GitHubUser {
   html_url: string
 }
 
+interface YouTubeVideo {
+  id: string
+  title: string
+  thumbnail: string
+  url: string
+  publishedAt: string
+}
+
+interface TelegramPost {
+  id: number
+  text: string
+  date: string
+  views: number
+}
+
+type Language = 'ru' | 'en'
+
+const translations = {
+  ru: {
+    nav: {
+      about: 'Обо мне',
+      projects: 'Проекты',
+      blog: 'Блог',
+      contact: 'Контакты'
+    },
+    hero: {
+      systemInit: '> SYSTEM.INIT()',
+      position: 'CTO GIGACHAIN В GIGACHAT',
+      description: 'Руковожу разработкой GigaChain — набора инструментов для работы с GigaChat. Создаю будущее интеллектуальных систем.',
+      experience: 'Ex-Head of AI в The Coach | Head of AI и основатель Cubic.ai. Специализируюсь на AI агентах, LLM приложениях и робототехнике.',
+      github: 'GitHub',
+      channel: 'Канал'
+    },
+    about: {
+      title: 'ОБО МНЕ',
+      cto: {
+        title: 'CTO GIGACHAIN',
+        description: 'Руковожу разработкой GigaChain в GigaChat - набора инструментов для работы с GigaChat. Создаю передовые LLM-приложения и интеллектуальные системы.'
+      },
+      exHead: {
+        title: 'EX-HEAD OF AI',
+        description: 'Бывший Head of AI в The Coach. Руководил AI-инициативами и разрабатывал интеллектуальные решения для коучинга.'
+      },
+      founder: {
+        title: 'ОСНОВАТЕЛЬ & HEAD OF AI',
+        description: 'Head of AI и основатель Cubic.ai - первого в мире AI-голосового спикера. Пионер в робототехнике, нейротехнологиях и будущем AI.'
+      },
+      stats: {
+        repositories: 'Репозитории',
+        followers: 'Подписчики',
+        tgSubscribers: 'Подписчики TG',
+        ytSubscribers: 'Подписчики YT'
+      }
+    },
+    projects: {
+      title: 'ИЗБРАННЫЕ ПРОЕКТЫ',
+      loading: 'ЗАГРУЗКА_ПРОЕКТОВ...',
+      noDescription: 'Описание отсутствует',
+      pypiRank: '🏆 Топ 2% всех Python пакетов в мире'
+    },
+    youtube: {
+      title: 'YOUTUBE КАНАЛ',
+      subscribers: 'подписчиков'
+    },
+    blog: {
+      title: 'БЛОГ ROBOFUTURE',
+      channelName: 'ROBOFUTURE',
+      subscribers: 'подписчиков',
+      description: 'Авторский канал о последних достижениях в мире AI, ML, робототехники и нейротехнологий. Прогнозы и комментарии от разработчика в этой области, никаких репостов новостей и...',
+      subscribe: 'Подписаться',
+      latestPosts: 'ПОСЛЕДНИЕ ПОСТЫ',
+      views: 'просмотров'
+    },
+    contact: {
+      title: 'СВЯЗАТЬСЯ СО МНОЙ',
+      email: 'Email',
+      telegram: 'Telegram',
+      github: 'GitHub'
+    },
+    footer: {
+      rights: '© 2025 Konstantin Krestnikov. Все права защищены.',
+      built: 'Создано с React + TypeScript + Tailwind CSS'
+    }
+  },
+  en: {
+    nav: {
+      about: 'About',
+      projects: 'Projects',
+      blog: 'Blog',
+      contact: 'Contact'
+    },
+    hero: {
+      systemInit: '> SYSTEM.INIT()',
+      position: 'CTO GIGACHAIN AT GIGACHAT',
+      description: 'Leading the development of GigaChain — a toolkit for working with GigaChat. Building the future of intelligent systems.',
+      experience: 'Ex-Head of AI at The Coach | Head of AI and founder at Cubic.ai. Specializing in AI Agents, LLM Applications, and Robotics.',
+      github: 'GitHub',
+      channel: 'Channel'
+    },
+    about: {
+      title: 'ABOUT ME',
+      cto: {
+        title: 'CTO GIGACHAIN',
+        description: 'Leading the development of GigaChain at GigaChat - a toolkit for working with GigaChat. Building cutting-edge LLM-powered applications and intelligent systems.'
+      },
+      exHead: {
+        title: 'EX-HEAD OF AI',
+        description: 'Former Head of AI at The Coach. Led AI initiatives and developed intelligent coaching solutions.'
+      },
+      founder: {
+        title: 'FOUNDER & HEAD OF AI',
+        description: 'Head of AI and founder at Cubic.ai - the world\'s first AI-powered voice speaker. Pioneering robotics, neurotechnology, and the future of AI.'
+      },
+      stats: {
+        repositories: 'Repositories',
+        followers: 'Followers',
+        tgSubscribers: 'TG Subscribers',
+        ytSubscribers: 'YT Subscribers'
+      }
+    },
+    projects: {
+      title: 'FEATURED PROJECTS',
+      loading: 'LOADING_PROJECTS...',
+      noDescription: 'No description available',
+      pypiRank: '🏆 Top 2% of all Python packages worldwide'
+    },
+    youtube: {
+      title: 'YOUTUBE CHANNEL',
+      subscribers: 'subscribers'
+    },
+    blog: {
+      title: 'ROBOFUTURE BLOG',
+      channelName: 'ROBOFUTURE',
+      subscribers: 'subscribers',
+      description: 'Author\'s channel about the latest achievements in AI, ML, robotics and neurotechnology. Forecasts and comments from a developer in this field, no news reposts and...',
+      subscribe: 'Subscribe',
+      latestPosts: 'LATEST POSTS',
+      views: 'views'
+    },
+    contact: {
+      title: 'GET IN TOUCH',
+      email: 'Email',
+      telegram: 'Telegram',
+      github: 'GitHub'
+    },
+    footer: {
+      rights: '© 2025 Konstantin Krestnikov. All rights reserved.',
+      built: 'Built with React + TypeScript + Tailwind CSS'
+    }
+  }
+}
+
 function App() {
   const [repos, setRepos] = useState<GitHubRepo[]>([])
   const [user, setUser] = useState<GitHubUser | null>(null)
   const [loading, setLoading] = useState(true)
+  const [telegramPosts, setTelegramPosts] = useState<TelegramPost[]>([])
+  const [telegramSubscribers] = useState<number>(1157)
+  const [youtubeSubscribers] = useState<number>(1000)
+  const [language, setLanguage] = useState<Language>('ru')
+  
+  const t = translations[language]
+  
+  const youtubeVideos: YouTubeVideo[] = [
+    {
+      id: 's3Ynz436Swc',
+      title: '🤖Универсальный агент = ReAct + REPL',
+      thumbnail: 'https://i.ytimg.com/vi/s3Ynz436Swc/mqdefault.jpg',
+      url: 'https://www.youtube.com/watch?v=s3Ynz436Swc',
+      publishedAt: '2024-10-11'
+    },
+    {
+      id: 'uGcRLjULR6w',
+      title: 'ИИ-агент проходит собеседование в IT-компанию и получает оффер',
+      thumbnail: 'https://i.ytimg.com/vi/uGcRLjULR6w/mqdefault.jpg',
+      url: 'https://www.youtube.com/watch?v=uGcRLjULR6w',
+      publishedAt: '2024-09-11'
+    },
+    {
+      id: '9sH2Tc4zIWI',
+      title: 'Константин Крестников МСР Think Tool добавляем мышление',
+      thumbnail: 'https://i.ytimg.com/vi/9sH2Tc4zIWI/mqdefault.jpg',
+      url: 'https://www.youtube.com/watch?v=9sH2Tc4zIWI',
+      publishedAt: '2024-10-11'
+    }
+  ]
 
   useEffect(() => {
-    const fetchGitHubData = async () => {
+    const fetchData = async () => {
       try {
         const userResponse = await fetch('https://api.github.com/users/Rai220')
         const userData = await userResponse.json()
         setUser(userData)
 
-        const reposResponse = await fetch('https://api.github.com/users/Rai220/repos?sort=updated&per_page=50')
-        const reposData = await reposResponse.json()
+        const repoNames = ['gigachat', 'gigachain', 'langchain-gigachat', 'giga_agent']
+        const repoPromises = repoNames.map(name => 
+          fetch(`https://api.github.com/repos/ai-forever/${name}`).then(r => r.json())
+        )
+        const reposData = await Promise.all(repoPromises)
         
-        const fiveYearsAgo = new Date()
-        fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5)
+        try {
+          const pypiResponse = await fetch('https://pypistats.org/api/packages/gigachat/recent')
+          const pypiData = await pypiResponse.json()
+          const gigachatIndex = reposData.findIndex(r => r.name === 'gigachat')
+          if (gigachatIndex !== -1 && pypiData.data) {
+            reposData[gigachatIndex].pypi_downloads = pypiData.data.last_month || 0
+            reposData[gigachatIndex].pypi_rank = 'Top 2%'
+          }
+        } catch (error) {
+          console.error('Error fetching PyPI stats:', error)
+        }
         
-        const recentRepos = reposData.filter((repo: GitHubRepo) => {
-          const updatedDate = new Date(repo.updated_at)
-          return updatedDate > fiveYearsAgo
-        }).slice(0, 6)
-        
-        setRepos(recentRepos)
+        setRepos(reposData)
+
+        try {
+          const telegramChannel = 'robofuture'
+          const telegramResponse = await fetch(
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://t.me/s/${telegramChannel}`)}`
+          )
+          const telegramHtml = await telegramResponse.text()
+          
+          const parser = new DOMParser()
+          const doc = parser.parseFromString(telegramHtml, 'text/html')
+          const messages = doc.querySelectorAll('.tgme_widget_message')
+          
+          const posts: TelegramPost[] = []
+          messages.forEach((msg, index) => {
+            if (index < 5) { // Get latest 5 posts
+              const textElement = msg.querySelector('.tgme_widget_message_text')
+              const dateElement = msg.querySelector('.tgme_widget_message_date time')
+              const viewsElement = msg.querySelector('.tgme_widget_message_views')
+              
+              if (textElement && dateElement) {
+                posts.push({
+                  id: index,
+                  text: textElement.textContent?.slice(0, 200) || '',
+                  date: dateElement.getAttribute('datetime') || '',
+                  views: parseInt(viewsElement?.textContent?.replace(/[^0-9]/g, '') || '0')
+                })
+              }
+            }
+          })
+          
+          setTelegramPosts(posts)
+        } catch (error) {
+          console.error('Error fetching Telegram data:', error)
+        }
       } catch (error) {
-        console.error('Error fetching GitHub data:', error)
+        console.error('Error fetching data:', error)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchGitHubData()
+    fetchData()
   }, [])
 
   return (
@@ -74,23 +300,29 @@ function App() {
                 <span className="hover:text-cyber-pink transition-colors">KK</span>
                 <span className="text-cyber-pink">/&gt;</span>
               </div>
-              <div className="hidden md:flex space-x-8">
+              <div className="hidden md:flex space-x-8 items-center">
                 <a href="#about" className="text-cyber-blue hover:text-white transition-all font-mono uppercase text-sm tracking-widest hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.8)] relative group">
-                  <span className="relative z-10">About</span>
+                  <span className="relative z-10">{t.nav.about}</span>
                   <span className="absolute inset-x-0 bottom-0 h-0.5 bg-cyber-blue transform scale-x-0 group-hover:scale-x-100 transition-transform"></span>
                 </a>
                 <a href="#projects" className="text-cyber-blue hover:text-white transition-all font-mono uppercase text-sm tracking-widest hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.8)] relative group">
-                  <span className="relative z-10">Projects</span>
+                  <span className="relative z-10">{t.nav.projects}</span>
                   <span className="absolute inset-x-0 bottom-0 h-0.5 bg-cyber-blue transform scale-x-0 group-hover:scale-x-100 transition-transform"></span>
                 </a>
                 <a href="#blog" className="text-cyber-blue hover:text-white transition-all font-mono uppercase text-sm tracking-widest hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.8)] relative group">
-                  <span className="relative z-10">Blog</span>
+                  <span className="relative z-10">{t.nav.blog}</span>
                   <span className="absolute inset-x-0 bottom-0 h-0.5 bg-cyber-blue transform scale-x-0 group-hover:scale-x-100 transition-transform"></span>
                 </a>
                 <a href="#contact" className="text-cyber-blue hover:text-white transition-all font-mono uppercase text-sm tracking-widest hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.8)] relative group">
-                  <span className="relative z-10">Contact</span>
+                  <span className="relative z-10">{t.nav.contact}</span>
                   <span className="absolute inset-x-0 bottom-0 h-0.5 bg-cyber-blue transform scale-x-0 group-hover:scale-x-100 transition-transform"></span>
                 </a>
+                <button
+                  onClick={() => setLanguage(language === 'ru' ? 'en' : 'ru')}
+                  className="text-cyber-pink hover:text-white transition-all font-mono uppercase text-sm tracking-widest hover:drop-shadow-[0_0_8px_rgba(255,0,110,0.8)] px-3 py-1 border border-cyber-pink rounded hover:bg-cyber-pink/10"
+                >
+                  {language === 'ru' ? 'EN' : 'RU'}
+                </button>
               </div>
             </div>
           </div>
@@ -100,21 +332,20 @@ function App() {
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="text-cyber-blue font-mono text-sm mb-4 tracking-widest animate-pulse">&gt; SYSTEM.INIT()</div>
+                <div className="text-cyber-blue font-mono text-sm mb-4 tracking-widest animate-pulse">{t.hero.systemInit}</div>
                 <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-pink to-cyber-blue animate-pulse drop-shadow-[0_0_15px_rgba(0,240,255,0.5)]">
                     Konstantin Krestnikov
                   </span>
                 </h1>
                 <p className="text-2xl md:text-3xl text-cyber-pink mb-4 font-mono tracking-wide drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">
-                  AI EXPERT & CTO
+                  {t.hero.position}
                 </p>
                 <p className="text-xl text-gray-200 mb-4 leading-relaxed">
-                  Co-founder of <span className="text-cyber-pink font-bold drop-shadow-[0_0_8px_rgba(255,0,110,0.6)]">cubic.ai</span> — the world's first AI-powered voice speaker. 
-                  Pioneering the future of intelligent systems.
+                  {t.hero.description}
                 </p>
                 <p className="text-lg text-gray-400 mb-8">
-                  Specializing in AI Agents, LLM Applications, and Robotics. Building tomorrow's technology today.
+                  {t.hero.experience}
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <a
@@ -123,7 +354,7 @@ function App() {
                     rel="noopener noreferrer"
                     className="group relative bg-gradient-to-r from-cyber-blue to-cyan-500 hover:from-cyan-400 hover:to-cyber-blue text-black px-8 py-3 rounded font-bold transition-all shadow-lg shadow-cyber-blue/50 hover:shadow-cyber-blue/80 hover:scale-105 uppercase tracking-wider font-mono"
                   >
-                    <span className="relative z-10">GitHub</span>
+                    <span className="relative z-10">{t.hero.github}</span>
                     <div className="absolute inset-0 bg-cyber-blue opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
                   </a>
                   <a
@@ -132,7 +363,7 @@ function App() {
                     rel="noopener noreferrer"
                     className="group relative bg-gradient-to-r from-cyber-pink to-fuchsia-500 hover:from-fuchsia-400 hover:to-cyber-pink text-white px-8 py-3 rounded font-bold transition-all shadow-lg shadow-cyber-pink/50 hover:shadow-cyber-pink/80 hover:scale-105 uppercase tracking-wider font-mono"
                   >
-                    <span className="relative z-10">Channel</span>
+                    <span className="relative z-10">{t.hero.channel}</span>
                     <div className="absolute inset-0 bg-cyber-pink opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
                   </a>
                 </div>
@@ -157,28 +388,28 @@ function App() {
         <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-50 backdrop-blur-sm border-y border-cyber-blue/30">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center font-mono">
-              <span className="text-cyber-blue">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">ABOUT ME</span>
+              <span className="text-cyber-blue">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">{t.about.title}</span>
             </h2>
             <div className="grid md:grid-cols-3 gap-8 mb-12">
               <div className="group bg-gradient-to-br from-cyber-blue/10 to-black p-6 rounded border border-cyber-blue shadow-lg shadow-cyber-blue/30 hover:shadow-cyber-blue/60 hover:border-cyber-blue/80 transition-all hover:scale-105">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
-                <h3 className="text-xl font-bold text-cyber-blue mb-2 font-mono drop-shadow-[0_0_8px_rgba(0,240,255,0.4)]">AI AGENTS DEVELOPER</h3>
+                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🚀</div>
+                <h3 className="text-xl font-bold text-cyber-blue mb-2 font-mono drop-shadow-[0_0_8px_rgba(0,240,255,0.4)]">{t.about.cto.title}</h3>
                 <p className="text-gray-300">
-                  Expert in developing intelligent AI agents and LLM-powered applications. Specializing in GigaChat and LangChain integrations.
+                  {t.about.cto.description}
                 </p>
               </div>
               <div className="group bg-gradient-to-br from-cyber-pink/10 to-black p-6 rounded border border-cyber-pink shadow-lg shadow-cyber-pink/30 hover:shadow-cyber-pink/60 hover:border-cyber-pink/80 transition-all hover:scale-105">
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">💼</div>
-                <h3 className="text-xl font-bold text-cyber-pink mb-2 font-mono drop-shadow-[0_0_8px_rgba(255,0,110,0.4)]">TECHNICAL DIRECTOR</h3>
+                <h3 className="text-xl font-bold text-cyber-pink mb-2 font-mono drop-shadow-[0_0_8px_rgba(255,0,110,0.4)]">{t.about.exHead.title}</h3>
                 <p className="text-gray-300">
-                  Leading technical teams in building cutting-edge AI solutions. Experienced in architecture design and implementation.
+                  {t.about.exHead.description}
                 </p>
               </div>
               <div className="group bg-gradient-to-br from-cyber-blue/10 to-black p-6 rounded border border-cyber-blue shadow-lg shadow-cyber-blue/30 hover:shadow-cyber-blue/60 hover:border-cyber-blue/80 transition-all hover:scale-105">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🚀</div>
-                <h3 className="text-xl font-bold text-cyber-blue mb-2 font-mono drop-shadow-[0_0_8px_rgba(0,240,255,0.4)]">INNOVATION PIONEER</h3>
+                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
+                <h3 className="text-xl font-bold text-cyber-blue mb-2 font-mono drop-shadow-[0_0_8px_rgba(0,240,255,0.4)]">{t.about.founder.title}</h3>
                 <p className="text-gray-300">
-                  Co-founder of cubic.ai, the world's first AI voice speaker. Passionate about robotics, neurotechnology, and the future of AI.
+                  {t.about.founder.description}
                 </p>
               </div>
             </div>
@@ -189,23 +420,32 @@ function App() {
                     <div className="absolute inset-0 bg-cyber-blue blur-xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
                     <div className="relative">
                       <div className="text-5xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_15px_rgba(0,240,255,0.6)]">{user.public_repos}</div>
-                      <div className="text-cyber-blue uppercase text-sm tracking-widest font-mono">Repositories</div>
+                      <div className="text-cyber-blue uppercase text-sm tracking-widest font-mono">{t.about.stats.repositories}</div>
                     </div>
                   </div>
                   <div className="relative group">
                     <div className="absolute inset-0 bg-cyber-pink blur-xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
                     <div className="relative">
                       <div className="text-5xl font-bold text-cyber-pink font-mono drop-shadow-[0_0_15px_rgba(255,0,110,0.6)]">{user.followers}</div>
-                      <div className="text-cyber-pink uppercase text-sm tracking-widest font-mono">Followers</div>
+                      <div className="text-cyber-pink uppercase text-sm tracking-widest font-mono">{t.about.stats.followers}</div>
                     </div>
                   </div>
                   <div className="relative group">
                     <div className="absolute inset-0 bg-cyber-blue blur-xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
                     <div className="relative">
-                      <div className="text-5xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_15px_rgba(0,240,255,0.6)]">1,157</div>
-                      <div className="text-cyber-blue uppercase text-sm tracking-widest font-mono">Subscribers</div>
+                      <div className="text-5xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_15px_rgba(0,240,255,0.6)]">{telegramSubscribers.toLocaleString()}</div>
+                      <div className="text-cyber-blue uppercase text-sm tracking-widest font-mono">{t.about.stats.tgSubscribers}</div>
                     </div>
                   </div>
+                  {youtubeSubscribers > 0 && (
+                    <div className="relative group">
+                      <div className="absolute inset-0 bg-cyber-pink blur-xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                      <div className="relative">
+                        <div className="text-5xl font-bold text-cyber-pink font-mono drop-shadow-[0_0_15px_rgba(255,0,110,0.6)]">{youtubeSubscribers.toLocaleString()}</div>
+                        <div className="text-cyber-pink uppercase text-sm tracking-widest font-mono">{t.about.stats.ytSubscribers}</div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -215,10 +455,10 @@ function App() {
         <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center font-mono">
-              <span className="text-cyber-pink">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">FEATURED PROJECTS</span>
+              <span className="text-cyber-pink">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">{t.projects.title}</span>
             </h2>
             {loading ? (
-              <div className="text-center text-cyber-blue font-mono text-xl animate-pulse drop-shadow-[0_0_10px_rgba(0,240,255,0.6)]">LOADING_PROJECTS...</div>
+              <div className="text-center text-cyber-blue font-mono text-xl animate-pulse drop-shadow-[0_0_10px_rgba(0,240,255,0.6)]">{t.projects.loading}</div>
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {repos.map((repo) => (
@@ -231,8 +471,18 @@ function App() {
                   >
                     <h3 className="text-xl font-bold text-cyber-blue group-hover:text-cyber-pink mb-2 font-mono transition-colors drop-shadow-[0_0_8px_rgba(0,240,255,0.4)] group-hover:drop-shadow-[0_0_8px_rgba(255,0,110,0.4)]">{repo.name}</h3>
                     <p className="text-gray-300 mb-4 min-h-12 text-sm">
-                      {repo.description || 'No description available'}
+                      {repo.description || t.projects.noDescription}
                     </p>
+                    {repo.name === 'gigachat' && repo.pypi_downloads && (
+                      <div className="mb-3 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <img src="https://img.shields.io/pypi/dm/gigachat" alt="PyPI Downloads" className="h-5" />
+                        </div>
+                        <div className="text-xs text-cyber-pink font-mono bg-cyber-pink/10 px-2 py-1 rounded border border-cyber-pink/30 inline-block">
+                          {t.projects.pypiRank}
+                        </div>
+                      </div>
+                    )}
                     <div className="flex items-center justify-between mb-2">
                       {repo.language && (
                         <span className="text-sm text-cyber-pink font-mono">{repo.language}</span>
@@ -261,34 +511,103 @@ function App() {
           </div>
         </section>
 
+        {youtubeVideos.length > 0 && (
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-50 backdrop-blur-sm border-y border-cyber-blue/30">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center font-mono">
+                <span className="text-cyber-pink">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">{t.youtube.title}</span>
+              </h2>
+              <div className="text-center mb-8">
+                <a
+                  href="https://www.youtube.com/c/Rai220/videos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 text-cyber-pink hover:text-white transition-colors"
+                >
+                  <span className="text-2xl">📺</span>
+                  <span className="text-xl font-mono">{youtubeSubscribers.toLocaleString()} {t.youtube.subscribers}</span>
+                </a>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {youtubeVideos.map((video) => (
+                  <a
+                    key={video.id}
+                    href={video.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-gradient-to-br from-cyber-pink/5 to-black rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all transform hover:scale-105 shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/50 overflow-hidden"
+                  >
+                    <div className="relative">
+                      <img src={video.thumbnail} alt={video.title} className="w-full h-48 object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="text-5xl">▶️</span>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-sm font-bold text-cyber-pink group-hover:text-cyber-blue mb-2 font-mono transition-colors line-clamp-2">
+                        {video.title}
+                      </h3>
+                      <p className="text-xs text-gray-400 font-mono">
+                        {new Date(video.publishedAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         <section id="blog" className="py-20 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-50 backdrop-blur-sm border-y border-cyber-pink/30">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center font-mono">
-              <span className="text-cyber-blue">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">ROBOFUTURE BLOG</span>
+              <span className="text-cyber-blue">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">{t.blog.title}</span>
             </h2>
-            <div className="max-w-3xl mx-auto bg-gradient-to-br from-cyber-pink/10 to-black p-8 rounded border border-cyber-pink shadow-lg shadow-cyber-pink/40 hover:shadow-cyber-pink/60 transition-all">
-              <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-cyber-blue to-cyber-pink rounded-full flex items-center justify-center text-2xl mr-4 shadow-lg shadow-cyber-pink/60 animate-pulse">
-                  🤖
+            <div className="max-w-3xl mx-auto space-y-6">
+              <div className="bg-gradient-to-br from-cyber-pink/10 to-black p-8 rounded border border-cyber-pink shadow-lg shadow-cyber-pink/40 hover:shadow-cyber-pink/60 transition-all">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-cyber-blue to-cyber-pink rounded-full flex items-center justify-center text-2xl mr-4 shadow-lg shadow-cyber-pink/60 animate-pulse">
+                    🤖
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-cyber-pink font-mono drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">{t.blog.channelName}</h3>
+                    <p className="text-cyber-blue font-mono text-sm">{telegramSubscribers.toLocaleString()} {t.blog.subscribers}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-cyber-pink font-mono drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">ROBOFUTURE</h3>
-                  <p className="text-cyber-blue font-mono text-sm">1,157 subscribers</p>
-                </div>
+                <p className="text-gray-300 mb-6 leading-relaxed">
+                  {t.blog.description}
+                </p>
+                <a
+                  href="https://t.me/robofuture"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-block bg-gradient-to-r from-cyber-pink to-fuchsia-500 hover:from-fuchsia-400 hover:to-cyber-pink text-white px-8 py-3 rounded font-bold transition-all shadow-lg shadow-cyber-pink/50 hover:shadow-cyber-pink/80 hover:scale-105 uppercase tracking-wider font-mono"
+                >
+                  <span className="relative z-10">{t.blog.subscribe}</span>
+                  <div className="absolute inset-0 bg-cyber-pink opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
+                </a>
               </div>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                Авторский канал о последних достижениях в мире AI, ML, робототехники и нейротехнологий. 
-                Прогнозы и комментарии от разработчика в этой области, никаких репостов новостей и...
-              </p>
-              <a
-                href="https://t.me/robofuture"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative inline-block bg-gradient-to-r from-cyber-pink to-fuchsia-500 hover:from-fuchsia-400 hover:to-cyber-pink text-white px-8 py-3 rounded font-bold transition-all shadow-lg shadow-cyber-pink/50 hover:shadow-cyber-pink/80 hover:scale-105 uppercase tracking-wider font-mono"
-              >
-                <span className="relative z-10">Subscribe</span>
-                <div className="absolute inset-0 bg-cyber-pink opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
-              </a>
+              
+              {telegramPosts.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold text-cyber-blue font-mono text-center drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">{t.blog.latestPosts}</h3>
+                  {telegramPosts.map((post) => (
+                    <div
+                      key={post.id}
+                      className="bg-gradient-to-br from-cyber-blue/5 to-black p-6 rounded border border-cyber-blue/50 hover:border-cyber-pink transition-all shadow-lg shadow-cyber-blue/20 hover:shadow-cyber-pink/30"
+                    >
+                      <p className="text-gray-300 mb-3 leading-relaxed text-sm">
+                        {post.text}
+                        {post.text.length >= 200 && '...'}
+                      </p>
+                      <div className="flex items-center justify-between text-xs text-gray-400 font-mono">
+                        <span>{new Date(post.date).toLocaleDateString()}</span>
+                        <span>👁️ {post.views.toLocaleString()} {t.blog.views}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -296,7 +615,7 @@ function App() {
         <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center font-mono">
-              <span className="text-cyber-pink">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">GET IN TOUCH</span>
+              <span className="text-cyber-pink">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">{t.contact.title}</span>
             </h2>
             <div className="max-w-2xl mx-auto bg-gradient-to-br from-cyber-blue/10 to-black p-8 rounded border border-cyber-blue shadow-lg shadow-cyber-blue/40 hover:shadow-cyber-blue/60 transition-all">
               <div className="space-y-6">
@@ -305,7 +624,7 @@ function App() {
                     <span className="text-2xl">📧</span>
                   </div>
                   <div>
-                    <div className="text-cyber-blue text-sm font-mono uppercase tracking-widest">Email</div>
+                    <div className="text-cyber-blue text-sm font-mono uppercase tracking-widest">{t.contact.email}</div>
                     <a href="mailto:k.krestnikov@gmail.com" className="text-white text-lg hover:text-cyber-blue transition font-mono drop-shadow-[0_0_5px_rgba(0,240,255,0.3)]">
                       k.krestnikov@gmail.com
                     </a>
@@ -316,7 +635,7 @@ function App() {
                     <span className="text-2xl">✈️</span>
                   </div>
                   <div>
-                    <div className="text-cyber-blue text-sm font-mono uppercase tracking-widest">Telegram</div>
+                    <div className="text-cyber-blue text-sm font-mono uppercase tracking-widest">{t.contact.telegram}</div>
                     <a href="https://t.me/Krestnikov" className="text-white text-lg hover:text-cyber-blue transition font-mono drop-shadow-[0_0_5px_rgba(0,240,255,0.3)]">
                       @Krestnikov
                     </a>
@@ -327,7 +646,7 @@ function App() {
                     <span className="text-2xl">💻</span>
                   </div>
                   <div>
-                    <div className="text-cyber-blue text-sm font-mono uppercase tracking-widest">GitHub</div>
+                    <div className="text-cyber-blue text-sm font-mono uppercase tracking-widest">{t.contact.github}</div>
                     <a href="https://github.com/Rai220" className="text-white text-lg hover:text-cyber-blue transition font-mono drop-shadow-[0_0_5px_rgba(0,240,255,0.3)]">
                       @Rai220
                     </a>
@@ -340,8 +659,8 @@ function App() {
 
         <footer className="py-8 px-4 sm:px-6 lg:px-8 bg-black border-t border-cyber-blue shadow-lg shadow-cyber-blue/30">
           <div className="max-w-7xl mx-auto text-center text-gray-400">
-            <p className="font-mono text-cyber-blue drop-shadow-[0_0_5px_rgba(0,240,255,0.3)]">&copy; 2025 Konstantin Krestnikov. All rights reserved.</p>
-            <p className="mt-2 text-sm text-cyber-pink font-mono">Built with React + TypeScript + Tailwind CSS</p>
+            <p className="font-mono text-cyber-blue drop-shadow-[0_0_5px_rgba(0,240,255,0.3)]">{t.footer.rights}</p>
+            <p className="mt-2 text-sm text-cyber-pink font-mono">{t.footer.built}</p>
           </div>
         </footer>
       </div>
