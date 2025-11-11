@@ -43,10 +43,33 @@ function App() {
   const [repos, setRepos] = useState<GitHubRepo[]>([])
   const [user, setUser] = useState<GitHubUser | null>(null)
   const [loading, setLoading] = useState(true)
-  const [youtubeVideos, setYoutubeVideos] = useState<YouTubeVideo[]>([])
-  const [youtubeSubscribers, setYoutubeSubscribers] = useState<number>(0)
   const [telegramPosts, setTelegramPosts] = useState<TelegramPost[]>([])
   const [telegramSubscribers] = useState<number>(1157)
+  const [youtubeSubscribers] = useState<number>(1000)
+  
+  const youtubeVideos: YouTubeVideo[] = [
+    {
+      id: 's3Ynz436Swc',
+      title: '🤖Универсальный агент = ReAct + REPL',
+      thumbnail: 'https://i.ytimg.com/vi/s3Ynz436Swc/mqdefault.jpg',
+      url: 'https://www.youtube.com/watch?v=s3Ynz436Swc',
+      publishedAt: '2024-10-11'
+    },
+    {
+      id: 'uGcRLjULR6w',
+      title: 'ИИ-агент проходит собеседование в IT-компанию и получает оффер',
+      thumbnail: 'https://i.ytimg.com/vi/uGcRLjULR6w/mqdefault.jpg',
+      url: 'https://www.youtube.com/watch?v=uGcRLjULR6w',
+      publishedAt: '2024-09-11'
+    },
+    {
+      id: '9sH2Tc4zIWI',
+      title: 'Константин Крестников МСР Think Tool добавляем мышление',
+      thumbnail: 'https://i.ytimg.com/vi/9sH2Tc4zIWI/mqdefault.jpg',
+      url: 'https://www.youtube.com/watch?v=9sH2Tc4zIWI',
+      publishedAt: '2024-10-11'
+    }
+  ]
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,38 +97,6 @@ function App() {
         }
         
         setRepos(reposData)
-
-        try {
-          const channelId = 'UCxvt-pZ9aqsIWWR5JCpYmLg'
-          const youtubeApiKey = import.meta.env.VITE_YOUTUBE_API_KEY
-          
-          if (youtubeApiKey) {
-            const channelResponse = await fetch(
-              `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${youtubeApiKey}`
-            )
-            const channelData = await channelResponse.json()
-            if (channelData.items && channelData.items[0]) {
-              setYoutubeSubscribers(parseInt(channelData.items[0].statistics.subscriberCount))
-            }
-
-            const videosResponse = await fetch(
-              `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=6&order=date&type=video&key=${youtubeApiKey}`
-            )
-            const videosData = await videosResponse.json()
-            if (videosData.items) {
-              const videos = videosData.items.map((item: any) => ({
-                id: item.id.videoId,
-                title: item.snippet.title,
-                thumbnail: item.snippet.thumbnails.medium.url,
-                url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
-                publishedAt: item.snippet.publishedAt
-              }))
-              setYoutubeVideos(videos)
-            }
-          }
-        } catch (error) {
-          console.error('Error fetching YouTube data:', error)
-        }
 
         try {
           const telegramChannel = 'robofuture'
