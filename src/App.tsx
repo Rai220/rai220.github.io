@@ -744,7 +744,7 @@ function App() {
                   </div>
                   <div>
                         <h3 className="text-2xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">Habr</h3>
-                        <p className="text-cyber-pink font-mono text-sm">3 {t.habr.articles}</p>
+                        <p className="text-cyber-pink font-mono text-sm">5 {t.habr.articles}</p>
                   </div>
                 </div>
                 <a
@@ -761,6 +761,30 @@ function App() {
               <div className="space-y-3">
                 <h3 className="text-2xl font-bold text-cyber-pink font-mono text-center drop-shadow-[0_0_10px_rgba(255,0,110,0.5)] mb-4">{t.habr.articles}</h3>
                 
+                <a
+                  href="https://habr.com/ru/companies/sberbank/articles/941340/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Гайд: AI-агент на GigaChat и LangGraph (от архитектуры до валидации) на примере Lean Canvas</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>📅 4 сен 2024</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/companies/sberdevices/articles/794773/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Какой плащ был у Понтия Пилата? Отвечает GigaChat</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>📅 13 фев 2024</span>
+                  </div>
+                </a>
+
                 <a
                   href="https://habr.com/ru/articles/724012/"
                   target="_blank"
