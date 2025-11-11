@@ -24,6 +24,13 @@ interface GitHubUser {
   html_url: string
 }
 
+interface GitHubStats {
+  totalCommits: number
+  totalPRs: number
+  totalIssues: number
+  contributedRepos: number
+}
+
 interface YouTubeVideo {
   id: string
   title: string
@@ -74,9 +81,13 @@ const translations = {
       },
       stats: {
         repositories: 'Репозитории',
-        followers: 'Подписчики',
+        followers: 'Подписчики GitHub',
         tgSubscribers: 'Подписчики TG',
-        ytSubscribers: 'Подписчики YT'
+        ytSubscribers: 'Подписчики YT',
+        commits: 'Коммиты GitHub',
+        prs: 'Pull Requests',
+        issues: 'Issues',
+        contributedRepos: 'Репозитории с вкладом'
       }
     },
     projects: {
@@ -148,9 +159,13 @@ const translations = {
       },
       stats: {
         repositories: 'Repositories',
-        followers: 'Followers',
+        followers: 'GitHub Followers',
         tgSubscribers: 'TG Subscribers',
-        ytSubscribers: 'YT Subscribers'
+        ytSubscribers: 'YT Subscribers',
+        commits: 'GitHub Commits',
+        prs: 'Pull Requests',
+        issues: 'Issues',
+        contributedRepos: 'Contributed Repos'
       }
     },
     projects: {
@@ -200,6 +215,12 @@ function App() {
   const [telegramSubscribers] = useState<number>(1157)
   const [youtubeSubscribers] = useState<number>(1000)
   const [language, setLanguage] = useState<Language>('ru')
+  const [githubStats, setGithubStats] = useState<GitHubStats>({
+    totalCommits: 0,
+    totalPRs: 0,
+    totalIssues: 0,
+    contributedRepos: 0
+  })
   
   const t = translations[language]
   
@@ -209,21 +230,21 @@ function App() {
       title: '🤖Универсальный агент = ReAct + REPL',
       thumbnail: 'https://i.ytimg.com/vi/s3Ynz436Swc/mqdefault.jpg',
       url: 'https://youtu.be/s3Ynz436Swc',
-      publishedAt: '2024-10-11T00:00:00Z'
+      publishedAt: '2025-09-13T00:00:00Z'
     },
     {
       id: 'kwpBP2-ZtAc',
       title: 'MCP и Think-Tool: добавляем мышление и инструменты любому AI-агенту',
       thumbnail: 'https://i.ytimg.com/vi/kwpBP2-ZtAc/mqdefault.jpg',
       url: 'https://youtu.be/kwpBP2-ZtAc',
-      publishedAt: '2024-07-11T00:00:00Z'
+      publishedAt: '2025-07-02T00:00:00Z'
     },
     {
       id: '9QXRAC8G89I',
       title: 'AI агенты - что это и как их делать (GigaConf)',
       thumbnail: 'https://i.ytimg.com/vi/9QXRAC8G89I/mqdefault.jpg',
       url: 'https://www.youtube.com/watch?v=9QXRAC8G89I',
-      publishedAt: '2023-11-11T00:00:00Z'
+      publishedAt: '2024-12-28T00:00:00Z'
     }
   ]
 
@@ -256,38 +277,83 @@ function App() {
         setRepos(reposData)
         setProjectsLoading(false)
 
-        try {
-          const telegramChannel = 'robofuture'
-          const telegramResponse = await fetch(
+        const telegramChannel = 'robofuture'
+        const getTelegramPosts = async () => {
+          const urls = [
+            `https://r.jina.ai/http://t.me/s/${telegramChannel}`,
             `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://t.me/s/${telegramChannel}`)}`
-          )
-          const telegramHtml = await telegramResponse.text()
+          ]
           
-          const parser = new DOMParser()
-          const doc = parser.parseFromString(telegramHtml, 'text/html')
-          const messages = doc.querySelectorAll('.tgme_widget_message')
-          
-          const posts: TelegramPost[] = []
-          messages.forEach((msg, index) => {
-            if (index < 5) { // Get latest 5 posts
-              const textElement = msg.querySelector('.tgme_widget_message_text')
-              const dateElement = msg.querySelector('.tgme_widget_message_date time')
-              const viewsElement = msg.querySelector('.tgme_widget_message_views')
+          for (const url of urls) {
+            try {
+              const response = await fetch(url)
+              const html = await response.text()
+              console.log('Telegram fetch:', url, response.status, html.length)
               
-              if (textElement && dateElement) {
-                posts.push({
-                  id: index,
-                  text: textElement.textContent?.slice(0, 200) || '',
-                  date: dateElement.getAttribute('datetime') || '',
-                  views: parseInt(viewsElement?.textContent?.replace(/[^0-9]/g, '') || '0')
-                })
+              const parser = new DOMParser()
+              const doc = parser.parseFromString(html, 'text/html')
+              const messages = Array.from(doc.querySelectorAll('.tgme_widget_message'))
+              console.log('Telegram messages found:', messages.length)
+              
+              const parsed = messages.map((msg, index) => {
+                const textEl = msg.querySelector('.tgme_widget_message_text, .tgme_widget_message_description, .tgme_widget_message_bubble')
+                const dateEl = msg.querySelector('.tgme_widget_message_date time') || msg.querySelector('time')
+                const viewsEl = msg.querySelector('.tgme_widget_message_views')
+                
+                const text = (textEl?.textContent || '').trim()
+                const dateIso = dateEl?.getAttribute('datetime') || ''
+                const sortKey = dateIso ? Date.parse(dateIso) : 0
+                const views = parseInt((viewsEl?.textContent || '').replace(/\D/g, '') || '0', 10)
+                
+                return { id: index, text: text.slice(0, 200), date: dateIso, views, sortKey }
+              }).filter(p => p.text.length > 0)
+              
+              parsed.sort((a, b) => b.sortKey - a.sortKey)
+              
+              if (parsed.length > 0) {
+                console.log('Telegram posts parsed:', parsed.length)
+                return parsed.slice(0, 5)
               }
+            } catch (error) {
+              console.error('Telegram fetch error:', url, error)
             }
-          })
-          
+          }
+          return []
+        }
+        
+        try {
+          const posts = await getTelegramPosts()
           setTelegramPosts(posts)
         } catch (error) {
           console.error('Error fetching Telegram data:', error)
+        }
+
+        try {
+          const eventsResponse = await fetch('https://api.github.com/users/Rai220/events/public?per_page=100')
+          const eventsData = await eventsResponse.json()
+          
+          let totalCommits = 0
+          let totalPRs = 0
+          const contributedReposSet = new Set<string>()
+          
+          eventsData.forEach((event: any) => {
+            if (event.type === 'PushEvent') {
+              totalCommits += event.payload.commits?.length || 0
+              contributedReposSet.add(event.repo.name)
+            } else if (event.type === 'PullRequestEvent') {
+              totalPRs += 1
+              contributedReposSet.add(event.repo.name)
+            }
+          })
+          
+          setGithubStats({
+            totalCommits,
+            totalPRs,
+            totalIssues: 0,
+            contributedRepos: contributedReposSet.size
+          })
+        } catch (error) {
+          console.error('Error fetching GitHub stats:', error)
         }
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -470,6 +536,24 @@ function App() {
                       <div className="relative">
                         <div className="text-5xl font-bold text-cyber-pink font-mono drop-shadow-[0_0_15px_rgba(255,0,110,0.6)]">{youtubeSubscribers.toLocaleString()}</div>
                         <div className="text-cyber-pink uppercase text-sm tracking-widest font-mono">{t.about.stats.ytSubscribers}</div>
+                      </div>
+                    </div>
+                  )}
+                  {githubStats.totalCommits > 0 && (
+                    <div className="relative group">
+                      <div className="absolute inset-0 bg-cyber-blue blur-xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                      <div className="relative">
+                        <div className="text-5xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_15px_rgba(0,240,255,0.6)]">{githubStats.totalCommits.toLocaleString()}</div>
+                        <div className="text-cyber-blue uppercase text-sm tracking-widest font-mono">{t.about.stats.commits}</div>
+                      </div>
+                    </div>
+                  )}
+                  {githubStats.totalPRs > 0 && (
+                    <div className="relative group">
+                      <div className="absolute inset-0 bg-cyber-pink blur-xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                      <div className="relative">
+                        <div className="text-5xl font-bold text-cyber-pink font-mono drop-shadow-[0_0_15px_rgba(255,0,110,0.6)]">{githubStats.totalPRs.toLocaleString()}</div>
+                        <div className="text-cyber-pink uppercase text-sm tracking-widest font-mono">{t.about.stats.prs}</div>
                       </div>
                     </div>
                   )}
@@ -659,7 +743,7 @@ function App() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">Habr</h3>
-                    <p className="text-cyber-pink font-mono text-sm">7 {t.habr.articles}</p>
+                    <p className="text-cyber-pink font-mono text-sm">8 {t.habr.articles}</p>
                   </div>
                 </div>
                 <a
@@ -687,6 +771,19 @@ function App() {
                     <span>👍 22</span>
                     <span>💬 57</span>
                     <span>📅 4 сен 2024</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/724012/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем чат-бота на GPT-3 с собственной картиной мира</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>🏆 Статья-победитель сезона Machine Learning</span>
+                    <span>📅 26 мар 2023</span>
                   </div>
                 </a>
 
