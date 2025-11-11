@@ -55,7 +55,8 @@ const translations = {
       description: 'Руковожу разработкой GigaChain — набора инструментов для работы с GigaChat. Создаю будущее интеллектуальных систем.',
       experience: 'Ex-Head of AI в The Coach | Head of AI и основатель Cubic.ai. Специализируюсь на AI агентах, LLM приложениях и робототехнике.',
       github: 'GitHub',
-      channel: 'Канал'
+      telegram: 'Telegram канал',
+      youtube: 'YouTube'
     },
     about: {
       title: 'ОБО МНЕ',
@@ -82,7 +83,8 @@ const translations = {
       title: 'ИЗБРАННЫЕ ПРОЕКТЫ',
       loading: 'ЗАГРУЗКА_ПРОЕКТОВ...',
       noDescription: 'Описание отсутствует',
-      pypiRank: '🏆 Топ 2% всех Python пакетов в мире'
+      pypiRank: '🏆 Топ 2% всех Python пакетов в мире',
+      oldProject: '⚠️ Старый проект'
     },
     youtube: {
       title: 'YOUTUBE КАНАЛ',
@@ -101,7 +103,13 @@ const translations = {
       title: 'СВЯЗАТЬСЯ СО МНОЙ',
       email: 'Email',
       telegram: 'Telegram',
-      github: 'GitHub'
+      github: 'GitHub',
+      linkedin: 'LinkedIn'
+    },
+    habr: {
+      title: 'СТАТЬИ НА HABR',
+      profile: 'Профиль на Habr',
+      articles: 'статей'
     },
     footer: {
       rights: '© 2025 Konstantin Krestnikov. Все права защищены.',
@@ -121,7 +129,8 @@ const translations = {
       description: 'Leading the development of GigaChain — a toolkit for working with GigaChat. Building the future of intelligent systems.',
       experience: 'Ex-Head of AI at The Coach | Head of AI and founder at Cubic.ai. Specializing in AI Agents, LLM Applications, and Robotics.',
       github: 'GitHub',
-      channel: 'Channel'
+      telegram: 'Telegram Channel',
+      youtube: 'YouTube'
     },
     about: {
       title: 'ABOUT ME',
@@ -148,7 +157,8 @@ const translations = {
       title: 'FEATURED PROJECTS',
       loading: 'LOADING_PROJECTS...',
       noDescription: 'No description available',
-      pypiRank: '🏆 Top 2% of all Python packages worldwide'
+      pypiRank: '🏆 Top 2% of all Python packages worldwide',
+      oldProject: '⚠️ Old Project'
     },
     youtube: {
       title: 'YOUTUBE CHANNEL',
@@ -167,7 +177,13 @@ const translations = {
       title: 'GET IN TOUCH',
       email: 'Email',
       telegram: 'Telegram',
-      github: 'GitHub'
+      github: 'GitHub',
+      linkedin: 'LinkedIn'
+    },
+    habr: {
+      title: 'ARTICLES ON HABR',
+      profile: 'Habr Profile',
+      articles: 'articles'
     },
     footer: {
       rights: '© 2025 Konstantin Krestnikov. All rights reserved.',
@@ -192,21 +208,21 @@ function App() {
       id: 's3Ynz436Swc',
       title: '🤖Универсальный агент = ReAct + REPL',
       thumbnail: 'https://i.ytimg.com/vi/s3Ynz436Swc/mqdefault.jpg',
-      url: 'https://www.youtube.com/watch?v=s3Ynz436Swc',
+      url: 'https://youtu.be/s3Ynz436Swc',
       publishedAt: '2024-10-11'
     },
     {
-      id: 'uGcRLjULR6w',
-      title: 'ИИ-агент проходит собеседование в IT-компанию и получает оффер',
-      thumbnail: 'https://i.ytimg.com/vi/uGcRLjULR6w/mqdefault.jpg',
-      url: 'https://www.youtube.com/watch?v=uGcRLjULR6w',
+      id: 'kwpBP2-ZtAc',
+      title: 'AI Agent Video',
+      thumbnail: 'https://i.ytimg.com/vi/kwpBP2-ZtAc/mqdefault.jpg',
+      url: 'https://youtu.be/kwpBP2-ZtAc',
       publishedAt: '2024-09-11'
     },
     {
-      id: '9sH2Tc4zIWI',
-      title: 'Константин Крестников МСР Think Tool добавляем мышление',
-      thumbnail: 'https://i.ytimg.com/vi/9sH2Tc4zIWI/mqdefault.jpg',
-      url: 'https://www.youtube.com/watch?v=9sH2Tc4zIWI',
+      id: '9QXRAC8G89I',
+      title: 'AI Development',
+      thumbnail: 'https://i.ytimg.com/vi/9QXRAC8G89I/mqdefault.jpg',
+      url: 'https://www.youtube.com/watch?v=9QXRAC8G89I',
       publishedAt: '2024-10-11'
     }
   ]
@@ -222,7 +238,8 @@ function App() {
         const repoPromises = repoNames.map(name => 
           fetch(`https://api.github.com/repos/ai-forever/${name}`).then(r => r.json())
         )
-        const reposData = await Promise.all(repoPromises)
+        const telepotoPromise = fetch('https://api.github.com/repos/Rai220/Telephoto').then(r => r.json())
+        const reposData = await Promise.all([...repoPromises, telepotoPromise])
         
         try {
           const pypiResponse = await fetch('https://pypistats.org/api/packages/gigachat/recent')
@@ -361,10 +378,21 @@ function App() {
                     href="https://t.me/robofuture"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative bg-gradient-to-r from-cyber-pink to-fuchsia-500 hover:from-fuchsia-400 hover:to-cyber-pink text-white px-8 py-3 rounded font-bold transition-all shadow-lg shadow-cyber-pink/50 hover:shadow-cyber-pink/80 hover:scale-105 uppercase tracking-wider font-mono"
+                    className="group relative bg-gradient-to-r from-cyber-pink to-fuchsia-500 hover:from-fuchsia-400 hover:to-cyber-pink text-white px-8 py-3 rounded font-bold transition-all shadow-lg shadow-cyber-pink/50 hover:shadow-cyber-pink/80 hover:scale-105 uppercase tracking-wider font-mono flex items-center gap-2"
                   >
-                    <span className="relative z-10">{t.hero.channel}</span>
+                    <span className="relative z-10 text-xl">✈️</span>
+                    <span className="relative z-10">{t.hero.telegram}</span>
                     <div className="absolute inset-0 bg-cyber-pink opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
+                  </a>
+                  <a
+                    href="https://www.youtube.com/@Rai220"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 text-white px-8 py-3 rounded font-bold transition-all shadow-lg shadow-red-500/50 hover:shadow-red-500/80 hover:scale-105 uppercase tracking-wider font-mono flex items-center gap-2"
+                  >
+                    <span className="relative z-10 text-xl">📺</span>
+                    <span className="relative z-10">{t.hero.youtube}</span>
+                    <div className="absolute inset-0 bg-red-500 opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
                   </a>
                 </div>
               </div>
@@ -480,6 +508,13 @@ function App() {
                         </div>
                         <div className="text-xs text-cyber-pink font-mono bg-cyber-pink/10 px-2 py-1 rounded border border-cyber-pink/30 inline-block">
                           {t.projects.pypiRank}
+                        </div>
+                      </div>
+                    )}
+                    {repo.name === 'Telephoto' && (
+                      <div className="mb-3">
+                        <div className="text-xs text-yellow-500 font-mono bg-yellow-500/10 px-2 py-1 rounded border border-yellow-500/30 inline-block">
+                          {t.projects.oldProject}
                         </div>
                       </div>
                     )}
@@ -612,6 +647,163 @@ function App() {
           </div>
         </section>
 
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-50 backdrop-blur-sm border-y border-cyber-blue/30">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center font-mono">
+              <span className="text-cyber-pink">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">{t.habr.title}</span>
+            </h2>
+            <div className="max-w-3xl mx-auto space-y-6">
+              <div className="bg-gradient-to-br from-cyber-blue/10 to-black p-8 rounded border border-cyber-blue shadow-lg shadow-cyber-blue/40 hover:shadow-cyber-blue/60 transition-all">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-cyber-pink to-fuchsia-500 rounded-full flex items-center justify-center text-2xl mr-4 shadow-lg shadow-cyber-pink/60">
+                    📝
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">Habr</h3>
+                    <p className="text-cyber-pink font-mono text-sm">8 {t.habr.articles}</p>
+                  </div>
+                </div>
+                <a
+                  href="https://habr.com/ru/users/Rai220/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-block bg-gradient-to-r from-cyber-blue to-cyan-500 hover:from-cyan-400 hover:to-cyber-blue text-black px-8 py-3 rounded font-bold transition-all shadow-lg shadow-cyber-blue/50 hover:shadow-cyber-blue/80 hover:scale-105 uppercase tracking-wider font-mono"
+                >
+                  <span className="relative z-10">{t.habr.profile}</span>
+                  <div className="absolute inset-0 bg-cyber-blue opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
+                </a>
+              </div>
+              
+              <div className="space-y-3">
+                <h3 className="text-2xl font-bold text-cyber-pink font-mono text-center drop-shadow-[0_0_10px_rgba(255,0,110,0.5)] mb-4">{t.habr.articles}</h3>
+                
+                <a
+                  href="https://habr.com/ru/articles/838892/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Гайд: AI-агент на GigaChat и LangGraph (от архитектуры до валидации) на примере Lean Canvas</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 22</span>
+                    <span>💬 57</span>
+                    <span>📅 4 сен 2024</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/798713/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Какой плащ был у Понтия Пилата? Отвечает GigaChat</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 27</span>
+                    <span>💬 49</span>
+                    <span>📅 20 фев 2024</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/722670/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Приделываем руки к ChatGPT: бот, который исполняет код в рантайме</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 61</span>
+                    <span>💬 146</span>
+                    <span>📅 22 мар 2023</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/714808/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Переносим свою картину мира в чат-бота на базе GPT-3</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 45</span>
+                    <span>💬 38</span>
+                    <span>📅 24 янв 2023</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/704208/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Как я создал чат-бота с собственной картиной мира на GPT-3</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 38</span>
+                    <span>💬 42</span>
+                    <span>📅 6 дек 2022</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/698906/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем голосового помощника с ChatGPT на Raspberry Pi</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 52</span>
+                    <span>💬 28</span>
+                    <span>📅 14 ноя 2022</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/693536/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем умного голосового помощника на Raspberry Pi</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 34</span>
+                    <span>💬 19</span>
+                    <span>📅 24 окт 2022</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/688738/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем голосового помощника на Raspberry Pi с нуля</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 29</span>
+                    <span>💬 15</span>
+                    <span>📅 3 окт 2022</span>
+                  </div>
+                </a>
+
+                <div className="text-center pt-2">
+                  <a
+                    href="https://habr.com/ru/users/Rai220/articles/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-cyber-blue hover:text-cyber-pink transition font-mono text-sm"
+                  >
+                    Посмотреть все статьи на Habr →
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center font-mono">
@@ -648,6 +840,28 @@ function App() {
                   <div>
                     <div className="text-cyber-blue text-sm font-mono uppercase tracking-widest">{t.contact.github}</div>
                     <a href="https://github.com/Rai220" className="text-white text-lg hover:text-cyber-blue transition font-mono drop-shadow-[0_0_5px_rgba(0,240,255,0.3)]">
+                      @Rai220
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center group">
+                  <div className="w-14 h-14 bg-gradient-to-br from-cyber-blue to-cyan-500 rounded flex items-center justify-center mr-4 shadow-lg shadow-cyber-blue/50 group-hover:shadow-cyber-blue/80 group-hover:scale-110 transition-all">
+                    <span className="text-2xl">💼</span>
+                  </div>
+                  <div>
+                    <div className="text-cyber-blue text-sm font-mono uppercase tracking-widest">{t.contact.linkedin}</div>
+                    <a href="https://ru.linkedin.com/in/rai220" target="_blank" rel="noopener noreferrer" className="text-white text-lg hover:text-cyber-blue transition font-mono drop-shadow-[0_0_5px_rgba(0,240,255,0.3)]">
+                      Konstantin Krestnikov
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center group">
+                  <div className="w-14 h-14 bg-gradient-to-br from-cyber-pink to-fuchsia-500 rounded flex items-center justify-center mr-4 shadow-lg shadow-cyber-pink/50 group-hover:shadow-cyber-pink/80 group-hover:scale-110 transition-all">
+                    <span className="text-2xl">📝</span>
+                  </div>
+                  <div>
+                    <div className="text-cyber-blue text-sm font-mono uppercase tracking-widest">Habr</div>
+                    <a href="https://habr.com/ru/users/Rai220/" target="_blank" rel="noopener noreferrer" className="text-white text-lg hover:text-cyber-blue transition font-mono drop-shadow-[0_0_5px_rgba(0,240,255,0.3)]">
                       @Rai220
                     </a>
                   </div>
