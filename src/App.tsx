@@ -280,8 +280,9 @@ function App() {
         const telegramChannel = 'robofuture'
         const getTelegramPosts = async () => {
           const urls = [
-            `https://r.jina.ai/http://t.me/s/${telegramChannel}`,
-            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://t.me/s/${telegramChannel}`)}`
+            `https://corsproxy.io/?${encodeURIComponent(`https://t.me/s/${telegramChannel}`)}`,
+            `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(`https://t.me/s/${telegramChannel}`)}`,
+            `https://t.me/s/${telegramChannel}`
           ]
           
           for (const url of urls) {
@@ -742,8 +743,8 @@ function App() {
                     📝
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">Habr</h3>
-                    <p className="text-cyber-pink font-mono text-sm">8 {t.habr.articles}</p>
+                        <h3 className="text-2xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">Habr</h3>
+                        <p className="text-cyber-pink font-mono text-sm">5 {t.habr.articles}</p>
                   </div>
                 </div>
                 <a
@@ -761,34 +762,31 @@ function App() {
                 <h3 className="text-2xl font-bold text-cyber-pink font-mono text-center drop-shadow-[0_0_10px_rgba(255,0,110,0.5)] mb-4">{t.habr.articles}</h3>
                 
                 <a
-                  href="https://habr.com/ru/articles/838892/"
+                  href="https://habr.com/ru/companies/sberbank/articles/941340/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
                 >
                   <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Гайд: AI-агент на GigaChat и LangGraph (от архитектуры до валидации) на примере Lean Canvas</h4>
                   <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
-                    <span>👍 22</span>
-                    <span>💬 57</span>
                     <span>📅 4 сен 2024</span>
                   </div>
                 </a>
 
                 <a
-                  href="https://habr.com/ru/articles/724012/"
+                  href="https://habr.com/ru/companies/sberdevices/articles/794773/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
                 >
-                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем чат-бота на GPT-3 с собственной картиной мира</h4>
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Какой плащ был у Понтия Пилата? Отвечает GigaChat</h4>
                   <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
-                    <span>🏆 Статья-победитель сезона Machine Learning</span>
-                    <span>📅 26 мар 2023</span>
+                    <span>📅 13 фев 2024</span>
                   </div>
                 </a>
 
                 <a
-                  href="https://habr.com/ru/articles/722670/"
+                  href="https://habr.com/ru/articles/724012/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
@@ -802,7 +800,7 @@ function App() {
                 </a>
 
                 <a
-                  href="https://habr.com/ru/articles/714808/"
+                  href="https://habr.com/ru/articles/712534/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
@@ -816,58 +814,14 @@ function App() {
                 </a>
 
                 <a
-                  href="https://habr.com/ru/articles/704208/"
+                  href="https://habr.com/ru/articles/453314/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
                 >
-                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Как я создал чат-бота с собственной картиной мира на GPT-3</h4>
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Черное Зеркало своими руками — обучаем бота на базе своей истории чатов</h4>
                   <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
-                    <span>👍 38</span>
-                    <span>💬 42</span>
-                    <span>📅 6 дек 2022</span>
-                  </div>
-                </a>
-
-                <a
-                  href="https://habr.com/ru/articles/698906/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
-                >
-                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем голосового помощника с ChatGPT на Raspberry Pi</h4>
-                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
-                    <span>👍 52</span>
-                    <span>💬 28</span>
-                    <span>📅 14 ноя 2022</span>
-                  </div>
-                </a>
-
-                <a
-                  href="https://habr.com/ru/articles/693536/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
-                >
-                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем умного голосового помощника на Raspberry Pi</h4>
-                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
-                    <span>👍 34</span>
-                    <span>💬 19</span>
-                    <span>📅 24 окт 2022</span>
-                  </div>
-                </a>
-
-                <a
-                  href="https://habr.com/ru/articles/688738/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
-                >
-                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем голосового помощника на Raspberry Pi с нуля</h4>
-                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
-                    <span>👍 29</span>
-                    <span>💬 15</span>
-                    <span>📅 3 окт 2022</span>
+                    <span>📅 19 июл 2019</span>
                   </div>
                 </a>
 
