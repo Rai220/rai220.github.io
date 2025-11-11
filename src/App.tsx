@@ -277,35 +277,52 @@ function App() {
         setRepos(reposData)
         setProjectsLoading(false)
 
-        try {
-          const telegramChannel = 'robofuture'
-          const telegramResponse = await fetch(
+        const telegramChannel = 'robofuture'
+        const getTelegramPosts = async () => {
+          const urls = [
+            `https://r.jina.ai/http://t.me/s/${telegramChannel}`,
             `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://t.me/s/${telegramChannel}`)}`
-          )
-          const telegramHtml = await telegramResponse.text()
+          ]
           
-          const parser = new DOMParser()
-          const doc = parser.parseFromString(telegramHtml, 'text/html')
-          const messages = doc.querySelectorAll('.tgme_widget_message')
-          
-          const posts: TelegramPost[] = []
-          messages.forEach((msg, index) => {
-            if (index < 5) { // Get latest 5 posts
-              const textElement = msg.querySelector('.tgme_widget_message_text')
-              const dateElement = msg.querySelector('.tgme_widget_message_date time')
-              const viewsElement = msg.querySelector('.tgme_widget_message_views')
+          for (const url of urls) {
+            try {
+              const response = await fetch(url)
+              const html = await response.text()
+              console.log('Telegram fetch:', url, response.status, html.length)
               
-              if (textElement && dateElement) {
-                posts.push({
-                  id: index,
-                  text: textElement.textContent?.slice(0, 200) || '',
-                  date: dateElement.getAttribute('datetime') || '',
-                  views: parseInt(viewsElement?.textContent?.replace(/[^0-9]/g, '') || '0')
-                })
+              const parser = new DOMParser()
+              const doc = parser.parseFromString(html, 'text/html')
+              const messages = Array.from(doc.querySelectorAll('.tgme_widget_message'))
+              console.log('Telegram messages found:', messages.length)
+              
+              const parsed = messages.map((msg, index) => {
+                const textEl = msg.querySelector('.tgme_widget_message_text, .tgme_widget_message_description, .tgme_widget_message_bubble')
+                const dateEl = msg.querySelector('.tgme_widget_message_date time') || msg.querySelector('time')
+                const viewsEl = msg.querySelector('.tgme_widget_message_views')
+                
+                const text = (textEl?.textContent || '').trim()
+                const dateIso = dateEl?.getAttribute('datetime') || ''
+                const sortKey = dateIso ? Date.parse(dateIso) : 0
+                const views = parseInt((viewsEl?.textContent || '').replace(/\D/g, '') || '0', 10)
+                
+                return { id: index, text: text.slice(0, 200), date: dateIso, views, sortKey }
+              }).filter(p => p.text.length > 0)
+              
+              parsed.sort((a, b) => b.sortKey - a.sortKey)
+              
+              if (parsed.length > 0) {
+                console.log('Telegram posts parsed:', parsed.length)
+                return parsed.slice(0, 5)
               }
+            } catch (error) {
+              console.error('Telegram fetch error:', url, error)
             }
-          })
-          
+          }
+          return []
+        }
+        
+        try {
+          const posts = await getTelegramPosts()
           setTelegramPosts(posts)
         } catch (error) {
           console.error('Error fetching Telegram data:', error)
