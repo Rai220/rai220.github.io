@@ -674,34 +674,129 @@ function App() {
                 </a>
               </div>
               
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-cyber-pink font-mono text-center drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">{t.habr.articles}</h3>
+              <div className="space-y-3">
+                <h3 className="text-2xl font-bold text-cyber-pink font-mono text-center drop-shadow-[0_0_10px_rgba(255,0,110,0.5)] mb-4">{t.habr.articles}</h3>
+                
                 <a
-                  href="https://habr.com/ru/users/Rai220/articles/"
+                  href="https://habr.com/ru/articles/838892/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-6 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
                 >
-                  <h4 className="text-lg font-bold text-cyber-pink mb-2 font-mono">Гайд: AI-агент на GigaChat и LangGraph (от архитектуры до валидации) на примере Lean Canvas</h4>
-                  <p className="text-gray-400 text-sm font-mono">Блог компании Сбер, Машинное обучение*, Искусственный интеллект</p>
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Гайд: AI-агент на GigaChat и LangGraph (от архитектуры до валидации) на примере Lean Canvas</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 22</span>
+                    <span>💬 57</span>
+                    <span>📅 4 сен 2024</span>
+                  </div>
                 </a>
+
                 <a
-                  href="https://habr.com/ru/users/Rai220/articles/"
+                  href="https://habr.com/ru/articles/798713/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-6 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
                 >
-                  <h4 className="text-lg font-bold text-cyber-pink mb-2 font-mono">Какой плащ был у Понтия Пилата? Отвечает GigaChat</h4>
-                  <p className="text-gray-400 text-sm font-mono">Блог компании SberDevices, Машинное обучение*, Искусственный интеллект, Natural Language Processing*</p>
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Какой плащ был у Понтия Пилата? Отвечает GigaChat</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 27</span>
+                    <span>💬 49</span>
+                    <span>📅 20 фев 2024</span>
+                  </div>
                 </a>
-                <div className="text-center">
+
+                <a
+                  href="https://habr.com/ru/articles/722670/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Приделываем руки к ChatGPT: бот, который исполняет код в рантайме</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 61</span>
+                    <span>💬 146</span>
+                    <span>📅 22 мар 2023</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/714808/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Переносим свою картину мира в чат-бота на базе GPT-3</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 45</span>
+                    <span>💬 38</span>
+                    <span>📅 24 янв 2023</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/704208/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Как я создал чат-бота с собственной картиной мира на GPT-3</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 38</span>
+                    <span>💬 42</span>
+                    <span>📅 6 дек 2022</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/698906/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем голосового помощника с ChatGPT на Raspberry Pi</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 52</span>
+                    <span>💬 28</span>
+                    <span>📅 14 ноя 2022</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/693536/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем умного голосового помощника на Raspberry Pi</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 34</span>
+                    <span>💬 19</span>
+                    <span>📅 24 окт 2022</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://habr.com/ru/articles/688738/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
+                >
+                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Создаем голосового помощника на Raspberry Pi с нуля</h4>
+                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
+                    <span>👍 29</span>
+                    <span>💬 15</span>
+                    <span>📅 3 окт 2022</span>
+                  </div>
+                </a>
+
+                <div className="text-center pt-2">
                   <a
                     href="https://habr.com/ru/users/Rai220/articles/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block text-cyber-blue hover:text-cyber-pink transition font-mono text-sm"
                   >
-                    Посмотреть все статьи →
+                    Посмотреть все статьи на Habr →
                   </a>
                 </div>
               </div>
