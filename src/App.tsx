@@ -691,7 +691,6 @@ function App() {
                 </a>
 
                 <a
-                <a
                   href="https://habr.com/ru/articles/722670/"
                   target="_blank"
                   rel="noopener noreferrer"
