@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 interface GitHubRepo {
   id: number
   name: string
+  full_name: string
   description: string
   html_url: string
   stargazers_count: number
@@ -10,6 +11,8 @@ interface GitHubRepo {
   topics: string[]
   created_at: string
   updated_at: string
+  pypi_downloads?: number
+  pypi_rank?: string
 }
 
 interface GitHubUser {
@@ -21,38 +24,130 @@ interface GitHubUser {
   html_url: string
 }
 
+interface YouTubeVideo {
+  id: string
+  title: string
+  thumbnail: string
+  url: string
+  publishedAt: string
+}
+
+interface TelegramPost {
+  id: number
+  text: string
+  date: string
+  views: number
+}
+
 function App() {
   const [repos, setRepos] = useState<GitHubRepo[]>([])
   const [user, setUser] = useState<GitHubUser | null>(null)
   const [loading, setLoading] = useState(true)
+  const [youtubeVideos, setYoutubeVideos] = useState<YouTubeVideo[]>([])
+  const [youtubeSubscribers, setYoutubeSubscribers] = useState<number>(0)
+  const [telegramPosts, setTelegramPosts] = useState<TelegramPost[]>([])
+  const [telegramSubscribers] = useState<number>(1157)
 
   useEffect(() => {
-    const fetchGitHubData = async () => {
+    const fetchData = async () => {
       try {
         const userResponse = await fetch('https://api.github.com/users/Rai220')
         const userData = await userResponse.json()
         setUser(userData)
 
-        const reposResponse = await fetch('https://api.github.com/users/Rai220/repos?sort=updated&per_page=50')
-        const reposData = await reposResponse.json()
+        const repoNames = ['gigachat', 'gigachain', 'langchain-gigachat', 'giga_agent']
+        const repoPromises = repoNames.map(name => 
+          fetch(`https://api.github.com/repos/ai-forever/${name}`).then(r => r.json())
+        )
+        const reposData = await Promise.all(repoPromises)
         
-        const fiveYearsAgo = new Date()
-        fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5)
+        try {
+          const pypiResponse = await fetch('https://pypistats.org/api/packages/gigachat/recent')
+          const pypiData = await pypiResponse.json()
+          const gigachatIndex = reposData.findIndex(r => r.name === 'gigachat')
+          if (gigachatIndex !== -1 && pypiData.data) {
+            reposData[gigachatIndex].pypi_downloads = pypiData.data.last_month || 0
+            reposData[gigachatIndex].pypi_rank = 'Top 2%'
+          }
+        } catch (error) {
+          console.error('Error fetching PyPI stats:', error)
+        }
         
-        const recentRepos = reposData.filter((repo: GitHubRepo) => {
-          const updatedDate = new Date(repo.updated_at)
-          return updatedDate > fiveYearsAgo
-        }).slice(0, 6)
-        
-        setRepos(recentRepos)
+        setRepos(reposData)
+
+        try {
+          const channelId = 'UCxvt-pZ9aqsIWWR5JCpYmLg'
+          const youtubeApiKey = import.meta.env.VITE_YOUTUBE_API_KEY
+          
+          if (youtubeApiKey) {
+            const channelResponse = await fetch(
+              `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${youtubeApiKey}`
+            )
+            const channelData = await channelResponse.json()
+            if (channelData.items && channelData.items[0]) {
+              setYoutubeSubscribers(parseInt(channelData.items[0].statistics.subscriberCount))
+            }
+
+            const videosResponse = await fetch(
+              `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=6&order=date&type=video&key=${youtubeApiKey}`
+            )
+            const videosData = await videosResponse.json()
+            if (videosData.items) {
+              const videos = videosData.items.map((item: any) => ({
+                id: item.id.videoId,
+                title: item.snippet.title,
+                thumbnail: item.snippet.thumbnails.medium.url,
+                url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+                publishedAt: item.snippet.publishedAt
+              }))
+              setYoutubeVideos(videos)
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching YouTube data:', error)
+        }
+
+        try {
+          const telegramChannel = 'robofuture'
+          const telegramResponse = await fetch(
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://t.me/s/${telegramChannel}`)}`
+          )
+          const telegramHtml = await telegramResponse.text()
+          
+          const parser = new DOMParser()
+          const doc = parser.parseFromString(telegramHtml, 'text/html')
+          const messages = doc.querySelectorAll('.tgme_widget_message')
+          
+          const posts: TelegramPost[] = []
+          messages.forEach((msg, index) => {
+            if (index < 5) { // Get latest 5 posts
+              const textElement = msg.querySelector('.tgme_widget_message_text')
+              const dateElement = msg.querySelector('.tgme_widget_message_date time')
+              const viewsElement = msg.querySelector('.tgme_widget_message_views')
+              
+              if (textElement && dateElement) {
+                posts.push({
+                  id: index,
+                  text: textElement.textContent?.slice(0, 200) || '',
+                  date: dateElement.getAttribute('datetime') || '',
+                  views: parseInt(viewsElement?.textContent?.replace(/[^0-9]/g, '') || '0')
+                })
+              }
+            }
+          })
+          
+          setTelegramPosts(posts)
+        } catch (error) {
+          console.error('Error fetching Telegram data:', error)
+        }
       } catch (error) {
-        console.error('Error fetching GitHub data:', error)
+        console.error('Error fetching data:', error)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchGitHubData()
+    fetchData()
   }, [])
 
   return (
@@ -107,14 +202,14 @@ function App() {
                   </span>
                 </h1>
                 <p className="text-2xl md:text-3xl text-cyber-pink mb-4 font-mono tracking-wide drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">
-                  AI EXPERT & CTO
+                  CTO GIGACHAIN AT GIGACHAT
                 </p>
                 <p className="text-xl text-gray-200 mb-4 leading-relaxed">
-                  Co-founder of <span className="text-cyber-pink font-bold drop-shadow-[0_0_8px_rgba(255,0,110,0.6)]">cubic.ai</span> — the world's first AI-powered voice speaker. 
-                  Pioneering the future of intelligent systems.
+                  Leading the development of <span className="text-cyber-pink font-bold drop-shadow-[0_0_8px_rgba(255,0,110,0.6)]">GigaChain</span> — enterprise-grade AI agent framework. 
+                  Building the future of intelligent systems.
                 </p>
                 <p className="text-lg text-gray-400 mb-8">
-                  Specializing in AI Agents, LLM Applications, and Robotics. Building tomorrow's technology today.
+                  Ex-Head of AI at The Coach | Head of AI and founder at Cubic.ai. Specializing in AI Agents, LLM Applications, and Robotics.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <a
@@ -161,24 +256,24 @@ function App() {
             </h2>
             <div className="grid md:grid-cols-3 gap-8 mb-12">
               <div className="group bg-gradient-to-br from-cyber-blue/10 to-black p-6 rounded border border-cyber-blue shadow-lg shadow-cyber-blue/30 hover:shadow-cyber-blue/60 hover:border-cyber-blue/80 transition-all hover:scale-105">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
-                <h3 className="text-xl font-bold text-cyber-blue mb-2 font-mono drop-shadow-[0_0_8px_rgba(0,240,255,0.4)]">AI AGENTS DEVELOPER</h3>
+                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🚀</div>
+                <h3 className="text-xl font-bold text-cyber-blue mb-2 font-mono drop-shadow-[0_0_8px_rgba(0,240,255,0.4)]">CTO GIGACHAIN</h3>
                 <p className="text-gray-300">
-                  Expert in developing intelligent AI agents and LLM-powered applications. Specializing in GigaChat and LangChain integrations.
+                  Leading the development of GigaChain at GigaChat - enterprise-grade AI agent framework. Building cutting-edge LLM-powered applications and intelligent systems.
                 </p>
               </div>
               <div className="group bg-gradient-to-br from-cyber-pink/10 to-black p-6 rounded border border-cyber-pink shadow-lg shadow-cyber-pink/30 hover:shadow-cyber-pink/60 hover:border-cyber-pink/80 transition-all hover:scale-105">
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">💼</div>
-                <h3 className="text-xl font-bold text-cyber-pink mb-2 font-mono drop-shadow-[0_0_8px_rgba(255,0,110,0.4)]">TECHNICAL DIRECTOR</h3>
+                <h3 className="text-xl font-bold text-cyber-pink mb-2 font-mono drop-shadow-[0_0_8px_rgba(255,0,110,0.4)]">EX-HEAD OF AI</h3>
                 <p className="text-gray-300">
-                  Leading technical teams in building cutting-edge AI solutions. Experienced in architecture design and implementation.
+                  Former Head of AI at <a href="https://the.coach/" target="_blank" rel="noopener noreferrer" className="text-cyber-pink hover:text-white transition-colors underline">The Coach</a>. Led AI initiatives and developed intelligent coaching solutions.
                 </p>
               </div>
               <div className="group bg-gradient-to-br from-cyber-blue/10 to-black p-6 rounded border border-cyber-blue shadow-lg shadow-cyber-blue/30 hover:shadow-cyber-blue/60 hover:border-cyber-blue/80 transition-all hover:scale-105">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🚀</div>
-                <h3 className="text-xl font-bold text-cyber-blue mb-2 font-mono drop-shadow-[0_0_8px_rgba(0,240,255,0.4)]">INNOVATION PIONEER</h3>
+                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
+                <h3 className="text-xl font-bold text-cyber-blue mb-2 font-mono drop-shadow-[0_0_8px_rgba(0,240,255,0.4)]">FOUNDER & HEAD OF AI</h3>
                 <p className="text-gray-300">
-                  Co-founder of cubic.ai, the world's first AI voice speaker. Passionate about robotics, neurotechnology, and the future of AI.
+                  Head of AI and founder at Cubic.ai - the world's first AI-powered voice speaker. Pioneering robotics, neurotechnology, and the future of AI.
                 </p>
               </div>
             </div>
@@ -202,10 +297,19 @@ function App() {
                   <div className="relative group">
                     <div className="absolute inset-0 bg-cyber-blue blur-xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
                     <div className="relative">
-                      <div className="text-5xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_15px_rgba(0,240,255,0.6)]">1,157</div>
-                      <div className="text-cyber-blue uppercase text-sm tracking-widest font-mono">Subscribers</div>
+                      <div className="text-5xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_15px_rgba(0,240,255,0.6)]">{telegramSubscribers.toLocaleString()}</div>
+                      <div className="text-cyber-blue uppercase text-sm tracking-widest font-mono">TG Subscribers</div>
                     </div>
                   </div>
+                  {youtubeSubscribers > 0 && (
+                    <div className="relative group">
+                      <div className="absolute inset-0 bg-cyber-pink blur-xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                      <div className="relative">
+                        <div className="text-5xl font-bold text-cyber-pink font-mono drop-shadow-[0_0_15px_rgba(255,0,110,0.6)]">{youtubeSubscribers.toLocaleString()}</div>
+                        <div className="text-cyber-pink uppercase text-sm tracking-widest font-mono">YT Subscribers</div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -233,6 +337,16 @@ function App() {
                     <p className="text-gray-300 mb-4 min-h-12 text-sm">
                       {repo.description || 'No description available'}
                     </p>
+                    {repo.name === 'gigachat' && repo.pypi_downloads && (
+                      <div className="mb-3 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <img src="https://img.shields.io/pypi/dm/gigachat" alt="PyPI Downloads" className="h-5" />
+                        </div>
+                        <div className="text-xs text-cyber-pink font-mono bg-cyber-pink/10 px-2 py-1 rounded border border-cyber-pink/30 inline-block">
+                          🏆 Top 2% of all Python packages worldwide
+                        </div>
+                      </div>
+                    )}
                     <div className="flex items-center justify-between mb-2">
                       {repo.language && (
                         <span className="text-sm text-cyber-pink font-mono">{repo.language}</span>
@@ -261,34 +375,104 @@ function App() {
           </div>
         </section>
 
+        {youtubeVideos.length > 0 && (
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-50 backdrop-blur-sm border-y border-cyber-blue/30">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center font-mono">
+                <span className="text-cyber-pink">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">YOUTUBE CHANNEL</span>
+              </h2>
+              <div className="text-center mb-8">
+                <a
+                  href="https://www.youtube.com/c/Rai220/videos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 text-cyber-pink hover:text-white transition-colors"
+                >
+                  <span className="text-2xl">📺</span>
+                  <span className="text-xl font-mono">{youtubeSubscribers.toLocaleString()} subscribers</span>
+                </a>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {youtubeVideos.map((video) => (
+                  <a
+                    key={video.id}
+                    href={video.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-gradient-to-br from-cyber-pink/5 to-black rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all transform hover:scale-105 shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/50 overflow-hidden"
+                  >
+                    <div className="relative">
+                      <img src={video.thumbnail} alt={video.title} className="w-full h-48 object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="text-5xl">▶️</span>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-sm font-bold text-cyber-pink group-hover:text-cyber-blue mb-2 font-mono transition-colors line-clamp-2">
+                        {video.title}
+                      </h3>
+                      <p className="text-xs text-gray-400 font-mono">
+                        {new Date(video.publishedAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         <section id="blog" className="py-20 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-50 backdrop-blur-sm border-y border-cyber-pink/30">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center font-mono">
               <span className="text-cyber-blue">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">ROBOFUTURE BLOG</span>
             </h2>
-            <div className="max-w-3xl mx-auto bg-gradient-to-br from-cyber-pink/10 to-black p-8 rounded border border-cyber-pink shadow-lg shadow-cyber-pink/40 hover:shadow-cyber-pink/60 transition-all">
-              <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-cyber-blue to-cyber-pink rounded-full flex items-center justify-center text-2xl mr-4 shadow-lg shadow-cyber-pink/60 animate-pulse">
-                  🤖
+            <div className="max-w-3xl mx-auto space-y-6">
+              <div className="bg-gradient-to-br from-cyber-pink/10 to-black p-8 rounded border border-cyber-pink shadow-lg shadow-cyber-pink/40 hover:shadow-cyber-pink/60 transition-all">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-cyber-blue to-cyber-pink rounded-full flex items-center justify-center text-2xl mr-4 shadow-lg shadow-cyber-pink/60 animate-pulse">
+                    🤖
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-cyber-pink font-mono drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">ROBOFUTURE</h3>
+                    <p className="text-cyber-blue font-mono text-sm">{telegramSubscribers.toLocaleString()} subscribers</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-cyber-pink font-mono drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">ROBOFUTURE</h3>
-                  <p className="text-cyber-blue font-mono text-sm">1,157 subscribers</p>
-                </div>
+                <p className="text-gray-300 mb-6 leading-relaxed">
+                  Авторский канал о последних достижениях в мире AI, ML, робототехники и нейротехнологий. 
+                  Прогнозы и комментарии от разработчика в этой области, никаких репостов новостей и...
+                </p>
+                <a
+                  href="https://t.me/robofuture"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-block bg-gradient-to-r from-cyber-pink to-fuchsia-500 hover:from-fuchsia-400 hover:to-cyber-pink text-white px-8 py-3 rounded font-bold transition-all shadow-lg shadow-cyber-pink/50 hover:shadow-cyber-pink/80 hover:scale-105 uppercase tracking-wider font-mono"
+                >
+                  <span className="relative z-10">Subscribe</span>
+                  <div className="absolute inset-0 bg-cyber-pink opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
+                </a>
               </div>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                Авторский канал о последних достижениях в мире AI, ML, робототехники и нейротехнологий. 
-                Прогнозы и комментарии от разработчика в этой области, никаких репостов новостей и...
-              </p>
-              <a
-                href="https://t.me/robofuture"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative inline-block bg-gradient-to-r from-cyber-pink to-fuchsia-500 hover:from-fuchsia-400 hover:to-cyber-pink text-white px-8 py-3 rounded font-bold transition-all shadow-lg shadow-cyber-pink/50 hover:shadow-cyber-pink/80 hover:scale-105 uppercase tracking-wider font-mono"
-              >
-                <span className="relative z-10">Subscribe</span>
-                <div className="absolute inset-0 bg-cyber-pink opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
-              </a>
+              
+              {telegramPosts.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold text-cyber-blue font-mono text-center drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">LATEST POSTS</h3>
+                  {telegramPosts.map((post) => (
+                    <div
+                      key={post.id}
+                      className="bg-gradient-to-br from-cyber-blue/5 to-black p-6 rounded border border-cyber-blue/50 hover:border-cyber-pink transition-all shadow-lg shadow-cyber-blue/20 hover:shadow-cyber-pink/30"
+                    >
+                      <p className="text-gray-300 mb-3 leading-relaxed text-sm">
+                        {post.text}
+                        {post.text.length >= 200 && '...'}
+                      </p>
+                      <div className="flex items-center justify-between text-xs text-gray-400 font-mono">
+                        <span>{new Date(post.date).toLocaleDateString()}</span>
+                        <span>👁️ {post.views.toLocaleString()} views</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>
