@@ -112,7 +112,7 @@ const translations = {
       articles: 'статей'
     },
     footer: {
-      rights: '© 2025 Konstantin Krestnikov. Все права защищены.',
+      rights: 'Агентарии всех стран соединяйся!',
       built: 'Создано с React + TypeScript + Tailwind CSS'
     }
   },
@@ -186,7 +186,7 @@ const translations = {
       articles: 'articles'
     },
     footer: {
-      rights: '© 2025 Konstantin Krestnikov. All rights reserved.',
+      rights: 'Агентарии всех стран соединяйся!',
       built: 'Built with React + TypeScript + Tailwind CSS'
     }
   }
@@ -195,7 +195,7 @@ const translations = {
 function App() {
   const [repos, setRepos] = useState<GitHubRepo[]>([])
   const [user, setUser] = useState<GitHubUser | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [projectsLoading, setProjectsLoading] = useState(true)
   const [telegramPosts, setTelegramPosts] = useState<TelegramPost[]>([])
   const [telegramSubscribers] = useState<number>(1157)
   const [youtubeSubscribers] = useState<number>(1000)
@@ -209,21 +209,21 @@ function App() {
       title: '🤖Универсальный агент = ReAct + REPL',
       thumbnail: 'https://i.ytimg.com/vi/s3Ynz436Swc/mqdefault.jpg',
       url: 'https://youtu.be/s3Ynz436Swc',
-      publishedAt: '2024-10-11'
+      publishedAt: '2024-10-11T00:00:00Z'
     },
     {
       id: 'kwpBP2-ZtAc',
-      title: 'AI Agent Video',
+      title: 'MCP и Think-Tool: добавляем мышление и инструменты любому AI-агенту',
       thumbnail: 'https://i.ytimg.com/vi/kwpBP2-ZtAc/mqdefault.jpg',
       url: 'https://youtu.be/kwpBP2-ZtAc',
-      publishedAt: '2024-09-11'
+      publishedAt: '2024-07-11T00:00:00Z'
     },
     {
       id: '9QXRAC8G89I',
-      title: 'AI Development',
+      title: 'AI агенты - что это и как их делать (GigaConf)',
       thumbnail: 'https://i.ytimg.com/vi/9QXRAC8G89I/mqdefault.jpg',
       url: 'https://www.youtube.com/watch?v=9QXRAC8G89I',
-      publishedAt: '2024-10-11'
+      publishedAt: '2023-11-11T00:00:00Z'
     }
   ]
 
@@ -254,6 +254,7 @@ function App() {
         }
         
         setRepos(reposData)
+        setProjectsLoading(false)
 
         try {
           const telegramChannel = 'robofuture'
@@ -290,8 +291,6 @@ function App() {
         }
       } catch (error) {
         console.error('Error fetching data:', error)
-      } finally {
-        setLoading(false)
       }
     }
 
@@ -485,7 +484,7 @@ function App() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center font-mono">
               <span className="text-cyber-pink">&gt;_</span> <span className="drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">{t.projects.title}</span>
             </h2>
-            {loading ? (
+            {projectsLoading ? (
               <div className="text-center text-cyber-blue font-mono text-xl animate-pulse drop-shadow-[0_0_10px_rgba(0,240,255,0.6)]">{t.projects.loading}</div>
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -660,7 +659,7 @@ function App() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-cyber-blue font-mono drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">Habr</h3>
-                    <p className="text-cyber-pink font-mono text-sm">8 {t.habr.articles}</p>
+                    <p className="text-cyber-pink font-mono text-sm">7 {t.habr.articles}</p>
                   </div>
                 </div>
                 <a
@@ -692,19 +691,6 @@ function App() {
                 </a>
 
                 <a
-                  href="https://habr.com/ru/articles/798713/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block bg-gradient-to-br from-cyber-pink/5 to-black p-4 rounded border border-cyber-pink/50 hover:border-cyber-blue transition-all shadow-lg shadow-cyber-pink/20 hover:shadow-cyber-blue/30"
-                >
-                  <h4 className="text-base font-bold text-cyber-pink mb-2 font-mono">Какой плащ был у Понтия Пилата? Отвечает GigaChat</h4>
-                  <div className="flex items-center gap-4 text-xs text-gray-400 font-mono">
-                    <span>👍 27</span>
-                    <span>💬 49</span>
-                    <span>📅 20 фев 2024</span>
-                  </div>
-                </a>
-
                 <a
                   href="https://habr.com/ru/articles/722670/"
                   target="_blank"
