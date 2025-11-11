@@ -58,7 +58,7 @@ const translations = {
     },
     hero: {
       systemInit: '> SYSTEM.INIT()',
-      position: 'CTO GIGACHAIN В GIGACHAT',
+      position: 'CTO GIGACHAIN (GigaChat Agents and Dev tools)',
       description: 'Руковожу разработкой GigaChain — набора инструментов для работы с GigaChat. Создаю будущее интеллектуальных систем.',
       experience: 'Ex-Head of AI в The Coach | Head of AI и основатель Cubic.ai. Специализируюсь на AI агентах, LLM приложениях и робототехнике.',
       github: 'GitHub',
@@ -136,7 +136,7 @@ const translations = {
     },
     hero: {
       systemInit: '> SYSTEM.INIT()',
-      position: 'CTO GIGACHAIN AT GIGACHAT',
+      position: 'CTO GIGACHAIN (GigaChat Agents and Dev tools)',
       description: 'Leading the development of GigaChain — a toolkit for working with GigaChat. Building the future of intelligent systems.',
       experience: 'Ex-Head of AI at The Coach | Head of AI and founder at Cubic.ai. Specializing in AI Agents, LLM Applications, and Robotics.',
       github: 'GitHub',
