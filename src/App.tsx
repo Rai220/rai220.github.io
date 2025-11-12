@@ -71,13 +71,13 @@ const translations = {
         title: 'CTO GIGACHAIN',
         description: 'Руковожу разработкой GigaChain в GigaChat - набора инструментов для работы с GigaChat. Создаю передовые LLM-приложения и интеллектуальные системы.'
       },
+      founder: {
+        title: 'СО-ОСНОВАТЕЛЬ & HEAD OF AI',
+        description: 'Head of AI и сооснователь Cubic.ai - первого в мире AI-голосового спикера. Пионер в робототехнике, нейротехнологиях и будущем AI.'
+      },
       exHead: {
         title: 'EX-HEAD OF AI',
         description: 'Бывший Head of AI в The Coach. Руководил AI-инициативами и разрабатывал интеллектуальные решения для коучинга.'
-      },
-      founder: {
-        title: 'ОСНОВАТЕЛЬ & HEAD OF AI',
-        description: 'Head of AI и основатель Cubic.ai - первого в мире AI-голосового спикера. Пионер в робототехнике, нейротехнологиях и будущем AI.'
       },
       stats: {
         repositories: 'Репозитории',
@@ -149,13 +149,13 @@ const translations = {
         title: 'CTO GIGACHAIN',
         description: 'Leading the development of GigaChain at GigaChat - a toolkit for working with GigaChat. Building cutting-edge LLM-powered applications and intelligent systems.'
       },
+      founder: {
+        title: 'CO-FOUNDER & HEAD OF AI',
+        description: 'Head of AI and co-founder at Cubic.ai - the world\'s first AI-powered voice speaker. Pioneering robotics, neurotechnology, and the future of AI.'
+      },
       exHead: {
         title: 'EX-HEAD OF AI',
         description: 'Former Head of AI at The Coach. Led AI initiatives and developed intelligent coaching solutions.'
-      },
-      founder: {
-        title: 'FOUNDER & HEAD OF AI',
-        description: 'Head of AI and founder at Cubic.ai - the world\'s first AI-powered voice speaker. Pioneering robotics, neurotechnology, and the future of AI.'
       },
       stats: {
         repositories: 'Repositories',
