@@ -32,9 +32,16 @@ export function Hero({ user, t }: HeroProps) {
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion || !sectionRef.current || !contentRef.current) return
+    if (prefersReducedMotion || !sectionRef.current || !contentRef.current || !user) return
 
     const ctx = gsap.context(() => {
+      const heroLines = sectionRef.current?.querySelectorAll('.hero-line')
+      const heroAvatar = sectionRef.current?.querySelector('.hero-avatar')
+      const hero3d = sectionRef.current?.querySelector('.hero-3d')
+      const heroBgHue = sectionRef.current?.querySelector('.hero-bg-hue')
+
+      if (!heroLines || heroLines.length === 0) return
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -45,31 +52,40 @@ export function Hero({ user, t }: HeroProps) {
         },
       })
 
-      tl.from('.hero-line', {
+      tl.from(heroLines, {
         opacity: 0,
         y: 30,
         stagger: 0.15,
         ease: 'power2.out',
       })
-        .from('.hero-avatar', {
+
+      if (heroAvatar) {
+        tl.from(heroAvatar, {
           scale: 0.8,
           opacity: 0,
           ease: 'back.out(1.7)',
         }, 0.3)
-        .from('.hero-3d', {
+      }
+
+      if (hero3d) {
+        tl.from(hero3d, {
           opacity: 0,
           scale: 0.9,
           ease: 'power2.out',
         }, 0.5)
-        .to('.hero-bg-hue', {
+      }
+
+      if (heroBgHue) {
+        tl.to(heroBgHue, {
           filter: 'hue-rotate(90deg)',
           ease: 'none',
         }, 0)
+      }
 
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [user])
 
   return (
     <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
