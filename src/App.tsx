@@ -368,11 +368,98 @@ function App() {
     <div className="min-h-screen bg-cyber-dark relative overflow-hidden">
       {/* Animated background layers */}
       <div className="fixed inset-0 bg-gradient-to-br from-[#0a0e27] via-black to-[#1a001f]"></div>
-      <div className="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDAsMjQwLDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+      <div className="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDAsMjQwLDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30 grid-move"></div>
       
+      {/* Animated 3D Grid Background */}
+      <div className="fixed inset-0 opacity-20" style={{ perspective: '1000px' }}>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZDMkIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iMTAwIiB5Mj0iMCIgc3Ryb2tlPSJyZ2JhKDAsIDI0MCwgMjU1LCAwLjMpIiBzdHJva2Utd2lkdGg9IjIiLz48bGluZSB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMTAwIiBzdHJva2U9InJnYmEoMCwgMjQwLCAyNTUsIDAuMykiIHN0cm9rZS13aWR0aD0iMiIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkM2QpIi8+PC9zdmc+')] grid-move"></div>
+      </div>
+
+      {/* Scanline Effect */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute w-full h-1 bg-gradient-to-r from-transparent via-cyber-blue to-transparent opacity-50 scanline"></div>
+      </div>
+
+      {/* Floating Particles */}
+      <div className="fixed inset-0 pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-cyber-blue rounded-full float-animation"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 6}s`,
+              animationDuration: `${6 + Math.random() * 4}s`,
+              boxShadow: '0 0 10px rgba(0, 240, 255, 0.8)',
+            }}
+          ></div>
+        ))}
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={`pink-${i}`}
+            className="absolute w-1 h-1 bg-cyber-pink rounded-full float-animation"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 6}s`,
+              animationDuration: `${6 + Math.random() * 4}s`,
+              boxShadow: '0 0 10px rgba(255, 0, 110, 0.8)',
+            }}
+          ></div>
+        ))}
+      </div>
+
+      {/* Data Streams */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-px bg-gradient-to-b from-transparent via-cyber-blue to-transparent data-stream"
+            style={{
+              left: `${10 + i * 12}%`,
+              height: '30vh',
+              animationDelay: `${i * 0.5}s`,
+              opacity: 0.3,
+            }}
+          ></div>
+        ))}
+      </div>
+
+      {/* Hexagon Patterns */}
+      <div className="fixed inset-0 pointer-events-none">
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute hex-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 8}s`,
+            }}
+          >
+            <svg width="40" height="40" viewBox="0 0 40 40" className="opacity-20">
+              <polygon
+                points="20,2 35,11 35,29 20,38 5,29 5,11"
+                fill="none"
+                stroke={i % 2 === 0 ? '#00f0ff' : '#ff006e'}
+                strokeWidth="1"
+              />
+            </svg>
+          </div>
+        ))}
+      </div>
+
       {/* Glowing orbs for atmosphere */}
-      <div className="fixed top-20 left-10 w-96 h-96 bg-cyber-blue rounded-full opacity-10 blur-3xl"></div>
-      <div className="fixed bottom-20 right-10 w-96 h-96 bg-cyber-pink rounded-full opacity-10 blur-3xl"></div>
+      <div className="fixed top-20 left-10 w-96 h-96 bg-cyber-blue rounded-full opacity-10 blur-3xl pulse-animation"></div>
+      <div className="fixed bottom-20 right-10 w-96 h-96 bg-cyber-pink rounded-full opacity-10 blur-3xl pulse-animation" style={{ animationDelay: '1s' }}></div>
+      <div className="fixed top-1/2 left-1/2 w-96 h-96 bg-cyber-purple rounded-full opacity-10 blur-3xl pulse-animation" style={{ animationDelay: '0.5s' }}></div>
+
+      {/* Corner Accent Lines */}
+      <div className="fixed top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-cyber-blue opacity-50"></div>
+      <div className="fixed top-0 right-0 w-32 h-32 border-t-2 border-r-2 border-cyber-pink opacity-50"></div>
+      <div className="fixed bottom-0 left-0 w-32 h-32 border-b-2 border-l-2 border-cyber-pink opacity-50"></div>
+      <div className="fixed bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-cyber-blue opacity-50"></div>
       
       <div className="relative z-10">
         <nav className="fixed top-0 w-full bg-black bg-opacity-80 backdrop-blur-md z-50 border-b border-cyber-blue shadow-lg shadow-cyber-blue/30">
@@ -415,13 +502,13 @@ function App() {
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="text-cyber-blue font-mono text-sm mb-4 tracking-widest animate-pulse">{t.hero.systemInit}</div>
+                <div className="text-cyber-blue font-mono text-sm mb-4 tracking-widest glitch-text">{t.hero.systemInit}</div>
                 <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-pink to-cyber-blue animate-pulse drop-shadow-[0_0_15px_rgba(0,240,255,0.5)]">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-pink to-cyber-blue chromatic-text drop-shadow-[0_0_15px_rgba(0,240,255,0.5)]">
                     Konstantin Krestnikov
                   </span>
                 </h1>
-                <p className="text-2xl md:text-3xl text-cyber-pink mb-4 font-mono tracking-wide drop-shadow-[0_0_10px_rgba(255,0,110,0.5)]">
+                <p className="text-2xl md:text-3xl text-cyber-pink mb-4 font-mono tracking-wide drop-shadow-[0_0_10px_rgba(255,0,110,0.5)] glitch-text">
                   {t.hero.position}
                 </p>
                 <p className="text-xl text-gray-200 mb-4 leading-relaxed">

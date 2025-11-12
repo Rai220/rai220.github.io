@@ -9,9 +9,216 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(90deg);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+    filter: hue-rotate(180deg);
+  }
+  60% {
+    transform: translate(2px, 2px);
+    filter: hue-rotate(270deg);
+  }
+  80% {
+    transform: translate(2px, -2px);
+    filter: hue-rotate(360deg);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes glitchText {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.8),
+                 0 0 20px rgba(0, 240, 255, 0.6),
+                 0 0 30px rgba(0, 240, 255, 0.4);
+  }
+  25% {
+    text-shadow: -2px 0 10px rgba(255, 0, 110, 0.8),
+                 2px 0 20px rgba(0, 240, 255, 0.6),
+                 0 0 30px rgba(139, 0, 255, 0.4);
+    transform: translateX(2px);
+  }
+  50% {
+    text-shadow: 2px 0 10px rgba(0, 240, 255, 0.8),
+                 -2px 0 20px rgba(255, 0, 110, 0.6),
+                 0 0 30px rgba(0, 240, 255, 0.4);
+    transform: translateX(-2px);
+  }
+  75% {
+    text-shadow: 0 2px 10px rgba(139, 0, 255, 0.8),
+                 0 -2px 20px rgba(255, 0, 110, 0.6),
+                 0 0 30px rgba(0, 240, 255, 0.4);
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-10px);
+  }
+  75% {
+    transform: translateY(-30px) translateX(5px);
+  }
+}
+
+@keyframes gridMove {
+  0% {
+    transform: perspective(1000px) rotateX(60deg) translateZ(0px);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(60deg) translateZ(100px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes dataStream {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes hexFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(180deg);
+  }
+}
+
+@keyframes chromatic {
+  0% {
+    text-shadow: -2px 0 0 rgba(255, 0, 110, 0.7),
+                 2px 0 0 rgba(0, 240, 255, 0.7);
+  }
+  50% {
+    text-shadow: 2px 0 0 rgba(255, 0, 110, 0.7),
+                 -2px 0 0 rgba(0, 240, 255, 0.7);
+  }
+  100% {
+    text-shadow: -2px 0 0 rgba(255, 0, 110, 0.7),
+                 2px 0 0 rgba(0, 240, 255, 0.7);
+  }
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 240, 255, 0.5),
+                0 0 10px rgba(0, 240, 255, 0.5),
+                0 0 15px rgba(0, 240, 255, 0.5),
+                0 0 20px rgba(0, 240, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.8),
+                0 0 20px rgba(0, 240, 255, 0.8),
+                0 0 30px rgba(0, 240, 255, 0.6),
+                0 0 40px rgba(255, 0, 110, 0.6),
+                0 0 50px rgba(255, 0, 110, 0.4);
+  }
+}
+
+@keyframes rotate3d {
+  0% {
+    transform: rotateY(0deg) rotateX(0deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateX(360deg);
+  }
+}
+
+.glitch-effect {
+  animation: glitch 0.3s infinite;
+}
+
+.glitch-text {
+  animation: glitchText 3s infinite;
+}
+
+.scanline {
+  animation: scanline 8s linear infinite;
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+.grid-move {
+  animation: gridMove 20s linear infinite;
+}
+
+.pulse-animation {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.data-stream {
+  animation: dataStream 3s linear infinite;
+}
+
+.hex-float {
+  animation: hexFloat 8s ease-in-out infinite;
+}
+
+.chromatic-text {
+  animation: chromatic 2s ease-in-out infinite;
+}
+
+.neon-pulse {
+  animation: neonPulse 2s ease-in-out infinite;
+}
+
+.rotate-3d {
+  animation: rotate3d 20s linear infinite;
 }
