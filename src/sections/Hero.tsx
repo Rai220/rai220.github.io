@@ -158,7 +158,7 @@ export function Hero({ user, t }: HeroProps) {
                   <span className="relative z-10">{t.hero.youtube}</span>
                   <div className="absolute inset-0 bg-red-500 opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
                 </MagneticButton>
-              </motion.div>
+              </div>
             </div>
             <div className="flex flex-col items-center gap-8">
               {user && (
