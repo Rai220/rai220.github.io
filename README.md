@@ -70,3 +70,7 @@ The repository is configured with GitHub Pages to serve from the `master` branch
 ## License
 
 ISC © Konstantin Krestnikov
+
+## Development Notes
+
+This repository has been verified for automated workflows and CI/CD integration.
