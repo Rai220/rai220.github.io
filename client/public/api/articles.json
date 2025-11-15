@@ -1,0 +1,31 @@
+[
+  {
+    "id": "1",
+    "title": "Как мы сделали GigaChain — набор инструментов для работы с GigaChat",
+    "url": "https://habr.com/ru/companies/sberbank/articles/941340/",
+    "date": "2024",
+    "platform": "Habr"
+  },
+  {
+    "id": "2",
+    "title": "Как мы делали GigaChat: от идеи до продакшена",
+    "url": "https://habr.com/ru/companies/sberdevices/articles/794773/",
+    "date": "2024",
+    "platform": "Habr"
+  },
+  {
+    "id": "3",
+    "title": "Обучение нейросети для генерации текста на основе GPT-2",
+    "url": "https://habr.com/ru/articles/724012/",
+    "date": "2024",
+    "platform": "Habr",
+    "badge": "🏆 Победитель Сезона Machine Learning"
+  },
+  {
+    "id": "4",
+    "title": "Создание чат-бота на основе GPT-2 для Telegram",
+    "url": "https://habr.com/ru/articles/712534/",
+    "date": "2023",
+    "platform": "Habr"
+  }
+]
