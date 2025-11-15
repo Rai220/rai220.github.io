@@ -26,7 +26,8 @@
     "tech": ["Python", "LangChain", "Integration"],
     "stars": 34,
     "language": "Python",
-    "url": "https://github.com/ai-forever/langchain-gigachat"
+    "url": "https://github.com/ai-forever/langchain-gigachat",
+    "tags": ["langchain", "integration"]
   },
   {
     "id": "4",
@@ -40,12 +41,22 @@
   },
   {
     "id": "5",
+    "title": "gpt2giga",
+    "description": "Инструменты для конвертации моделей GPT-2 в формат GigaChat. Позволяет адаптировать существующие модели для работы с российской LLM.",
+    "tech": ["Python", "Model Conversion", "AI"],
+    "stars": 15,
+    "language": "Python",
+    "url": "https://github.com/ai-forever/gpt2giga",
+    "tags": ["model-conversion", "gpt2"]
+  },
+  {
+    "id": "6",
     "title": "Telephoto",
-    "description": "Android CCTV через Telegram - превратите ваш старый Android в систему видеонаблюдения с уведомлениями.",
+    "description": "⚠️ DEPRECATED - Android CCTV через Telegram - превратите ваш старый Android в систему видеонаблюдения с уведомлениями.",
     "tech": ["Java", "Android", "Telegram Bot"],
     "stars": 28,
     "language": "Java",
     "url": "https://github.com/Rai220/Telephoto",
-    "tags": ["android", "bot", "alarm"]
+    "tags": ["android", "bot", "alarm", "deprecated"]
   }
 ]
