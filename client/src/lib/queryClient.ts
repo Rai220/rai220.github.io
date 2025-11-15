@@ -29,7 +29,13 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+    let url = queryKey.join("/") as string;
+    
+    if (import.meta.env.PROD) {
+      url = `${url}.json`;
+    }
+    
+    const res = await fetch(url, {
       credentials: "include",
     });
 

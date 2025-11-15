@@ -1,0 +1,6 @@
+[
+  { "id": "1", "label": "Репозитории", "value": 85, "icon": "repos" },
+  { "id": "2", "label": "GitHub Followers", "value": 108, "icon": "followers" },
+  { "id": "3", "label": "TG Подписчики", "value": 1157, "icon": "activity" },
+  { "id": "4", "label": "YT Подписчики", "value": 1000, "icon": "stars" }
+]
