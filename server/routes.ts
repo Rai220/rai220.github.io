@@ -48,6 +48,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/articles", async (_req, res) => {
+    try {
+      const articles = await storage.getArticles();
+      res.json(articles);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch articles" });
+    }
+  });
+
+  app.get("/api/github-activity", async (_req, res) => {
+    try {
+      const activity = await storage.getGitHubActivity();
+      res.json(activity);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch GitHub activity" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

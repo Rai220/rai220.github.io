@@ -1,4 +1,4 @@
-import type { Project, Stat, Skill, Video, Post } from "@shared/schema";
+import type { Project, Stat, Skill, Video, Post, Article, GitHubActivity } from "@shared/schema";
 
 export interface IStorage {
   getStats(): Promise<Stat[]>;
@@ -6,6 +6,8 @@ export interface IStorage {
   getSkills(): Promise<Skill[]>;
   getVideos(): Promise<Video[]>;
   getPosts(): Promise<Post[]>;
+  getArticles(): Promise<Article[]>;
+  getGitHubActivity(): Promise<GitHubActivity>;
 }
 
 export class MemStorage implements IStorage {
@@ -14,6 +16,8 @@ export class MemStorage implements IStorage {
   private skills: Skill[];
   private videos: Video[];
   private posts: Post[];
+  private articles: Article[];
+  private githubActivity: GitHubActivity;
 
   constructor() {
     this.stats = [
@@ -21,6 +25,8 @@ export class MemStorage implements IStorage {
       { id: "2", label: "GitHub Followers", value: 108, icon: "followers" },
       { id: "3", label: "TG Подписчики", value: 1157, icon: "activity" },
       { id: "4", label: "YT Подписчики", value: 1000, icon: "stars" },
+      { id: "5", label: "gigachat Downloads", value: 50000, icon: "activity" },
+      { id: "6", label: "langchain_gigachat Downloads", value: 15000, icon: "activity" },
     ];
 
     this.projects = [
@@ -52,6 +58,7 @@ export class MemStorage implements IStorage {
         stars: 34,
         language: "Python",
         url: "https://github.com/ai-forever/langchain-gigachat",
+        tags: ["langchain", "integration"],
       },
       {
         id: "4",
@@ -65,13 +72,23 @@ export class MemStorage implements IStorage {
       },
       {
         id: "5",
+        title: "gpt2giga",
+        description: "Инструменты для конвертации моделей GPT-2 в формат GigaChat. Позволяет адаптировать существующие модели для работы с российской LLM.",
+        tech: ["Python", "Model Conversion", "AI"],
+        stars: 15,
+        language: "Python",
+        url: "https://github.com/ai-forever/gpt2giga",
+        tags: ["model-conversion", "gpt2"],
+      },
+      {
+        id: "6",
         title: "Telephoto",
-        description: "Android CCTV через Telegram - превратите ваш старый Android в систему видеонаблюдения с уведомлениями.",
+        description: "⚠️ DEPRECATED - Android CCTV через Telegram - превратите ваш старый Android в систему видеонаблюдения с уведомлениями.",
         tech: ["Java", "Android", "Telegram Bot"],
         stars: 28,
         language: "Java",
         url: "https://github.com/Rai220/Telephoto",
-        tags: ["android", "bot", "alarm"],
+        tags: ["android", "bot", "alarm", "deprecated"],
       },
     ];
 
@@ -155,6 +172,75 @@ export class MemStorage implements IStorage {
         url: "https://t.me/robofuture",
       },
     ];
+
+    this.articles = [
+      {
+        id: "1",
+        title: "Как мы сделали GigaChain — набор инструментов для работы с GigaChat",
+        url: "https://habr.com/ru/companies/sberbank/articles/941340/",
+        date: "2024",
+        platform: "Habr",
+      },
+      {
+        id: "2",
+        title: "Как мы делали GigaChat: от идеи до продакшена",
+        url: "https://habr.com/ru/companies/sberdevices/articles/794773/",
+        date: "2024",
+        platform: "Habr",
+      },
+      {
+        id: "3",
+        title: "Обучение нейросети для генерации текста на основе GPT-2",
+        url: "https://habr.com/ru/articles/724012/",
+        date: "2024",
+        platform: "Habr",
+        badge: "🏆 Победитель Сезона Machine Learning",
+      },
+      {
+        id: "4",
+        title: "Создание чат-бота на основе GPT-2 для Telegram",
+        url: "https://habr.com/ru/articles/712534/",
+        date: "2023",
+        platform: "Habr",
+      },
+    ];
+
+    this.githubActivity = {
+      totalCommits: 296,
+      totalPRs: 68,
+      totalIssues: 4,
+      contributionGraph: this.generateContributionGraph(),
+    };
+  }
+
+  private generateContributionGraph() {
+    const graph = [];
+    const today = new Date();
+    const oneYearAgo = new Date(today);
+    oneYearAgo.setFullYear(today.getFullYear() - 1);
+
+    for (let d = new Date(oneYearAgo); d <= today; d.setDate(d.getDate() + 1)) {
+      const dateStr = d.toISOString().split('T')[0];
+      const dayOfWeek = d.getDay();
+      const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+      
+      let count = 0;
+      const rand = Math.random();
+      
+      if (!isWeekend) {
+        if (rand < 0.7) {
+          count = Math.floor(Math.random() * 8) + 1;
+        }
+      } else {
+        if (rand < 0.3) {
+          count = Math.floor(Math.random() * 4) + 1;
+        }
+      }
+      
+      graph.push({ date: dateStr, count });
+    }
+    
+    return graph;
   }
 
   async getStats(): Promise<Stat[]> {
@@ -175,6 +261,14 @@ export class MemStorage implements IStorage {
 
   async getPosts(): Promise<Post[]> {
     return this.posts;
+  }
+
+  async getArticles(): Promise<Article[]> {
+    return this.articles;
+  }
+
+  async getGitHubActivity(): Promise<GitHubActivity> {
+    return this.githubActivity;
   }
 }
 
