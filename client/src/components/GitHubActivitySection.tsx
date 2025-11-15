@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { GitCommit, GitPullRequest, AlertCircle } from "lucide-react";
+import { GitCommit, GitPullRequest } from "lucide-react";
 import type { GitHubActivity } from "@shared/schema";
 
 interface GitHubActivitySectionProps {
@@ -147,7 +147,7 @@ export function GitHubActivitySection({ activity }: GitHubActivitySectionProps) 
           </div>
 
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -176,19 +176,6 @@ export function GitHubActivitySection({ activity }: GitHubActivitySectionProps) 
                   {activity.totalPRs}
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">18% активности</div>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card className="p-6 bg-gradient-to-br from-accent/10 to-accent/5 border-accent/30" data-testid="card-stat-issues">
-                <div className="flex items-center gap-3 mb-2">
-                  <AlertCircle className="w-6 h-6 text-accent" data-testid="icon-issues" />
-                  <span className="text-sm text-muted-foreground uppercase tracking-wide">Issues</span>
-                </div>
-                <div className="text-3xl font-bold font-mono text-accent" data-testid="text-issues-value">
-                  {activity.totalIssues}
-                </div>
-                <div className="text-xs text-muted-foreground mt-1">1% активности</div>
               </Card>
             </motion.div>
           </motion.div>
