@@ -1,0 +1,51 @@
+[
+  {
+    "id": "1",
+    "title": "gigachat",
+    "description": "Библиотека для доступа к GigaChat - мощному российскому языковому AI-ассистенту. Официальная Python библиотека для работы с API.",
+    "tech": ["Python", "AI", "API"],
+    "stars": 136,
+    "language": "Python",
+    "url": "https://github.com/ai-forever/gigachat",
+    "tags": ["ai", "gigachat"]
+  },
+  {
+    "id": "2",
+    "title": "gigachain",
+    "description": "⚡ Набор решений для разработки LLM-приложений на русском языке с поддержкой GigaChat. Полноценная платформа для создания AI-агентов.",
+    "tech": ["Jupyter Notebook", "LangChain", "AI"],
+    "stars": 504,
+    "language": "Jupyter Notebook",
+    "url": "https://github.com/ai-forever/gigachain",
+    "tags": ["ai", "llm", "agents"]
+  },
+  {
+    "id": "3",
+    "title": "langchain-gigachat",
+    "description": "Интеграция GigaChat с LangChain - позволяет использовать российскую LLM в экосистеме LangChain для создания AI-агентов.",
+    "tech": ["Python", "LangChain", "Integration"],
+    "stars": 34,
+    "language": "Python",
+    "url": "https://github.com/ai-forever/langchain-gigachat"
+  },
+  {
+    "id": "4",
+    "title": "giga_agent",
+    "description": "Фреймворк для создания интеллектуальных AI-агентов на базе GigaChat с поддержкой инструментов и памяти.",
+    "tech": ["Python", "AI Agents", "Tools"],
+    "stars": 92,
+    "language": "Python",
+    "url": "https://github.com/ai-forever/giga_agent",
+    "tags": ["agents", "ai"]
+  },
+  {
+    "id": "5",
+    "title": "Telephoto",
+    "description": "Android CCTV через Telegram - превратите ваш старый Android в систему видеонаблюдения с уведомлениями.",
+    "tech": ["Java", "Android", "Telegram Bot"],
+    "stars": 28,
+    "language": "Java",
+    "url": "https://github.com/Rai220/Telephoto",
+    "tags": ["android", "bot", "alarm"]
+  }
+]

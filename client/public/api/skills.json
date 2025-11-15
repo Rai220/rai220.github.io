@@ -1,0 +1,26 @@
+[
+  { "id": "1", "name": "Python", "proficiency": 95, "category": "Languages" },
+  { "id": "2", "name": "TypeScript/JavaScript", "proficiency": 88, "category": "Languages" },
+  { "id": "3", "name": "Java", "proficiency": 75, "category": "Languages" },
+  { "id": "4", "name": "Go", "proficiency": 70, "category": "Languages" },
+  
+  { "id": "5", "name": "LangChain", "proficiency": 95, "category": "AI/ML Frameworks" },
+  { "id": "6", "name": "LangGraph", "proficiency": 90, "category": "AI/ML Frameworks" },
+  { "id": "7", "name": "TensorFlow", "proficiency": 82, "category": "AI/ML Frameworks" },
+  { "id": "8", "name": "PyTorch", "proficiency": 80, "category": "AI/ML Frameworks" },
+  
+  { "id": "9", "name": "FastAPI", "proficiency": 92, "category": "Backend Frameworks" },
+  { "id": "10", "name": "Django", "proficiency": 85, "category": "Backend Frameworks" },
+  { "id": "11", "name": "Node.js", "proficiency": 83, "category": "Backend Frameworks" },
+  { "id": "12", "name": "Express", "proficiency": 80, "category": "Backend Frameworks" },
+  
+  { "id": "13", "name": "React", "proficiency": 87, "category": "Frontend" },
+  { "id": "14", "name": "Next.js", "proficiency": 85, "category": "Frontend" },
+  { "id": "15", "name": "Tailwind CSS", "proficiency": 90, "category": "Frontend" },
+  { "id": "16", "name": "Vue.js", "proficiency": 75, "category": "Frontend" },
+  
+  { "id": "17", "name": "Docker", "proficiency": 90, "category": "DevOps & Tools" },
+  { "id": "18", "name": "Kubernetes", "proficiency": 78, "category": "DevOps & Tools" },
+  { "id": "19", "name": "PostgreSQL", "proficiency": 88, "category": "DevOps & Tools" },
+  { "id": "20", "name": "Redis", "proficiency": 82, "category": "DevOps & Tools" }
+]
