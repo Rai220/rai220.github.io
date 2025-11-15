@@ -43,8 +43,29 @@ export const postSchema = z.object({
   url: z.string(),
 });
 
+export const articleSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  url: z.string(),
+  date: z.string(),
+  platform: z.string(),
+  badge: z.string().optional(),
+});
+
+export const githubActivitySchema = z.object({
+  totalCommits: z.number(),
+  totalPRs: z.number(),
+  totalIssues: z.number(),
+  contributionGraph: z.array(z.object({
+    date: z.string(),
+    count: z.number(),
+  })),
+});
+
 export type Project = z.infer<typeof projectSchema>;
 export type Stat = z.infer<typeof statSchema>;
 export type Skill = z.infer<typeof skillSchema>;
 export type Video = z.infer<typeof videoSchema>;
 export type Post = z.infer<typeof postSchema>;
+export type Article = z.infer<typeof articleSchema>;
+export type GitHubActivity = z.infer<typeof githubActivitySchema>;
