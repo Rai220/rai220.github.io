@@ -37,9 +37,6 @@ jobs:
       - name: Add .nojekyll file
         run: touch ./dist/public/.nojekyll
       
-      - name: Copy CNAME into artifact
-        run: cp CNAME ./dist/public/CNAME
-      
       - name: Add SPA fallback
         run: cp ./dist/public/index.html ./dist/public/404.html
       
