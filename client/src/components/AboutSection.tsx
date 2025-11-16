@@ -112,7 +112,7 @@ export function AboutSection({ stats }: AboutSectionProps) {
                 </div>
                 <div className="space-y-2">
                   <div className="text-4xl font-bold font-mono text-primary" data-testid={`text-stat-value-${stat.id}`}>
-                    <CountUpAnimation end={stat.value} />
+                    {stat.displayValue || <CountUpAnimation end={stat.value} />}
                   </div>
                   <div className="text-sm text-muted-foreground uppercase tracking-wide" data-testid={`text-stat-label-${stat.id}`}>
                     {stat.label}

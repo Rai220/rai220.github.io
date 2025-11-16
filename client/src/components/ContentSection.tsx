@@ -175,7 +175,7 @@ export function ContentSection({ videos, posts }: ContentSectionProps) {
                   </div>
                   <div className="flex items-center gap-1" data-testid={`container-post-views-${post.id}`}>
                     <Eye className="w-3 h-3" data-testid={`icon-post-views-${post.id}`} />
-                    <span data-testid={`text-post-views-${post.id}`}>{post.views} просм.</span>
+                    <span data-testid={`text-post-views-${post.id}`}>{post.views} реакций</span>
                   </div>
                 </div>
 

@@ -24,7 +24,7 @@ export class MemStorage implements IStorage {
       { id: "1", label: "Репозитории", value: 85, icon: "repos" },
       { id: "2", label: "GitHub Followers", value: 108, icon: "followers" },
       { id: "3", label: "TG Подписчики", value: 1157, icon: "activity" },
-      { id: "4", label: "YT Подписчики", value: 1000, icon: "stars" },
+      { id: "4", label: "YT Подписчики", value: 1000, icon: "stars", displayValue: "1000+" },
       { id: "5", label: "gigachat Downloads", value: 50000, icon: "activity" },
       { id: "6", label: "langchain_gigachat Downloads", value: 15000, icon: "activity" },
     ];

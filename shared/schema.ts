@@ -16,6 +16,7 @@ export const statSchema = z.object({
   label: z.string(),
   value: z.number(),
   icon: z.string(),
+  displayValue: z.string().optional(),
 });
 
 export const skillSchema = z.object({
