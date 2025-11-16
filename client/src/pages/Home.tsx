@@ -81,65 +81,30 @@ function ContentLoading() {
 export default function Home() {
   const { data: stats = [], isLoading: statsLoading } = useQuery<Stat[]>({
     queryKey: ["/api/stats"],
-    queryFn: async () => {
-      const res = await fetch("/api/stats");
-      if (!res.ok) throw new Error(`Failed to fetch stats: ${res.status}`);
-      return res.json();
-    },
   });
 
   const { data: projects = [], isLoading: projectsLoading } = useQuery<Project[]>({
     queryKey: ["/api/projects"],
-    queryFn: async () => {
-      const res = await fetch("/api/projects");
-      if (!res.ok) throw new Error(`Failed to fetch projects: ${res.status}`);
-      return res.json();
-    },
   });
 
   const { data: skills = [], isLoading: skillsLoading } = useQuery<Skill[]>({
     queryKey: ["/api/skills"],
-    queryFn: async () => {
-      const res = await fetch("/api/skills");
-      if (!res.ok) throw new Error(`Failed to fetch skills: ${res.status}`);
-      return res.json();
-    },
   });
 
   const { data: videos = [], isLoading: videosLoading } = useQuery<Video[]>({
     queryKey: ["/api/videos"],
-    queryFn: async () => {
-      const res = await fetch("/api/videos");
-      if (!res.ok) throw new Error(`Failed to fetch videos: ${res.status}`);
-      return res.json();
-    },
   });
 
   const { data: posts = [], isLoading: postsLoading } = useQuery<Post[]>({
     queryKey: ["/api/posts"],
-    queryFn: async () => {
-      const res = await fetch("/api/posts");
-      if (!res.ok) throw new Error(`Failed to fetch posts: ${res.status}`);
-      return res.json();
-    },
   });
 
   const { data: articles = [], isLoading: articlesLoading } = useQuery<Article[]>({
     queryKey: ["/api/articles"],
-    queryFn: async () => {
-      const res = await fetch("/api/articles");
-      if (!res.ok) throw new Error(`Failed to fetch articles: ${res.status}`);
-      return res.json();
-    },
   });
 
   const { data: githubActivity, isLoading: githubActivityLoading } = useQuery<GitHubActivity>({
     queryKey: ["/api/github-activity"],
-    queryFn: async () => {
-      const res = await fetch("/api/github-activity");
-      if (!res.ok) throw new Error(`Failed to fetch github activity: ${res.status}`);
-      return res.json();
-    },
   });
 
   return (
