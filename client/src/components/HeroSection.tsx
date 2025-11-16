@@ -67,9 +67,9 @@ export function HeroSection() {
             <pre className="text-xs text-muted-foreground font-mono mb-4" data-testid="text-system-init">
               SYSTEM.INIT()
             </pre>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-mono mb-4 text-primary whitespace-nowrap" data-testid="text-hero-title">
+            <h1 className="text-[clamp(1.125rem,6.8vw,2rem)] sm:text-5xl md:text-6xl lg:text-7xl font-bold font-mono mb-4 text-primary tracking-tight sm:tracking-normal whitespace-nowrap" data-testid="text-hero-title">
               {typedText}
-              <span className={`inline-block w-1 h-12 md:h-16 lg:h-20 bg-primary ml-2 ${showCursor ? 'opacity-100' : 'opacity-0'}`} />
+              <span className={`inline-block w-[0.5ch] sm:w-1 h-[1em] bg-primary ml-1 sm:ml-2 ${showCursor ? 'opacity-100' : 'opacity-0'}`} />
             </h1>
           </motion.div>
 
