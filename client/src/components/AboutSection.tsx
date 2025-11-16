@@ -131,8 +131,8 @@ export function AboutSection({ stats }: AboutSectionProps) {
         whileInView="visible"
         viewport={{ once: true }}
       >
-        <motion.div variants={itemVariants}>
-          <Card className="p-8 bg-gradient-to-br from-card to-card/50 backdrop-blur-sm border-primary/30 hover-elevate" data-testid="card-position-1">
+        <motion.div variants={itemVariants} className="h-full">
+          <Card className="p-8 h-full bg-gradient-to-br from-card to-card/50 backdrop-blur-sm border-primary/30 hover-elevate" data-testid="card-position-1">
             <div className="flex items-start gap-4">
               <div className="text-4xl" aria-hidden="true">🚀</div>
               <div className="flex-1">
@@ -151,28 +151,8 @@ export function AboutSection({ stats }: AboutSectionProps) {
           </Card>
         </motion.div>
 
-        <motion.div variants={itemVariants}>
-          <Card className="p-8 bg-gradient-to-br from-card to-card/50 backdrop-blur-sm border-secondary/30 hover-elevate" data-testid="card-position-2">
-            <div className="flex items-start gap-4">
-              <div className="text-4xl" aria-hidden="true">💼</div>
-              <div className="flex-1">
-                <Badge variant="outline" className="mb-3 border-secondary/50 text-secondary font-mono" data-testid="badge-position-2">
-                  PREVIOUS
-                </Badge>
-                <h3 className="text-xl font-bold mb-2 text-foreground" data-testid="text-position-title-2">
-                  EX-HEAD OF AI
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-position-desc-2">
-                  Бывший Head of AI в The Coach. Руководил AI-инициативами и разрабатывал 
-                  интеллектуальные решения для коучинга.
-                </p>
-              </div>
-            </div>
-          </Card>
-        </motion.div>
-
-        <motion.div variants={itemVariants}>
-          <Card className="p-8 bg-gradient-to-br from-card to-card/50 backdrop-blur-sm border-accent/30 hover-elevate" data-testid="card-position-3">
+        <motion.div variants={itemVariants} className="h-full">
+          <Card className="p-8 h-full bg-gradient-to-br from-card to-card/50 backdrop-blur-sm border-accent/30 hover-elevate" data-testid="card-position-3">
             <div className="flex items-start gap-4">
               <div className="text-4xl" aria-hidden="true">🤖</div>
               <div className="flex-1">
@@ -182,9 +162,35 @@ export function AboutSection({ stats }: AboutSectionProps) {
                 <h3 className="text-xl font-bold mb-2 text-foreground" data-testid="text-position-title-3">
                   СО-ОСНОВАТЕЛЬ & HEAD OF AI
                 </h3>
+                <p className="text-xs text-muted-foreground/70 mb-2 font-mono">
+                  2012-2017
+                </p>
                 <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-position-desc-3">
-                  Head of AI и сооснователь Cubic.ai - первого в мире AI-голосового спикера. 
+                  Head of AI и сооснователь <a href="https://www.rbc.ru/magazine/2018/11/5bc4b6ca9a79479e46f0cf6f" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Cubic.ai</a> - первого в мире AI-голосового спикера. 
                   Пионер в робототехнике и нейротехнологиях.
+                </p>
+              </div>
+            </div>
+          </Card>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="h-full">
+          <Card className="p-8 h-full bg-gradient-to-br from-card to-card/50 backdrop-blur-sm border-secondary/30 hover-elevate" data-testid="card-position-2">
+            <div className="flex items-start gap-4">
+              <div className="text-4xl" aria-hidden="true">💼</div>
+              <div className="flex-1">
+                <Badge variant="outline" className="mb-3 border-secondary/50 text-secondary font-mono" data-testid="badge-position-2">
+                  PREVIOUS
+                </Badge>
+                <h3 className="text-xl font-bold mb-2 text-foreground" data-testid="text-position-title-2">
+                  EX-HEAD OF AI
+                </h3>
+                <p className="text-xs text-muted-foreground/70 mb-2 font-mono">
+                  2019-2021
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-position-desc-2">
+                  Бывший Head of AI в <a href="http://the.coach" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">The Coach</a>. Руководил AI-инициативами и разрабатывал 
+                  интеллектуальные решения для коучинга.
                 </p>
               </div>
             </div>
