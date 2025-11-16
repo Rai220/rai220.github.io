@@ -93,30 +93,33 @@ export class MemStorage implements IStorage {
     ];
 
     this.skills = [
-      { id: "1", name: "Python", proficiency: 95, category: "Languages" },
-      { id: "2", name: "TypeScript/JavaScript", proficiency: 88, category: "Languages" },
-      { id: "3", name: "Java", proficiency: 75, category: "Languages" },
-      { id: "4", name: "Go", proficiency: 70, category: "Languages" },
+      { id: "tag-1", name: "AI Agents", proficiency: 0, category: "tags" },
+      { id: "tag-2", name: "LLM Applications", proficiency: 0, category: "tags" },
+      { id: "tag-3", name: "Robotics", proficiency: 0, category: "tags" },
+      { id: "tag-4", name: "0→1 MVP Builder", proficiency: 0, category: "tags" },
+      { id: "tag-5", name: "Individual Contributor", proficiency: 0, category: "tags" },
       
-      { id: "5", name: "LangChain", proficiency: 95, category: "AI/ML Frameworks" },
-      { id: "6", name: "LangGraph", proficiency: 90, category: "AI/ML Frameworks" },
-      { id: "7", name: "TensorFlow", proficiency: 82, category: "AI/ML Frameworks" },
-      { id: "8", name: "PyTorch", proficiency: 80, category: "AI/ML Frameworks" },
+      { id: "vision-1", name: "Формирую видение продукта в областях AI-агентов, LLM-приложений и робототехники.", proficiency: 0, category: "vision" },
+      { id: "vision-2", name: "Нахожу реальные use case'ы и собираю быстрые MVP для проверки гипотез.", proficiency: 0, category: "vision" },
+      { id: "vision-3", name: "Помогаю отличить «добавить AI ради хайпа» от решений, которые реально меняют процессы.", proficiency: 0, category: "vision" },
       
-      { id: "9", name: "FastAPI", proficiency: 92, category: "Backend Frameworks" },
-      { id: "10", name: "Django", proficiency: 85, category: "Backend Frameworks" },
-      { id: "11", name: "Node.js", proficiency: 83, category: "Backend Frameworks" },
-      { id: "12", name: "Express", proficiency: 80, category: "Backend Frameworks" },
+      { id: "arch-1", name: "Проектирую архитектуры AI-агентов: планирование, инструменты, оркестрация, работа с внешними данными и API.", proficiency: 0, category: "architecture" },
+      { id: "arch-2", name: "Использую LangChain / LangGraph и собственные решения для сложных цепочек рассуждений и действий.", proficiency: 0, category: "architecture" },
+      { id: "arch-3", name: "Развиваю инфраструктуру вокруг MCP-серверов и «thinking tools» для структурированного мышления моделей.", proficiency: 0, category: "architecture" },
       
-      { id: "13", name: "React", proficiency: 87, category: "Frontend" },
-      { id: "14", name: "Next.js", proficiency: 85, category: "Frontend" },
-      { id: "15", name: "Tailwind CSS", proficiency: 90, category: "Frontend" },
-      { id: "16", name: "Vue.js", proficiency: 75, category: "Frontend" },
+      { id: "eng-1", name: "Python-стек для backend и AI-логики: от прототипа до продакшена.", proficiency: 0, category: "engineering" },
+      { id: "eng-2", name: "Агентные пайплайны на LangChain / LangGraph и интеграция с существующей инфраструктурой.", proficiency: 0, category: "engineering" },
+      { id: "eng-3", name: "Full-stack: собираю простой, но рабочий интерфейс, API, интеграции и деплой — без передачи работы «на команду».", proficiency: 0, category: "engineering" },
       
-      { id: "17", name: "Docker", proficiency: 90, category: "DevOps & Tools" },
-      { id: "18", name: "Kubernetes", proficiency: 78, category: "DevOps & Tools" },
-      { id: "19", name: "PostgreSQL", proficiency: 88, category: "DevOps & Tools" },
-      { id: "20", name: "Redis", proficiency: 82, category: "DevOps & Tools" },
+      { id: "tech-1", name: "Python", proficiency: 0, category: "tech" },
+      { id: "tech-2", name: "LangChain", proficiency: 0, category: "tech" },
+      { id: "tech-3", name: "LangGraph", proficiency: 0, category: "tech" },
+      { id: "tech-4", name: "MCP servers", proficiency: 0, category: "tech" },
+      { id: "tech-5", name: "LLM orchestration", proficiency: 0, category: "tech" },
+      { id: "tech-6", name: "Vector stores", proficiency: 0, category: "tech" },
+      { id: "tech-7", name: "RAG", proficiency: 0, category: "tech" },
+      { id: "tech-8", name: "API & integrations", proficiency: 0, category: "tech" },
+      { id: "tech-9", name: "Robotics prototypes", proficiency: 0, category: "tech" },
     ];
 
     this.videos = [
