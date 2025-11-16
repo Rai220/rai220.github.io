@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, Send, Github, Linkedin } from "lucide-react";
+import { Mail, Send, Github } from "lucide-react";
 
 export function ContactSection() {
   const [showCursor, setShowCursor] = useState(true);
@@ -151,29 +151,6 @@ export function ContactSection() {
                       >
                         <a href="https://github.com/Rai220" target="_blank" rel="noopener noreferrer">
                           @Rai220
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <Card className="p-6 bg-background/50 border-border hover:border-accent/50 transition-all hover-elevate" data-testid="card-contact-linkedin">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-md bg-accent/10 flex items-center justify-center flex-shrink-0" data-testid="icon-container-linkedin">
-                      <Linkedin className="w-6 h-6 text-accent" data-testid="icon-linkedin" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-bold text-foreground mb-2 font-mono" data-testid="heading-contact-linkedin">LinkedIn</h3>
-                      <Button
-                        variant="link"
-                        className="p-0 h-auto text-sm text-accent hover:text-accent/80"
-                        asChild
-                        data-testid="link-linkedin"
-                      >
-                        <a href="https://ru.linkedin.com/in/rai220" target="_blank" rel="noopener noreferrer">
-                          Konstantin Krestnikov
                         </a>
                       </Button>
                     </div>
