@@ -106,7 +106,7 @@ export function PublicationsSection({ articles }: PublicationsSectionProps) {
                 >
                   <a href={article.url} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-4 h-4 mr-2 group-hover/btn:animate-pulse" />
-                    Читать на Habr
+                    Читать на {article.platform}
                   </a>
                 </Button>
               </div>
