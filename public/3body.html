@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Three-Body Problem (Ultra Realistic)</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #000; }
+        canvas { display: block; }
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Helvetica Neue', sans-serif;
+            pointer-events: none;
+            user-select: none;
+            z-index: 10;
+        }
+        h1 {
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+        p {
+            font-size: 12px;
+            margin: 5px 0;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .controls-hint {
+            margin-top: 20px;
+            font-size: 11px;
+            border-left: 2px solid rgba(255, 255, 255, 0.3);
+            padding-left: 10px;
+        }
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: sans-serif;
+        }
+        #planet-stats {
+            position: absolute;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            pointer-events: none;
+            white-space: pre;
+            text-shadow: 1px 1px 2px black;
+            display: none;
+            z-index: 20;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">Loading libraries...</div>
+    <div id="planet-stats"></div>
+    <div id="ui">
+        <h1>Three-Body Problem</h1>
+        <p>Real-time N-body gravity simulation</p>
+        <div class="controls-hint">
+            <p>Left Click: Rotate Camera</p>
+            <p>Right Click: Pan</p>
+            <p>Scroll: Zoom</p>
+            <p>Space: Pause/Resume</p>
+            <p>R: Reset Simulation</p>
+        </div>
+    </div>
+
+    <!-- Load libraries via standard script tags to avoid CORS issues with file:// protocol -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    
+    <!-- Post-processing dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+
+    <script>
+        // Hide loading text when scripts are ready
+        window.onload = function() {
+            document.getElementById('loading').style.display = 'none';
+            init();
+        };
+
+        // --- Configuration ---
+        const CONFIG = {
+            G: 2.5,
+            SOFTENING: 50,
+            DAMPING: 1.0,
+            CENTER_PULL: 0.0001,
+            TRAIL_LENGTH: 1000, // Reduced slightly for performance with global lines
+            STAR_MASS_MIN: 200,
+            STAR_MASS_MAX: 400,
+            PLANET_MASS: 1,
+        };
+
+        let scene, camera, renderer, composer, controls;
+        let bodies = [];
+        let isPaused = false;
+
+        class CelestialBody {
+            constructor(type, x, y, z, vx, vy, vz, mass, color, radius) {
+                this.mass = mass;
+                this.pos = new THREE.Vector3(x, y, z);
+                this.vel = new THREE.Vector3(vx, vy, vz);
+                this.acc = new THREE.Vector3(0, 0, 0);
+                this.type = type;
+                this.color = new THREE.Color(color);
+                this.radius = radius;
+                
+                const geometry = new THREE.SphereGeometry(radius, 32, 32);
+                let material;
+
+                if (type === 'star') {
+                    material = new THREE.MeshStandardMaterial({
+                        color: this.color,
+                        emissive: this.color,
+                        emissiveIntensity: 2.0,
+                        roughness: 0.4,
+                        metalness: 0.1
+                    });
+                    this.light = new THREE.PointLight(this.color, 2, 2000);
+                    this.light.position.copy(this.pos);
+                    scene.add(this.light);
+                } else {
+                    material = new THREE.MeshStandardMaterial({
+                        color: 0xffffff,
+                        roughness: 0.8,
+                        metalness: 0.2
+                    });
+                }
+                
+                this.mesh = new THREE.Mesh(geometry, material);
+                this.mesh.position.copy(this.pos);
+                scene.add(this.mesh);
+
+                if (type === 'star') {
+                    const spriteMaterial = new THREE.SpriteMaterial({ 
+                        map: getGlowTexture(), 
+                        color: this.color, 
+                        transparent: true, 
+                        blending: THREE.AdditiveBlending,
+                        opacity: 0.6
+                    });
+                    this.glow = new THREE.Sprite(spriteMaterial);
+                    this.glow.scale.set(radius * 8, radius * 8, 1);
+                    this.mesh.add(this.glow);
+                }
+
+                // Trail
+                this.trailPoints = [];
+                // Pre-allocate buffer for better performance
+                this.maxTrailPoints = CONFIG.TRAIL_LENGTH;
+                const trailGeometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(this.maxTrailPoints * 3);
+                trailGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                trailGeometry.setDrawRange(0, 0); // Start with 0 points
+                
+                const trailMaterial = new THREE.LineBasicMaterial({ 
+                    color: this.color, 
+                    transparent: true, 
+                    opacity: type === 'star' ? 0.3 : 0.6,
+                    blending: THREE.AdditiveBlending
+                });
+                this.trail = new THREE.Line(trailGeometry, trailMaterial);
+                this.trail.frustumCulled = false;
+                scene.add(this.trail);
+            }
+
+            updatePhysics(allBodies, dt) {
+                this.acc.set(0, 0, 0);
+
+                for (const other of allBodies) {
+                    if (other === this) continue;
+                    const diff = new THREE.Vector3().subVectors(other.pos, this.pos);
+                    const distSq = diff.lengthSq();
+                    const dist = Math.sqrt(distSq);
+                    const f = (CONFIG.G * other.mass) / (distSq + CONFIG.SOFTENING);
+                    const accVec = diff.multiplyScalar(f / dist);
+                    this.acc.add(accVec);
+                }
+
+                const distToCenter = this.pos.length();
+                const pullDir = this.pos.clone().negate().normalize();
+                this.acc.add(pullDir.multiplyScalar(distToCenter * CONFIG.CENTER_PULL));
+            }
+
+            step(dt) {
+                this.vel.add(this.acc.multiplyScalar(dt));
+                this.vel.multiplyScalar(CONFIG.DAMPING);
+                this.pos.add(this.vel.clone().multiplyScalar(dt));
+            }
+
+            updateVisuals() {
+                this.mesh.position.copy(this.pos);
+                if (this.light) this.light.position.copy(this.pos);
+
+                // Update Trail Ring Buffer approach
+                this.trailPoints.push(this.pos.x, this.pos.y, this.pos.z);
+                if (this.trailPoints.length > this.maxTrailPoints * 3) {
+                    this.trailPoints.splice(0, 3);
+                }
+                
+                const positions = this.trail.geometry.attributes.position.array;
+                for (let i = 0; i < this.trailPoints.length; i++) {
+                    positions[i] = this.trailPoints[i];
+                }
+                
+                this.trail.geometry.attributes.position.needsUpdate = true;
+                this.trail.geometry.setDrawRange(0, this.trailPoints.length / 3);
+            }
+            
+            cleanup() {
+                scene.remove(this.mesh);
+                scene.remove(this.trail);
+                if (this.light) scene.remove(this.light);
+                this.mesh.geometry.dispose();
+                this.mesh.material.dispose();
+                this.trail.geometry.dispose();
+                this.trail.material.dispose();
+            }
+        }
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x000000, 0.0005);
+
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
+            camera.position.set(0, 200, 400);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.toneMapping = THREE.ReinhardToneMapping;
+            document.body.appendChild(renderer.domElement);
+
+            // Post-processing
+            const renderScene = new THREE.RenderPass(scene, camera);
+            
+            const bloomPass = new THREE.UnrealBloomPass(
+                new THREE.Vector2(window.innerWidth, window.innerHeight), 
+                1.5, 0.4, 0.85
+            );
+            bloomPass.threshold = 0.1;
+            bloomPass.strength = 1.2;
+            bloomPass.radius = 0.5;
+
+            composer = new THREE.EffectComposer(renderer);
+            composer.addPass(renderScene);
+            composer.addPass(bloomPass);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.5;
+
+            createStarfield();
+
+            window.addEventListener('resize', onWindowResize);
+            window.addEventListener('keydown', onKeyDown);
+            
+            resetSimulation();
+            animate();
+        }
+
+        function createStarfield() {
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+            for (let i = 0; i < 3000; i++) {
+                vertices.push(
+                    (Math.random() - 0.5) * 4000,
+                    (Math.random() - 0.5) * 4000,
+                    (Math.random() - 0.5) * 4000
+                );
+            }
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+            const material = new THREE.PointsMaterial({ color: 0x888888, size: 2, sizeAttenuation: false });
+            const stars = new THREE.Points(geometry, material);
+            scene.add(stars);
+        }
+
+        function getGlowTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 32;
+            canvas.height = 32;
+            const context = canvas.getContext('2d');
+            const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16);
+            gradient.addColorStop(0, 'rgba(255,255,255,1)');
+            gradient.addColorStop(0.2, 'rgba(255,255,255,0.5)');
+            gradient.addColorStop(0.5, 'rgba(255,255,255,0.1)');
+            gradient.addColorStop(1, 'rgba(0,0,0,0)');
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, 32, 32);
+            const texture = new THREE.CanvasTexture(canvas);
+            return texture;
+        }
+
+        function resetSimulation() {
+            bodies.forEach(b => b.cleanup());
+            bodies = [];
+            const starColors = [0xffaa00, 0x00aaff, 0xffffff];
+
+            for (let i = 0; i < 3; i++) {
+                const angle = (i / 3) * Math.PI * 2;
+                const dist = 100 + Math.random() * 50;
+                const pos = new THREE.Vector3(
+                    Math.cos(angle) * dist,
+                    (Math.random() - 0.5) * 20,
+                    Math.sin(angle) * dist
+                );
+                const velDir = new THREE.Vector3(-pos.z, 0, pos.x).normalize();
+                const speed = 1.2 + Math.random() * 0.5;
+                const vel = velDir.multiplyScalar(speed);
+
+                bodies.push(new CelestialBody(
+                    'star',
+                    pos.x, pos.y, pos.z,
+                    vel.x, vel.y, vel.z,
+                    CONFIG.STAR_MASS_MIN + Math.random() * (CONFIG.STAR_MASS_MAX - CONFIG.STAR_MASS_MIN),
+                    starColors[i],
+                    8 + Math.random() * 4
+                ));
+            }
+
+            bodies.push(new CelestialBody(
+                'planet',
+                (Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 2, (Math.random() - 0.5) * 2, (Math.random() - 0.5) * 2,
+                CONFIG.PLANET_MASS, 0xaaaaaa, 2
+            ));
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onKeyDown(event) {
+            if (event.code === 'Space') isPaused = !isPaused;
+            if (event.code === 'KeyR') resetSimulation();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if(!controls) return; 
+            
+            controls.update();
+
+            if (!isPaused) {
+                const steps = 2;
+                const dt = 0.5 / steps; 
+                for(let s=0; s<steps; s++) {
+                    bodies.forEach(b => b.updatePhysics(bodies, dt));
+                    bodies.forEach(b => b.step(dt));
+                }
+                bodies.forEach(b => b.updateVisuals());
+            }
+            
+            updatePlanetStats();
+            composer.render();
+        }
+
+        function updatePlanetStats() {
+            const planet = bodies.find(b => b.type === 'planet');
+            const statsDiv = document.getElementById('planet-stats');
+            
+            if (!planet) {
+                statsDiv.style.display = 'none';
+                return;
+            }
+
+            let totalFlux = 0;
+            bodies.forEach(b => {
+                if (b.type === 'star') {
+                    const distSq = planet.pos.distanceToSquared(b.pos);
+                    totalFlux += b.mass / Math.max(distSq, 100); // Avoid division by zero or extreme values
+                }
+            });
+
+            // Calibration: 
+            // T = K * Flux^0.25
+            // K approx 770 for Earth-like conditions
+            const tempK = 770 * Math.pow(totalFlux, 0.25);
+            const tempC = Math.round(tempK - 273);
+            
+            // Radiation relative to "Earth-like" flux of ~0.02
+            const radLevel = (totalFlux / 0.02).toFixed(2);
+
+            statsDiv.style.display = 'block';
+            statsDiv.innerHTML = `Temp: ${tempC}°C\nRad:  ${radLevel} G`;
+            
+            if (tempC > 60) statsDiv.style.color = '#ff3333'; // Hot
+            else if (tempC < -20) statsDiv.style.color = '#66ccff'; // Cold
+            else statsDiv.style.color = '#66ff66'; // Habitable
+
+            const vector = planet.pos.clone();
+            vector.project(camera);
+            
+            // Fade out if behind camera or too far
+            if (vector.z > 1) {
+                statsDiv.style.display = 'none';
+            } else {
+                const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
+                const y = (-(vector.y * 0.5) + 0.5) * window.innerHeight;
+                statsDiv.style.left = `${x}px`;
+                statsDiv.style.top = `${y - 60}px`;
+                statsDiv.style.transform = 'translate(-50%, 0)';
+            }
+        }
+    </script>
+</body>
+</html>
