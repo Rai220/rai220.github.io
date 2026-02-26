@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { NavigationBar } from "@/components/NavigationBar";
 import { HeroSection } from "@/components/HeroSection";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
@@ -7,182 +8,101 @@ import { ContentSection } from "@/components/ContentSection";
 import { ContactSection } from "@/components/ContactSection";
 import { GitHubActivitySection } from "@/components/GitHubActivitySection";
 import { PublicationsSection } from "@/components/PublicationsSection";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Card } from "@/components/ui/card";
 import type { Project, Stat, Skill, Video, Post, Article, GitHubActivity } from "@shared/schema";
 
-function StatsLoading() {
+function Section({ id, children, className = "" }: { id?: string; children: React.ReactNode; className?: string }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {[1, 2, 3, 4].map((i) => (
-        <Card key={i} className="p-6 bg-card/50 backdrop-blur-sm" data-testid={`skeleton-stat-${i}`}>
-          <Skeleton className="h-8 w-8 mb-4" />
-          <Skeleton className="h-12 w-20 mb-2" />
-          <Skeleton className="h-4 w-32" />
-        </Card>
-      ))}
-    </div>
+    <section id={id} className={`py-24 md:py-32 px-4 md:px-8 relative ${className}`}>
+      <div className="container mx-auto max-w-7xl relative z-10">
+        {children}
+      </div>
+    </section>
   );
 }
 
-function ProjectsLoading() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {[1, 2, 3].map((i) => (
-        <Card key={i} className="p-6 bg-card/50 backdrop-blur-sm" data-testid={`skeleton-project-${i}`}>
-          <Skeleton className="h-6 w-3/4 mb-4" />
-          <Skeleton className="h-4 w-full mb-2" />
-          <Skeleton className="h-4 w-full mb-4" />
-          <Skeleton className="h-10 w-full" />
-        </Card>
-      ))}
-    </div>
-  );
+function SectionDivider() {
+  return <div className="section-divider mx-auto max-w-5xl" />;
 }
 
-function SkillsLoading() {
+function LoadingSkeleton() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      {[1, 2].map((i) => (
-        <Card key={i} className="p-8 bg-card/50 backdrop-blur-sm" data-testid={`skeleton-skills-${i}`}>
-          <Skeleton className="h-6 w-48 mb-6" />
-          <div className="space-y-6">
-            {[1, 2, 3, 4].map((j) => (
-              <div key={j} className="space-y-2">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-2 w-full" />
-              </div>
-            ))}
-          </div>
-        </Card>
-      ))}
-    </div>
-  );
-}
-
-function ContentLoading() {
-  return (
-    <div className="space-y-16">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[1, 2, 3].map((i) => (
-          <Card key={i} className="overflow-hidden bg-card/50 backdrop-blur-sm" data-testid={`skeleton-video-${i}`}>
-            <Skeleton className="aspect-video w-full" />
-            <div className="p-6">
-              <Skeleton className="h-6 w-full mb-4" />
-              <Skeleton className="h-10 w-full" />
-            </div>
-          </Card>
-        ))}
+    <div className="flex items-center justify-center py-20">
+      <div className="flex items-center gap-3 text-muted-foreground/50 font-mono text-sm">
+        <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+        <span>Loading...</span>
       </div>
     </div>
   );
 }
 
 export default function Home() {
-  const { data: stats = [], isLoading: statsLoading } = useQuery<Stat[]>({
-    queryKey: ["/api/stats"],
-  });
-
-  const { data: projects = [], isLoading: projectsLoading } = useQuery<Project[]>({
-    queryKey: ["/api/projects"],
-  });
-
-  const { data: skills = [], isLoading: skillsLoading } = useQuery<Skill[]>({
-    queryKey: ["/api/skills"],
-  });
-
-  const { data: videos = [], isLoading: videosLoading } = useQuery<Video[]>({
-    queryKey: ["/api/videos"],
-  });
-
-  const { data: posts = [], isLoading: postsLoading } = useQuery<Post[]>({
-    queryKey: ["/api/posts"],
-  });
-
-  const { data: articles = [], isLoading: articlesLoading } = useQuery<Article[]>({
-    queryKey: ["/api/articles"],
-  });
-
-  const { data: githubActivity, isLoading: githubActivityLoading } = useQuery<GitHubActivity>({
-    queryKey: ["/api/github-activity"],
-  });
+  const { data: stats = [], isLoading: statsLoading } = useQuery<Stat[]>({ queryKey: ["/api/stats"] });
+  const { data: projects = [], isLoading: projectsLoading } = useQuery<Project[]>({ queryKey: ["/api/projects"] });
+  const { data: skills = [], isLoading: skillsLoading } = useQuery<Skill[]>({ queryKey: ["/api/skills"] });
+  const { data: videos = [], isLoading: videosLoading } = useQuery<Video[]>({ queryKey: ["/api/videos"] });
+  const { data: posts = [], isLoading: postsLoading } = useQuery<Post[]>({ queryKey: ["/api/posts"] });
+  const { data: articles = [], isLoading: articlesLoading } = useQuery<Article[]>({ queryKey: ["/api/articles"] });
+  const { data: githubActivity, isLoading: githubActivityLoading } = useQuery<GitHubActivity>({ queryKey: ["/api/github-activity"] });
 
   return (
-    <div className="min-h-screen bg-background text-foreground scroll-smooth">
+    <div className="min-h-screen bg-background text-foreground noise-overlay">
+      <NavigationBar />
+
       <HeroSection />
-      
-      <section className="py-24 px-4 relative overflow-hidden" data-testid="section-about-wrapper">
-        <div className="absolute inset-0 bg-gradient-to-b from-card via-background to-card opacity-50" />
-        <div className="container mx-auto max-w-7xl relative z-10">
-          {statsLoading ? <StatsLoading /> : <AboutSection stats={stats} />}
-        </div>
-      </section>
-      
-      <section className="py-24 px-4 relative" data-testid="section-projects-wrapper">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
-        <div className="container mx-auto max-w-7xl relative z-10">
-          {projectsLoading ? <ProjectsLoading /> : <ProjectsSection projects={projects} />}
-        </div>
-      </section>
 
-      <section className="py-24 px-4 relative overflow-hidden" data-testid="section-github-activity-wrapper">
-        <div className="absolute inset-0 bg-gradient-to-b from-card via-background to-card opacity-50" />
-        <div className="container mx-auto max-w-7xl relative z-10">
-          {githubActivityLoading || !githubActivity ? (
-            <div className="animate-pulse">
-              <Card className="p-8 bg-card/50 backdrop-blur-sm">
-                <Skeleton className="h-8 w-64 mb-6" />
-                <Skeleton className="h-32 w-full" />
-              </Card>
-            </div>
-          ) : (
-            <GitHubActivitySection activity={githubActivity} />
-          )}
-        </div>
-      </section>
-      
-      <section className="py-24 px-4 relative overflow-hidden" data-testid="section-skills-wrapper">
-        <div className="absolute inset-0 bg-gradient-to-b from-card via-background to-card opacity-50" />
-        <div className="container mx-auto max-w-7xl relative z-10">
-          {skillsLoading ? <SkillsLoading /> : <SkillsSection skills={skills} />}
-        </div>
-      </section>
-      
-      <section className="py-24 px-4 relative" data-testid="section-content-wrapper">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
-        <div className="container mx-auto max-w-7xl relative z-10">
-          {videosLoading || postsLoading ? <ContentLoading /> : <ContentSection videos={videos} posts={posts} />}
-        </div>
-      </section>
+      <SectionDivider />
 
-      <section className="py-24 px-4 relative overflow-hidden" data-testid="section-publications-wrapper">
-        <div className="absolute inset-0 bg-gradient-to-b from-card via-background to-card opacity-50" />
-        <div className="container mx-auto max-w-7xl relative z-10">
-          {articlesLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[1, 2, 3, 4].map((i) => (
-                <Card key={i} className="p-6 bg-card/50 backdrop-blur-sm" data-testid={`skeleton-article-${i}`}>
-                  <Skeleton className="h-6 w-3/4 mb-4" />
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-10 w-full" />
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <PublicationsSection articles={articles} />
-          )}
-        </div>
-      </section>
-      
+      <Section id="about">
+        {statsLoading ? <LoadingSkeleton /> : <AboutSection stats={stats} />}
+      </Section>
+
+      <SectionDivider />
+
+      <Section id="projects">
+        {projectsLoading ? <LoadingSkeleton /> : <ProjectsSection projects={projects} />}
+      </Section>
+
+      <SectionDivider />
+
+      <Section id="github">
+        {githubActivityLoading || !githubActivity ? <LoadingSkeleton /> : <GitHubActivitySection activity={githubActivity} />}
+      </Section>
+
+      <SectionDivider />
+
+      <Section id="skills">
+        {skillsLoading ? <LoadingSkeleton /> : <SkillsSection skills={skills} />}
+      </Section>
+
+      <SectionDivider />
+
+      <Section id="content">
+        {videosLoading || postsLoading ? <LoadingSkeleton /> : <ContentSection videos={videos} posts={posts} />}
+      </Section>
+
+      <SectionDivider />
+
+      <Section id="publications">
+        {articlesLoading ? <LoadingSkeleton /> : <PublicationsSection articles={articles} />}
+      </Section>
+
+      <SectionDivider />
+
       <ContactSection />
-      
-      <footer className="py-8 px-4 border-t border-border/50 bg-card/30" data-testid="footer">
+
+      <footer className="py-10 px-4 border-t border-border/30">
         <div className="container mx-auto max-w-7xl">
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground font-mono" data-testid="text-footer">
-              <span className="text-primary">&gt;</span> Создано с использованием AI и киберпанк-эстетики
-              <span className="text-secondary ml-2">|</span>
-              <span className="ml-2">2025</span>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center">
+                <span className="text-primary font-mono text-[10px] font-bold">KK</span>
+              </div>
+              <span className="text-sm text-muted-foreground/50 font-mono">
+                krestnikov<span className="text-primary/50">.dev</span>
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground/30 font-mono">
+              &copy; {new Date().getFullYear()} &middot; Built with AI and cyberpunk aesthetics
             </p>
           </div>
         </div>
