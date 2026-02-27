@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Brain, Target, Wrench, Zap, ArrowRight } from "lucide-react";
 import type { Skill } from "@shared/schema";
 
 interface SkillsSectionProps {
@@ -9,167 +8,85 @@ interface SkillsSectionProps {
 
 export function SkillsSection({ skills }: SkillsSectionProps) {
   const tags = skills.filter(s => s.category === "tags");
-  const visionItems = skills.filter(s => s.category === "vision");
-  const architectureItems = skills.filter(s => s.category === "architecture");
-  const engineeringItems = skills.filter(s => s.category === "engineering");
+  const thesisItems = skills.filter(s => s.category === "thesis");
+  const valueItems = skills.filter(s => s.category === "value");
   const techItems = skills.filter(s => s.category === "tech");
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
 
   return (
     <>
-      <div className="mb-12">
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold font-mono mb-4 text-primary"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          data-testid="heading-skills"
-        >
-          <span className="text-foreground">&gt;_</span> Как я работаю с AI и агентами
+      <div className="mb-16">
+        <motion.div className="flex items-center gap-3 mb-4" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-primary/60 to-transparent" />
+          <span className="text-xs font-mono text-primary uppercase tracking-[0.3em]">Vision</span>
+        </motion.div>
+        <motion.h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+          <span className="text-gradient">Почему AI-агенты — это всё</span>
         </motion.h2>
-        <motion.p
-          className="text-base md:text-lg text-muted-foreground font-mono mb-6"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          data-testid="text-skills-subtitle"
-        >
-          Я визионер и индивидуальный разработчик (IC), который ведёт проекты от идеи до работающего AI/agent-продукта.
+        <motion.p className="text-base md:text-lg text-muted-foreground max-w-2xl" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+          Мы стоим на пороге AGI-революции. Вопрос не «будет ли», а «кто окажется готов».
         </motion.p>
-        <motion.div 
-          className="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full"
-          initial={{ width: 0 }}
-          whileInView={{ width: 96 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        />
       </div>
 
-      <motion.div
-        className="flex flex-wrap gap-3 mb-12"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        data-testid="tags-container"
-      >
-        {tags.map((tag) => (
-          <Badge
-            key={tag.id}
-            variant="outline"
-            className="px-4 py-2 text-sm font-mono border-primary/40 bg-primary/5 hover:bg-primary/10 transition-colors"
-            data-testid={`tag-${tag.id}`}
-          >
+      <motion.div className="flex flex-wrap gap-2 mb-14" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
+        {tags.map((tag, i) => (
+          <motion.span key={tag.id}
+            className="px-4 py-2 rounded-xl text-sm font-mono glass border border-primary/20 text-foreground/80 hover:text-primary hover:border-primary/40 transition-all duration-300 cursor-default"
+            initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 + i * 0.05 }}>
             {tag.name}
-          </Badge>
+          </motion.span>
         ))}
       </motion.div>
 
-      <motion.div 
-        className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <motion.div variants={itemVariants}>
-          <Card
-            className="p-8 bg-card/50 backdrop-blur-sm border-border hover:border-primary/30 transition-all duration-300 h-full"
-            data-testid="card-vision"
-          >
-            <h3 className="text-xl font-bold font-mono text-foreground mb-6" data-testid="heading-vision">
-              Вижу, куда движется AI, и превращаю это в продукты
-            </h3>
-            <ul className="space-y-4">
-              {visionItems.map((item) => (
-                <li key={item.id} className="flex items-start" data-testid={`vision-item-${item.id}`}>
-                  <span className="text-primary mr-3 mt-1 flex-shrink-0">▸</span>
-                  <span className="text-sm text-muted-foreground leading-relaxed">{item.name}</span>
-                </li>
-              ))}
-            </ul>
-          </Card>
-        </motion.div>
-
-        <motion.div variants={itemVariants}>
-          <Card
-            className="p-8 bg-card/50 backdrop-blur-sm border-border hover:border-primary/30 transition-all duration-300 h-full"
-            data-testid="card-architecture"
-          >
-            <h3 className="text-xl font-bold font-mono text-foreground mb-6" data-testid="heading-architecture">
-              Проектирую агентные системы и когнитивные воркфлоу
-            </h3>
-            <ul className="space-y-4">
-              {architectureItems.map((item) => (
-                <li key={item.id} className="flex items-start" data-testid={`architecture-item-${item.id}`}>
-                  <span className="text-primary mr-3 mt-1 flex-shrink-0">▸</span>
-                  <span className="text-sm text-muted-foreground leading-relaxed">{item.name}</span>
-                </li>
-              ))}
-            </ul>
-          </Card>
-        </motion.div>
-
-        <motion.div variants={itemVariants}>
-          <Card
-            className="p-8 bg-card/50 backdrop-blur-sm border-border hover:border-primary/30 transition-all duration-300 h-full"
-            data-testid="card-engineering"
-          >
-            <h3 className="text-xl font-bold font-mono text-foreground mb-6" data-testid="heading-engineering">
-              Сам пишу и довожу до продакшена (IC)
-            </h3>
-            <ul className="space-y-4">
-              {engineeringItems.map((item) => (
-                <li key={item.id} className="flex items-start" data-testid={`engineering-item-${item.id}`}>
-                  <span className="text-primary mr-3 mt-1 flex-shrink-0">▸</span>
-                  <span className="text-sm text-muted-foreground leading-relaxed">{item.name}</span>
-                </li>
-              ))}
-            </ul>
-          </Card>
-        </motion.div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4, duration: 0.6 }}
-      >
-        <h3 className="text-2xl font-bold font-mono text-foreground mb-6" data-testid="heading-tech-focus">
-          Технологический фокус
-        </h3>
-        <div className="flex flex-wrap gap-3" data-testid="tech-container">
-          {techItems.map((tech) => (
-            <Badge
-              key={tech.id}
-              variant="outline"
-              className="px-4 py-2 text-sm font-mono border-secondary/40 bg-secondary/5 hover:bg-secondary/10 transition-colors"
-              data-testid={`tech-${tech.id}`}
-            >
-              {tech.name}
-            </Badge>
+      <div className="card-premium p-8 md:p-10 mb-14">
+        <div className="flex items-center gap-3 mb-8">
+          <Brain className="w-6 h-6 text-primary" />
+          <h3 className="text-xl md:text-2xl font-bold text-foreground">Мой тезис</h3>
+        </div>
+        <div className="space-y-6">
+          {thesisItems.map((item, i) => (
+            <motion.div key={item.id} className="flex items-start gap-4"
+              initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 + i * 0.15 }}>
+              <div className="mt-1 w-8 h-8 rounded-lg bg-primary/5 border border-primary/15 flex items-center justify-center flex-shrink-0">
+                <span className="text-primary font-mono text-sm font-bold">{i + 1}</span>
+              </div>
+              <p className="text-base md:text-lg text-foreground/90 leading-relaxed">{item.name}</p>
+            </motion.div>
           ))}
+        </div>
+      </div>
+
+      <div className="mb-14">
+        <div className="flex items-center gap-3 mb-8">
+          <Target className="w-5 h-5 text-secondary" />
+          <h3 className="text-xl font-bold text-foreground">Что я даю компании</h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {valueItems.map((item, i) => (
+            <motion.div key={item.id} className="card-premium p-6 group"
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 * i }}>
+              <div className="flex items-start gap-3">
+                <ArrowRight className="w-4 h-4 text-primary/50 mt-1 flex-shrink-0 group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.name}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
+        <div className="flex items-center gap-3 mb-6">
+          <Zap className="w-5 h-5 text-primary" />
+          <h3 className="text-xl font-bold text-foreground">Стек</h3>
+        </div>
+        <div className="relative overflow-hidden rounded-xl">
+          <div className="flex animate-marquee">
+            {[...techItems, ...techItems].map((tech, i) => (
+              <span key={`${tech.id}-${i}`}
+                className="flex-shrink-0 mx-2 px-5 py-2.5 rounded-xl glass border border-white/[0.06] text-sm font-mono text-foreground/70 hover:text-primary hover:border-primary/30 transition-all duration-300 cursor-default whitespace-nowrap">
+                {tech.name}
+              </span>
+            ))}
+          </div>
         </div>
       </motion.div>
     </>

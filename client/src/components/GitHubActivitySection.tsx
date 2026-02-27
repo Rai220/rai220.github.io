@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { GitCommit, GitPullRequest } from "lucide-react";
+import { GitCommit, GitPullRequest, Bug, Github } from "lucide-react";
 import type { GitHubActivity } from "@shared/schema";
 
 interface GitHubActivitySectionProps {
@@ -9,177 +7,139 @@ interface GitHubActivitySectionProps {
 }
 
 export function GitHubActivitySection({ activity }: GitHubActivitySectionProps) {
-  const getContributionColor = (count: number) => {
-    if (count === 0) return "bg-muted/30";
-    if (count <= 2) return "bg-primary/30";
-    if (count <= 4) return "bg-primary/50";
-    if (count <= 6) return "bg-primary/70";
-    return "bg-primary";
+  const getColor = (count: number) => {
+    if (count === 0) return "bg-white/[0.03]";
+    if (count <= 2) return "bg-primary/25";
+    if (count <= 4) return "bg-primary/45";
+    if (count <= 6) return "bg-primary/65";
+    return "bg-primary/90";
   };
 
-  const getContributionLevel = (count: number) => {
+  const getLevel = (count: number) => {
     if (count === 0) return "Нет активности";
-    if (count <= 2) return "Низкая активность";
-    if (count <= 4) return "Средняя активность";
-    if (count <= 6) return "Высокая активность";
-    return "Очень высокая активность";
+    if (count <= 2) return "Низкая";
+    if (count <= 4) return "Средняя";
+    if (count <= 6) return "Высокая";
+    return "Очень высокая";
   };
 
   const groupByWeek = (contributions: Array<{ date: string; count: number }>) => {
     const weeks: Array<Array<{ date: string; count: number }>> = [];
     let currentWeek: Array<{ date: string; count: number }> = [];
-    
     contributions.forEach((contrib, index) => {
       const date = new Date(contrib.date);
       const dayOfWeek = date.getDay();
-      
       if (index === 0 && dayOfWeek !== 0) {
         for (let i = 0; i < dayOfWeek; i++) {
           currentWeek.push({ date: "", count: -1 });
         }
       }
-      
       currentWeek.push(contrib);
-      
       if (dayOfWeek === 6 || index === contributions.length - 1) {
         weeks.push([...currentWeek]);
         currentWeek = [];
       }
     });
-    
     return weeks;
   };
 
   const weeks = groupByWeek(activity.contributionGraph);
-  const totalContributions = activity.contributionGraph.reduce((sum, day) => sum + day.count, 0);
+  const total = activity.contributionGraph.reduce((s, d) => s + d.count, 0);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.3 },
-    },
-  };
+  const statCards = [
+    { icon: GitCommit, label: "Коммиты", value: activity.totalCommits, color: "text-primary", bg: "bg-primary/5 border-primary/10" },
+    { icon: GitPullRequest, label: "Pull Requests", value: activity.totalPRs, color: "text-secondary", bg: "bg-secondary/5 border-secondary/10" },
+    { icon: Bug, label: "Issues", value: activity.totalIssues, color: "text-accent", bg: "bg-accent/5 border-accent/10" },
+  ];
 
   return (
     <>
       <div className="mb-16">
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold font-mono mb-4 text-primary"
+        <motion.div
+          className="flex items-center gap-3 mb-4"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          data-testid="heading-github-activity"
         >
-          <span className="text-foreground">&gt;_</span> АКТИВНОСТЬ НА GITHUB
-        </motion.h2>
-        <motion.div 
-          className="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full"
-          initial={{ width: 0 }}
-          whileInView={{ width: 96 }}
+          <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-primary/60 to-transparent" />
+          <span className="text-xs font-mono text-primary uppercase tracking-[0.3em]">Activity</span>
+        </motion.div>
+        <motion.h2
+          className="text-3xl md:text-5xl font-bold tracking-tight"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        />
+          transition={{ delay: 0.1 }}
+        >
+          <span className="text-gradient">GitHub активность</span>
+        </motion.h2>
       </div>
 
       <motion.div
+        className="card-premium p-6 md:p-8"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ delay: 0.2 }}
       >
-        <Card className="p-8 bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300" data-testid="card-github-activity">
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold font-mono text-foreground" data-testid="text-contributions-title">
-                {totalContributions} contributions в последний год
-              </h3>
-              <Badge variant="outline" className="font-mono border-primary/50 text-primary" data-testid="badge-github">
-                GitHub
-              </Badge>
-            </div>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+          <div className="flex items-center gap-3">
+            <Github className="w-5 h-5 text-foreground/60" />
+            <span className="text-lg font-bold font-mono text-foreground">
+              {total.toLocaleString()} <span className="text-muted-foreground font-normal text-sm">contributions</span>
+            </span>
           </div>
+          <span className="text-xs font-mono text-muted-foreground/60">последний год</span>
+        </div>
 
-          <div className="mb-8 overflow-x-auto">
-            <div className="inline-flex gap-1 min-w-full" data-testid="contribution-graph">
-              {weeks.map((week, weekIndex) => (
-                <div key={weekIndex} className="flex flex-col gap-1">
-                  {week.map((day, dayIndex) => {
-                    if (day.count === -1) {
-                      return <div key={dayIndex} className="w-3 h-3" />;
-                    }
-                    return (
-                      <motion.div
-                        key={dayIndex}
-                        className={`w-3 h-3 rounded-sm ${getContributionColor(day.count)} hover:ring-2 hover:ring-primary transition-all cursor-pointer`}
-                        title={`${day.date}: ${day.count} contributions - ${getContributionLevel(day.count)}`}
-                        variants={itemVariants}
-                        data-testid={`contribution-day-${day.date}`}
-                      />
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 mt-4 text-xs text-muted-foreground">
-              <span>Меньше</span>
-              <div className="flex gap-1">
-                <div className="w-3 h-3 rounded-sm bg-muted/30" />
-                <div className="w-3 h-3 rounded-sm bg-primary/30" />
-                <div className="w-3 h-3 rounded-sm bg-primary/50" />
-                <div className="w-3 h-3 rounded-sm bg-primary/70" />
-                <div className="w-3 h-3 rounded-sm bg-primary" />
+        <div className="mb-8 overflow-x-auto pb-2">
+          <div className="inline-flex gap-[3px] min-w-full">
+            {weeks.map((week, wi) => (
+              <div key={wi} className="flex flex-col gap-[3px]">
+                {week.map((day, di) => {
+                  if (day.count === -1) return <div key={di} className="w-[11px] h-[11px]" />;
+                  return (
+                    <div
+                      key={di}
+                      className={`w-[11px] h-[11px] rounded-[2px] ${getColor(day.count)} hover:ring-1 hover:ring-primary/50 transition-all cursor-pointer`}
+                      title={`${day.date}: ${day.count} — ${getLevel(day.count)}`}
+                    />
+                  );
+                })}
               </div>
-              <span>Больше</span>
-            </div>
+            ))}
           </div>
+          <div className="flex items-center gap-2 mt-4 text-[10px] text-muted-foreground/50 font-mono">
+            <span>Less</span>
+            <div className="flex gap-1">
+              <div className="w-[11px] h-[11px] rounded-[2px] bg-white/[0.03]" />
+              <div className="w-[11px] h-[11px] rounded-[2px] bg-primary/25" />
+              <div className="w-[11px] h-[11px] rounded-[2px] bg-primary/45" />
+              <div className="w-[11px] h-[11px] rounded-[2px] bg-primary/65" />
+              <div className="w-[11px] h-[11px] rounded-[2px] bg-primary/90" />
+            </div>
+            <span>More</span>
+          </div>
+        </div>
 
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <motion.div variants={itemVariants}>
-              <Card className="p-6 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30" data-testid="card-stat-commits">
-                <div className="flex items-center gap-3 mb-2">
-                  <GitCommit className="w-6 h-6 text-primary" data-testid="icon-commits" />
-                  <span className="text-sm text-muted-foreground uppercase tracking-wide">Коммиты</span>
-                </div>
-                <div className="text-3xl font-bold font-mono text-primary" data-testid="text-commits-value">
-                  {activity.totalCommits}
-                </div>
-                <div className="text-xs text-muted-foreground mt-1">79% активности</div>
-              </Card>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {statCards.map(({ icon: Icon, label, value, color, bg }, i) => (
+            <motion.div
+              key={label}
+              className={`flex items-center gap-4 p-4 rounded-xl border ${bg} transition-all`}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 + i * 0.1 }}
+            >
+              <Icon className={`w-5 h-5 ${color}`} />
+              <div>
+                <div className={`text-2xl font-bold font-mono ${color}`}>{value}</div>
+                <div className="text-xs text-muted-foreground">{label}</div>
+              </div>
             </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card className="p-6 bg-gradient-to-br from-secondary/10 to-secondary/5 border-secondary/30" data-testid="card-stat-prs">
-                <div className="flex items-center gap-3 mb-2">
-                  <GitPullRequest className="w-6 h-6 text-secondary" data-testid="icon-prs" />
-                  <span className="text-sm text-muted-foreground uppercase tracking-wide">Pull Requests</span>
-                </div>
-                <div className="text-3xl font-bold font-mono text-secondary" data-testid="text-prs-value">
-                  {activity.totalPRs}
-                </div>
-                <div className="text-xs text-muted-foreground mt-1">18% активности</div>
-              </Card>
-            </motion.div>
-          </motion.div>
-        </Card>
+          ))}
+        </div>
       </motion.div>
     </>
   );

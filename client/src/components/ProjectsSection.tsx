@@ -1,135 +1,104 @@
 import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Star, ExternalLink } from "lucide-react";
+import { Star, ExternalLink, GitFork } from "lucide-react";
 import type { Project } from "@shared/schema";
 
 interface ProjectsSectionProps {
   projects: Project[];
 }
 
+const languageColors: Record<string, string> = {
+  Python: "bg-blue-400",
+  "Jupyter Notebook": "bg-orange-400",
+  Java: "bg-red-400",
+  TypeScript: "bg-blue-500",
+  JavaScript: "bg-yellow-400",
+};
+
 export function ProjectsSection({ projects }: ProjectsSectionProps) {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
-
   return (
     <>
       <div className="mb-16">
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold font-mono mb-4 text-primary"
+        <motion.div
+          className="flex items-center gap-3 mb-4"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          data-testid="heading-projects"
         >
-          <span className="text-foreground">&gt;_</span> ИЗБРАННЫЕ ПРОЕКТЫ
-        </motion.h2>
-        <motion.div 
-          className="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full"
-          initial={{ width: 0 }}
-          whileInView={{ width: 96 }}
+          <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-primary/60 to-transparent" />
+          <span className="text-xs font-mono text-primary uppercase tracking-[0.3em]">Projects</span>
+        </motion.div>
+        <motion.h2
+          className="text-3xl md:text-5xl font-bold tracking-tight"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        />
+          transition={{ delay: 0.1 }}
+        >
+          <span className="text-gradient">Избранные проекты</span>
+        </motion.h2>
+        <motion.p
+          className="text-muted-foreground mt-4 max-w-xl text-base md:text-lg"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+        >
+          Open-source инструменты и платформы для разработки AI-агентов
+        </motion.p>
       </div>
 
-      <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        {projects.map((project) => (
-          <motion.div key={project.id} variants={itemVariants}>
-            <Card
-              className="group relative overflow-hidden bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-500 hover:shadow-lg hover:shadow-primary/10 hover-elevate h-full flex flex-col"
-              data-testid={`card-project-${project.id}`}
-            >
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              <div className="p-6 relative z-10 flex-1 flex flex-col">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-2 text-foreground group-hover:text-primary transition-colors font-mono" data-testid={`text-project-title-${project.id}`}>
-                      {project.title}
-                    </h3>
-                    {project.tags && project.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        {project.tags.map((tag) => (
-                          <Badge key={tag} variant="outline" className="text-xs font-mono border-primary/30" data-testid={`badge-project-tag-${project.id}-${tag}`}>
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {projects.map((project, i) => (
+          <motion.a
+            key={project.id}
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group card-premium p-6 flex flex-col cursor-pointer"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 * i, duration: 0.5 }}
+          >
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-3 flex-1" data-testid={`text-project-desc-${project.id}`}>
-                  {project.description}
-                </p>
-
-                <div className="flex items-center gap-4 mb-4 text-sm">
-                  <div className="flex items-center gap-1 text-muted-foreground" data-testid={`container-project-stars-${project.id}`}>
-                    <Star className="w-4 h-4 text-primary" data-testid={`icon-project-star-${project.id}`} />
-                    <span className="font-mono" data-testid={`text-project-stars-${project.id}`}>{project.stars}</span>
-                  </div>
-                  <Badge variant="secondary" className="font-mono text-xs" data-testid={`badge-project-language-${project.id}`}>
-                    {project.language}
-                  </Badge>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.slice(0, 3).map((tech) => (
-                    <Badge key={tech} variant="outline" className="text-xs border-secondary/30" data-testid={`badge-project-tech-${project.id}-${tech.toLowerCase().replace(/\s+/g, '-')}`}>
-                      {tech}
-                    </Badge>
-                  ))}
-                  {project.tech.length > 3 && (
-                    <Badge variant="outline" className="text-xs" data-testid={`badge-project-tech-more-${project.id}`}>
-                      +{project.tech.length - 3}
-                    </Badge>
-                  )}
-                </div>
-
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full border-primary/30 hover:border-primary group/btn"
-                  asChild
-                  data-testid={`button-project-view-${project.id}`}
-                >
-                  <a href={project.url} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="w-4 h-4 mr-2 group-hover/btn:animate-pulse" />
-                    Посмотреть проект
-                  </a>
-                </Button>
+            <div className="flex items-start justify-between mb-4">
+              <div className="w-10 h-10 rounded-xl bg-primary/5 border border-primary/10 flex items-center justify-center group-hover:border-primary/30 transition-colors">
+                <GitFork className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
               </div>
+              <ExternalLink className="w-4 h-4 text-muted-foreground/40 group-hover:text-primary transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </div>
 
-              <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </Card>
-          </motion.div>
+            <h3 className="text-lg font-bold font-mono text-foreground mb-2 group-hover:text-primary transition-colors">
+              {project.title}
+            </h3>
+
+            <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1 line-clamp-3">
+              {project.description}
+            </p>
+
+            <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <span className="flex items-center gap-1.5">
+                  <span className={`w-2.5 h-2.5 rounded-full ${languageColors[project.language] || "bg-gray-400"}`} />
+                  <span className="text-xs">{project.language}</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <Star className="w-3.5 h-3.5" />
+                  <span className="text-xs font-mono">{project.stars}</span>
+                </span>
+              </div>
+              <div className="flex gap-1.5">
+                {project.tech.slice(0, 2).map(t => (
+                  <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-muted-foreground">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.a>
         ))}
-      </motion.div>
+      </div>
     </>
   );
 }

@@ -1,8 +1,5 @@
 import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { FileText, ExternalLink, Award } from "lucide-react";
+import { FileText, ExternalLink, Award, Trophy } from "lucide-react";
 import type { Article } from "@shared/schema";
 
 interface PublicationsSectionProps {
@@ -10,112 +7,70 @@ interface PublicationsSectionProps {
 }
 
 export function PublicationsSection({ articles }: PublicationsSectionProps) {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
-
   return (
     <>
       <div className="mb-16">
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold font-mono mb-4 text-primary"
+        <motion.div
+          className="flex items-center gap-3 mb-4"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          data-testid="heading-publications"
         >
-          <span className="text-foreground">&gt;_</span> МОИ ПУБЛИКАЦИИ
-        </motion.h2>
-        <motion.div 
-          className="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full"
-          initial={{ width: 0 }}
-          whileInView={{ width: 96 }}
+          <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-accent/60 to-transparent" />
+          <span className="text-xs font-mono text-accent uppercase tracking-[0.3em]">Publications</span>
+        </motion.div>
+        <motion.h2
+          className="text-3xl md:text-5xl font-bold tracking-tight"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        />
+          transition={{ delay: 0.1 }}
+        >
+          <span className="text-gradient-accent">Публикации</span>
+        </motion.h2>
       </div>
 
-      <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        {articles.map((article) => (
-          <motion.div key={article.id} variants={itemVariants}>
-            <Card
-              className="group relative overflow-hidden bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-500 hover:shadow-lg hover:shadow-primary/10 hover-elevate h-full flex flex-col"
-              data-testid={`card-article-${article.id}`}
-            >
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              <div className="p-6 relative z-10 flex-1 flex flex-col">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <FileText className="w-5 h-5 text-primary" data-testid={`icon-article-${article.id}`} />
-                    <Badge variant="outline" className="font-mono text-xs border-primary/30" data-testid={`badge-article-platform-${article.id}`}>
-                      {article.platform}
-                    </Badge>
-                    {article.badge && (
-                      <Badge variant="default" className="font-mono text-xs bg-accent/20 border-accent/50 text-accent" data-testid={`badge-article-award-${article.id}`}>
-                        <Award className="w-3 h-3 mr-1" />
-                        Победитель
-                      </Badge>
-                    )}
-                  </div>
-                  <span className="text-xs text-muted-foreground font-mono" data-testid={`text-article-date-${article.id}`}>
-                    {article.date}
-                  </span>
-                </div>
-
-                <h3 className="text-lg font-bold mb-4 text-foreground group-hover:text-primary transition-colors leading-relaxed flex-1" data-testid={`text-article-title-${article.id}`}>
-                  {article.title}
-                </h3>
-
-                {article.badge && (
-                  <div className="mb-4 p-3 bg-accent/10 border border-accent/30 rounded-lg">
-                    <p className="text-sm text-accent font-medium" data-testid={`text-article-badge-${article.id}`}>
-                      {article.badge}
-                    </p>
-                  </div>
-                )}
-
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full border-primary/30 hover:border-primary group/btn"
-                  asChild
-                  data-testid={`button-article-read-${article.id}`}
-                >
-                  <a href={article.url} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="w-4 h-4 mr-2 group-hover/btn:animate-pulse" />
-                    Читать на {article.platform}
-                  </a>
-                </Button>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {articles.map((article, i) => (
+          <motion.a
+            key={article.id}
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`group card-premium p-6 flex flex-col cursor-pointer ${
+              article.badge ? "border-amber-500/20 hover:border-amber-500/40" : ""
+            }`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.08 * i, duration: 0.5 }}
+          >
+            {article.badge && (
+              <div className="flex items-center gap-2 mb-4 px-3 py-1.5 rounded-lg bg-amber-500/5 border border-amber-500/20 w-fit">
+                <Trophy className="w-3.5 h-3.5 text-amber-400" />
+                <span className="text-xs font-mono text-amber-400">{article.badge}</span>
               </div>
+            )}
 
-              <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </Card>
-          </motion.div>
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center">
+                  <FileText className="w-4 h-4 text-foreground/50" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-mono text-muted-foreground/60 uppercase">{article.platform}</span>
+                  <span className="text-[10px] font-mono text-muted-foreground/40 ml-2">{article.date}</span>
+                </div>
+              </div>
+              <ExternalLink className="w-4 h-4 text-muted-foreground/30 group-hover:text-primary transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0 mt-1" />
+            </div>
+
+            <h3 className="text-base font-semibold text-foreground group-hover:text-primary transition-colors leading-relaxed flex-1">
+              {article.title}
+            </h3>
+          </motion.a>
         ))}
-      </motion.div>
+      </div>
     </>
   );
 }

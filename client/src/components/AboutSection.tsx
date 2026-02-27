@@ -1,202 +1,144 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { GitFork, Users, Star, Activity } from "lucide-react";
+import { Rocket, Bot, Briefcase, TrendingUp, Download, Users, Star, FileText } from "lucide-react";
 import type { Stat } from "@shared/schema";
 
 interface AboutSectionProps {
   stats: Stat[];
 }
 
-function CountUpAnimation({ end, duration = 2000 }: { end: number; duration?: number }) {
+function AnimatedCounter({ end, suffix = "", duration = 2000 }: { end: number; suffix?: string; duration?: number }) {
   const [count, setCount] = useState(0);
-  const { ref, inView } = useInView({
-    threshold: 0.3,
-    triggerOnce: true,
-  });
-
+  const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
   useEffect(() => {
     if (!inView) return;
-
-    let startTime: number | null = null;
-    const startValue = 0;
-
-    const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime;
-      const progress = Math.min((currentTime - startTime) / duration, 1);
-      
-      setCount(Math.floor(progress * (end - startValue) + startValue));
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
+    let start: number | null = null;
+    const step = (ts: number) => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      setCount(Math.floor((1 - Math.pow(1 - p, 4)) * end));
+      if (p < 1) requestAnimationFrame(step);
     };
-
-    requestAnimationFrame(animate);
+    requestAnimationFrame(step);
   }, [inView, end, duration]);
-
-  return <span ref={ref}>{count.toLocaleString()}</span>;
+  return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
 }
 
+const iconMap: Record<string, any> = {
+  stars: Star, followers: Users, repos: FileText, activity: TrendingUp,
+};
+
+const positions = [
+  {
+    icon: Rocket,
+    badge: "Сейчас",
+    badgeColor: "text-primary border-primary/30 bg-primary/5",
+    title: "CTO GigaChain",
+    org: "GigaChat / Сбер",
+    items: [
+      "Главный архитектор платформы для AI-агентов (543 stars, 76 forks)",
+      "gigachat + langchain-gigachat: 77K+ загрузок/мес на PyPI",
+      "Определяю техническую стратегию SDK-экосистемы GigaChat",
+    ],
+    borderColor: "border-primary/20 hover:border-primary/40",
+  },
+  {
+    icon: Bot,
+    badge: "2012–2017",
+    badgeColor: "text-secondary border-secondary/30 bg-secondary/5",
+    title: "Co-founder & Head of AI",
+    org: "Cubic Robotics",
+    items: [
+      "Первый AI-голосовой спикер с V.O.I.S. — продажи в 40 странах",
+      "$180K+ на Indiegogo (top 2% кампаний) + $500K инвестиций",
+      "Публикация в РБК, разработка voice OS с нуля",
+    ],
+    borderColor: "border-secondary/20 hover:border-secondary/40",
+  },
+  {
+    icon: Briefcase,
+    badge: "2019–2021",
+    badgeColor: "text-accent border-accent/30 bg-accent/5",
+    title: "Head of AI",
+    org: "The Coach",
+    items: [
+      "AI-система для персонализированного коучинга",
+      "ML-пайплайны для анализа поведения пользователей",
+      "Перевёл R&D отдел из эксперимента в продакшен",
+    ],
+    borderColor: "border-accent/20 hover:border-accent/40",
+  },
+];
+
 export function AboutSection({ stats }: AboutSectionProps) {
-  const iconMap: Record<string, any> = {
-    repos: GitFork,
-    followers: Users,
-    stars: Star,
-    activity: Activity,
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
-
   return (
     <>
       <div className="mb-16">
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold font-mono mb-4 text-primary"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          data-testid="heading-about"
-        >
-          <span className="text-foreground">&gt;_</span> ОБО МНЕ
+        <motion.div className="flex items-center gap-3 mb-4" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-primary/60 to-transparent" />
+          <span className="text-xs font-mono text-primary uppercase tracking-[0.3em]">Impact</span>
+        </motion.div>
+        <motion.h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+          <span className="text-gradient">Что я построил</span>
         </motion.h2>
-        <motion.div 
-          className="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full"
-          initial={{ width: 0 }}
-          whileInView={{ width: 96 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        />
+        <motion.p className="text-muted-foreground text-base md:text-lg max-w-2xl" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+          Платформы, которые используют тысячи разработчиков. Продукты, которые привлекли инвестиции. Системы, которые работают в продакшене.
+        </motion.p>
       </div>
 
-      <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        {stats.map((stat, index) => {
-          const Icon = iconMap[stat.icon] || Activity;
+      <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-20"
+        initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
+        {stats.map((stat, i) => {
+          const Icon = iconMap[stat.icon] || TrendingUp;
           return (
-            <motion.div key={stat.id} variants={itemVariants}>
-              <Card 
-                className="p-6 bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 group hover-elevate"
-                data-testid={`card-stat-${stat.id}`}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <Icon className="w-8 h-8 text-primary group-hover:animate-pulse" data-testid={`icon-stat-${stat.id}`} />
-                  <Badge variant="outline" className="font-mono text-xs border-primary/30" data-testid={`badge-stat-${stat.id}`}>
-                    STATS
-                  </Badge>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-4xl font-bold font-mono text-primary" data-testid={`text-stat-value-${stat.id}`}>
-                    {stat.displayValue || <CountUpAnimation end={stat.value} />}
-                  </div>
-                  <div className="text-sm text-muted-foreground uppercase tracking-wide" data-testid={`text-stat-label-${stat.id}`}>
-                    {stat.label}
-                  </div>
-                </div>
-              </Card>
+            <motion.div key={stat.id} className="card-premium p-5 group" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 * i, duration: 0.5 }}>
+              <Icon className="w-5 h-5 text-primary/50 mb-3 group-hover:text-primary transition-colors" />
+              <div className="text-2xl md:text-3xl font-bold font-mono text-foreground mb-1">
+                {stat.displayValue || <AnimatedCounter end={stat.value} />}
+              </div>
+              <div className="text-[10px] text-muted-foreground uppercase tracking-wider leading-tight">{stat.label}</div>
             </motion.div>
           );
         })}
       </motion.div>
 
-      <motion.div 
-        className="grid grid-cols-1 lg:grid-cols-3 gap-8"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <motion.div variants={itemVariants} className="h-full">
-          <Card className="p-8 h-full bg-gradient-to-br from-card to-card/50 backdrop-blur-sm border-primary/30 hover-elevate" data-testid="card-position-1">
-            <div className="flex items-start gap-4">
-              <div className="text-4xl" aria-hidden="true">🚀</div>
-              <div className="flex-1">
-                <Badge variant="outline" className="mb-3 border-primary/50 text-primary font-mono" data-testid="badge-position-1">
-                  CURRENT
-                </Badge>
-                <h3 className="text-xl font-bold mb-2 text-foreground" data-testid="text-position-title-1">
-                  CTO GIGACHAIN
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-position-desc-1">
-                  Руковожу разработкой GigaChain в GigaChat - набора инструментов для работы с GigaChat. 
-                  Создаю передовые LLM-приложения и интеллектуальные системы.
-                </p>
-              </div>
-            </div>
-          </Card>
+      <div className="mb-10">
+        <motion.div className="flex items-center gap-3 mb-4" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-secondary/60 to-transparent" />
+          <span className="text-xs font-mono text-secondary uppercase tracking-[0.3em]">Track Record</span>
         </motion.div>
+        <motion.h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+          От стартапа до enterprise-платформы
+        </motion.h3>
+      </div>
 
-        <motion.div variants={itemVariants} className="h-full">
-          <Card className="p-8 h-full bg-gradient-to-br from-card to-card/50 backdrop-blur-sm border-accent/30 hover-elevate" data-testid="card-position-3">
-            <div className="flex items-start gap-4">
-              <div className="text-4xl" aria-hidden="true">🤖</div>
-              <div className="flex-1">
-                <Badge variant="outline" className="mb-3 border-accent/50 text-accent font-mono" data-testid="badge-position-3">
-                  FOUNDER
-                </Badge>
-                <h3 className="text-xl font-bold mb-2 text-foreground" data-testid="text-position-title-3">
-                  СО-ОСНОВАТЕЛЬ & HEAD OF AI
-                </h3>
-                <p className="text-xs text-muted-foreground/70 mb-2 font-mono">
-                  2012-2017
-                </p>
-                <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-position-desc-3">
-                  Head of AI и сооснователь <a href="https://www.rbc.ru/magazine/2018/11/5bc4b6ca9a79479e46f0cf6f" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Cubic.ai</a> - первого в мире AI-голосового спикера. 
-                  Пионер в робототехнике и нейротехнологиях.
-                </p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {positions.map((pos, i) => {
+          const Icon = pos.icon;
+          return (
+            <motion.div key={i} className={`group card-premium p-7 ${pos.borderColor} transition-all duration-500`}
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 * i, duration: 0.5 }}>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center">
+                  <Icon className="w-5 h-5 text-foreground/70" />
+                </div>
+                <span className={`text-xs font-mono px-3 py-1 rounded-full border ${pos.badgeColor}`}>{pos.badge}</span>
               </div>
-            </div>
-          </Card>
-        </motion.div>
-
-        <motion.div variants={itemVariants} className="h-full">
-          <Card className="p-8 h-full bg-gradient-to-br from-card to-card/50 backdrop-blur-sm border-secondary/30 hover-elevate" data-testid="card-position-2">
-            <div className="flex items-start gap-4">
-              <div className="text-4xl" aria-hidden="true">💼</div>
-              <div className="flex-1">
-                <Badge variant="outline" className="mb-3 border-secondary/50 text-secondary font-mono" data-testid="badge-position-2">
-                  PREVIOUS
-                </Badge>
-                <h3 className="text-xl font-bold mb-2 text-foreground" data-testid="text-position-title-2">
-                  EX-HEAD OF AI
-                </h3>
-                <p className="text-xs text-muted-foreground/70 mb-2 font-mono">
-                  2019-2021
-                </p>
-                <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-position-desc-2">
-                  Бывший Head of AI в <a href="http://the.coach" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">The Coach</a>. Руководил AI-инициативами и разрабатывал 
-                  интеллектуальные решения для коучинга.
-                </p>
-              </div>
-            </div>
-          </Card>
-        </motion.div>
-      </motion.div>
+              <h4 className="text-lg font-bold text-foreground mb-1">{pos.title}</h4>
+              <p className="text-sm text-muted-foreground/60 font-mono mb-4">{pos.org}</p>
+              <ul className="space-y-2.5">
+                {pos.items.map((item, j) => (
+                  <li key={j} className="flex items-start gap-2.5">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/50 flex-shrink-0" />
+                    <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          );
+        })}
+      </div>
     </>
   );
 }
