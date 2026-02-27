@@ -8,14 +8,13 @@ import { ContentSection } from "@/components/ContentSection";
 import { ContactSection } from "@/components/ContactSection";
 import { GitHubActivitySection } from "@/components/GitHubActivitySection";
 import { PublicationsSection } from "@/components/PublicationsSection";
+import { CTABanner } from "@/components/CTABanner";
 import type { Project, Stat, Skill, Video, Post, Article, GitHubActivity } from "@shared/schema";
 
 function Section({ id, children, className = "" }: { id?: string; children: React.ReactNode; className?: string }) {
   return (
     <section id={id} className={`py-24 md:py-32 px-4 md:px-8 relative ${className}`}>
-      <div className="container mx-auto max-w-7xl relative z-10">
-        {children}
-      </div>
+      <div className="container mx-auto max-w-7xl relative z-10">{children}</div>
     </section>
   );
 }
@@ -52,9 +51,17 @@ export default function Home() {
 
       <SectionDivider />
 
-      <Section id="about">
+      <Section id="impact">
         {statsLoading ? <LoadingSkeleton /> : <AboutSection stats={stats} />}
       </Section>
+
+      <SectionDivider />
+
+      <Section id="vision">
+        {skillsLoading ? <LoadingSkeleton /> : <SkillsSection skills={skills} />}
+      </Section>
+
+      <CTABanner />
 
       <SectionDivider />
 
@@ -70,13 +77,7 @@ export default function Home() {
 
       <SectionDivider />
 
-      <Section id="skills">
-        {skillsLoading ? <LoadingSkeleton /> : <SkillsSection skills={skills} />}
-      </Section>
-
-      <SectionDivider />
-
-      <Section id="content">
+      <Section id="media">
         {videosLoading || postsLoading ? <LoadingSkeleton /> : <ContentSection videos={videos} posts={posts} />}
       </Section>
 
@@ -97,12 +98,10 @@ export default function Home() {
               <div className="w-6 h-6 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center">
                 <span className="text-primary font-mono text-[10px] font-bold">KK</span>
               </div>
-              <span className="text-sm text-muted-foreground/50 font-mono">
-                krestnikov<span className="text-primary/50">.dev</span>
-              </span>
+              <span className="text-sm text-muted-foreground/50 font-mono">krestnikov<span className="text-primary/50">.dev</span></span>
             </div>
             <p className="text-xs text-muted-foreground/30 font-mono">
-              &copy; {new Date().getFullYear()} &middot; Built with AI and cyberpunk aesthetics
+              &copy; {new Date().getFullYear()} &middot; Built with AI &middot; e/acc
             </p>
           </div>
         </div>

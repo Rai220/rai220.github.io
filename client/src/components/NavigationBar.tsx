@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Обо мне", href: "#about" },
-  { label: "Проекты", href: "#projects" },
-  { label: "Навыки", href: "#skills" },
-  { label: "Контент", href: "#content" },
+  { label: "Impact", href: "#impact" },
+  { label: "Видение", href: "#vision" },
+  { label: "Продукты", href: "#projects" },
+  { label: "Медиа", href: "#media" },
   { label: "Контакты", href: "#contact" },
 ];
 

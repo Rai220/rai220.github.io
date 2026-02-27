@@ -40,8 +40,17 @@ export function ContactSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <span className="text-gradient">Связаться со мной</span>
+            <span className="text-gradient">Давайте поговорим</span>
           </motion.h2>
+          <motion.p
+            className="text-muted-foreground text-sm md:text-base mt-3 max-w-md mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            R&D Lead &middot; AI Visionary &middot; CTO &middot; Консультации по AI-стратегии
+          </motion.p>
         </div>
 
         <motion.div
