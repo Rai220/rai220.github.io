@@ -11,7 +11,7 @@ const socialLinks = [
 ];
 
 const metrics = [
-  { value: "543", label: "stars GigaChain" },
+  { value: "Top 1.5%", label: "PyPI worldwide" },
   { value: "77K+", label: "downloads / мес" },
   { value: "$680K+", label: "привлечено" },
 ];
@@ -94,15 +94,15 @@ export function HeroSection() {
             transition={{ delay: 0.7, duration: 0.8 }}
           >
             <p className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground">
-              Строю платформы для AI-агентов,{" "}
-              <span className="text-gradient-accent">которые использует индустрия</span>
+              Автор gigachat —{" "}
+              <span className="text-gradient-accent">top 1.5% библиотек мира на PyPI</span>
             </p>
             <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              CTO GigaChain @ Сбер &middot; Ex-Co-founder Cubic Robotics &middot; e/acc
+              CTO GigaChain @ Сбер &middot; Выбрал агентную архитектуру для всего Сбера &middot; e/acc
             </p>
             <p className="text-sm text-muted-foreground/70 max-w-xl mx-auto">
-              Визионер, который видит куда идёт AI — и умеет это строить руками.
-              От прототипа до enterprise-платформы с миллионами пользователей.
+              Визионер AGI-эры, который видит куда идёт AI — и умеет это строить руками.
+              От прототипа до enterprise-платформы с десятками тысяч пользователей.
             </p>
           </motion.div>
 

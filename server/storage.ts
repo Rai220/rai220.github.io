@@ -21,34 +21,34 @@ export class MemStorage implements IStorage {
 
   constructor() {
     this.stats = [
-      { id: "1", label: "Stars GigaChain", value: 543, icon: "stars", displayValue: "543" },
+      { id: "1", label: "Top PyPI worldwide", value: 15, icon: "stars", displayValue: "1.5%" },
       { id: "2", label: "PyPI Downloads / мес", value: 77000, icon: "activity", displayValue: "77K+" },
-      { id: "3", label: "GitHub Followers", value: 119, icon: "followers" },
-      { id: "4", label: "Публикации Habr", value: 8, icon: "repos" },
-      { id: "5", label: "TG Подписчики", value: 1157, icon: "activity" },
+      { id: "3", label: "Stars GigaChain", value: 543, icon: "stars", displayValue: "543" },
+      { id: "4", label: "TG Подписчики", value: 1563, icon: "activity" },
+      { id: "5", label: "GitHub Followers", value: 119, icon: "followers" },
       { id: "6", label: "Стран — Cubic", value: 40, icon: "activity" },
     ];
 
     this.projects = [
       {
         id: "1",
+        title: "gigachat",
+        description: "Официальная Python-библиотека GigaChat API — top 1.5% всех пакетов мира по загрузкам на PyPI (48K+/мес). Стандарт интеграции для тысяч разработчиков. Ключевой SDK экосистемы GigaChat.",
+        tech: ["Python", "SDK", "API", "PyPI Top 1.5%"],
+        stars: 136,
+        language: "Python",
+        url: "https://github.com/ai-forever/gigachat",
+        tags: ["sdk", "api", "gigachat", "top-pypi"],
+      },
+      {
+        id: "2",
         title: "GigaChain",
-        description: "Платформа для разработки LLM-приложений и AI-агентов на русском языке. Индустриальный стандарт для GigaChat-экосистемы, используется в enterprise-решениях Сбера и партнёров.",
+        description: "Платформа для разработки LLM-приложений и AI-агентов. Выбранная агентная архитектура для всего Сбера. 543 stars, индустриальный стандарт GigaChat-экосистемы.",
         tech: ["Python", "LangChain", "LLM", "Agents"],
         stars: 543,
         language: "Python",
         url: "https://github.com/ai-forever/gigachain",
         tags: ["platform", "llm", "agents"],
-      },
-      {
-        id: "2",
-        title: "gigachat",
-        description: "Официальная Python-библиотека для GigaChat API. 48K+ загрузок/мес на PyPI. Стандарт интеграции для тысяч разработчиков в России.",
-        tech: ["Python", "SDK", "API"],
-        stars: 136,
-        language: "Python",
-        url: "https://github.com/ai-forever/gigachat",
-        tags: ["sdk", "api", "gigachat"],
       },
       {
         id: "3",

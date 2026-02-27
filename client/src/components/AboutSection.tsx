@@ -37,9 +37,9 @@ const positions = [
     title: "CTO GigaChain",
     org: "GigaChat / Сбер",
     items: [
-      "Главный архитектор платформы для AI-агентов (543 stars, 76 forks)",
-      "gigachat + langchain-gigachat: 77K+ загрузок/мес на PyPI",
-      "Определяю техническую стратегию SDK-экосистемы GigaChat",
+      "gigachat — top 1.5% всех библиотек мира по скачиваниям на PyPI (48K+/мес)",
+      "Выбрал агентную архитектуру для всего Сбера — GigaChain (543 stars, 76 forks)",
+      "77K+ суммарных загрузок/мес на PyPI, определяю SDK-стратегию GigaChat",
     ],
     borderColor: "border-primary/20 hover:border-primary/40",
   },
@@ -83,7 +83,7 @@ export function AboutSection({ stats }: AboutSectionProps) {
           <span className="text-gradient">Что я построил</span>
         </motion.h2>
         <motion.p className="text-muted-foreground text-base md:text-lg max-w-2xl" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-          Платформы, которые используют тысячи разработчиков. Продукты, которые привлекли инвестиции. Системы, которые работают в продакшене.
+          Библиотека из top 1.5% мира на PyPI. Агентная архитектура, выбранная Сбером. Продукт, который привлёк $680K+ инвестиций.
         </motion.p>
       </div>
 
