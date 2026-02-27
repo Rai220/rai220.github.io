@@ -18,7 +18,7 @@ export function CTABanner() {
             <span className="text-gradient">который понимает будущее AI?</span>
           </h3>
           <p className="text-muted-foreground text-base md:text-lg mb-8 max-w-xl mx-auto">
-            Я строю платформы, которые используют тысячи разработчиков.
+            Автор библиотеки из top 1.5% PyPI. Определил агентную архитектуру Сбера.
             Готов сделать то же для вашей компании.
           </p>
           <a
