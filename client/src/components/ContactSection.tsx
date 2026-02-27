@@ -63,7 +63,7 @@ export function ContactSection() {
           <div className="mb-8">
             <div className="flex items-center gap-2 text-sm font-mono text-muted-foreground/60 mb-3">
               <Terminal className="w-4 h-4" />
-              <span className="text-primary/70">guest@krestnikov</span>
+              <span className="text-primary/70">guest@rai220</span>
               <span>~</span>
               <span className="text-secondary/70">$</span>
             </div>

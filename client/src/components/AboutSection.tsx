@@ -37,8 +37,8 @@ const positions = [
     title: "CTO GigaChain",
     org: "GigaChat / Сбер",
     items: [
-      "gigachat — top 1.5% всех библиотек мира по скачиваниям на PyPI (48K+/мес)",
-      "Выбрал агентную архитектуру для всего Сбера — GigaChain (543 stars, 76 forks)",
+      "Под моим руководством создана библиотека gigachat — top 1.5% всех библиотек мира по скачиваниям на PyPI (48K+/мес)",
+      "Выбрана стратегия Сбера по внедрению AI-агентов через взаимодействие с OpenSource",
       "77K+ суммарных загрузок/мес на PyPI, определяю SDK-стратегию GigaChat",
     ],
     borderColor: "border-primary/20 hover:border-primary/40",

@@ -98,7 +98,7 @@ export default function Home() {
               <div className="w-6 h-6 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center">
                 <span className="text-primary font-mono text-[10px] font-bold">KK</span>
               </div>
-              <span className="text-sm text-muted-foreground/50 font-mono">krestnikov<span className="text-primary/50">.dev</span></span>
+              <span className="text-sm text-muted-foreground/50 font-mono">Kirill Krestnikov</span>
             </div>
             <p className="text-xs text-muted-foreground/30 font-mono">
               &copy; {new Date().getFullYear()} &middot; Built with AI &middot; e/acc
