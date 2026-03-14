@@ -238,6 +238,13 @@ export class MemStorage implements IStorage {
         date: "05.2019",
         platform: "Habr",
       },
+      {
+        id: "7",
+        title: "Compression Favors Consistency, Not Truth: When and Why Language Models Prefer Correct Information",
+        url: "https://arxiv.org/abs/2603.11749",
+        date: "2026",
+        platform: "arXiv",
+      },
     ];
 
     this.githubActivity = {

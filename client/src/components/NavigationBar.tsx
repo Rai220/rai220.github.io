@@ -63,7 +63,7 @@ export function NavigationBar() {
                 <span className="text-primary font-mono font-bold text-sm">KK</span>
               </div>
               <span className="font-mono text-sm font-semibold text-foreground hidden sm:block">
-                Kirill Krestnikov
+                Konstantin Krestnikov
               </span>
             </motion.a>
 
