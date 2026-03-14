@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, ExternalLink, GitFork } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 import type { Project } from "@shared/schema";
 
 interface ProjectsSectionProps {
@@ -15,6 +16,8 @@ const languageColors: Record<string, string> = {
 };
 
 export function ProjectsSection({ projects }: ProjectsSectionProps) {
+  const { t } = useLanguage();
+
   return (
     <>
       <div className="mb-16">
@@ -34,7 +37,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
         >
-          <span className="text-gradient">Избранные проекты</span>
+          <span className="text-gradient">{t("projects_title")}</span>
         </motion.h2>
         <motion.p
           className="text-muted-foreground mt-4 max-w-xl text-base md:text-lg"
@@ -43,7 +46,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          Open-source инструменты и платформы для разработки AI-агентов
+          {t("projects_subtitle")}
         </motion.p>
       </div>
 

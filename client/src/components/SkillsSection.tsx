@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Brain, Target, Wrench, Zap, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 import type { Skill } from "@shared/schema";
 
 interface SkillsSectionProps {
@@ -7,6 +8,7 @@ interface SkillsSectionProps {
 }
 
 export function SkillsSection({ skills }: SkillsSectionProps) {
+  const { t } = useLanguage();
   const tags = skills.filter(s => s.category === "tags");
   const thesisItems = skills.filter(s => s.category === "thesis");
   const valueItems = skills.filter(s => s.category === "value");
@@ -20,10 +22,10 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
           <span className="text-xs font-mono text-primary uppercase tracking-[0.3em]">Vision</span>
         </motion.div>
         <motion.h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-          <span className="text-gradient">Почему AI-агенты — это всё</span>
+          <span className="text-gradient">{t("skills_title")}</span>
         </motion.h2>
         <motion.p className="text-base md:text-lg text-muted-foreground max-w-2xl" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-          Мы стоим на пороге AGI-революции. Вопрос не «будет ли», а «кто окажется готов».
+          {t("skills_subtitle")}
         </motion.p>
       </div>
 
@@ -40,7 +42,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
       <div className="card-premium p-8 md:p-10 mb-14">
         <div className="flex items-center gap-3 mb-8">
           <Brain className="w-6 h-6 text-primary" />
-          <h3 className="text-xl md:text-2xl font-bold text-foreground">Мой тезис</h3>
+          <h3 className="text-xl md:text-2xl font-bold text-foreground">{t("skills_thesis")}</h3>
         </div>
         <div className="space-y-6">
           {thesisItems.map((item, i) => (
@@ -58,7 +60,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
       <div className="mb-14">
         <div className="flex items-center gap-3 mb-8">
           <Target className="w-5 h-5 text-secondary" />
-          <h3 className="text-xl font-bold text-foreground">Что я даю компании</h3>
+          <h3 className="text-xl font-bold text-foreground">{t("skills_value")}</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {valueItems.map((item, i) => (
@@ -76,7 +78,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
         <div className="flex items-center gap-3 mb-6">
           <Zap className="w-5 h-5 text-primary" />
-          <h3 className="text-xl font-bold text-foreground">Стек</h3>
+          <h3 className="text-xl font-bold text-foreground">{t("skills_stack")}</h3>
         </div>
         <div className="relative overflow-hidden rounded-xl">
           <div className="flex animate-marquee">

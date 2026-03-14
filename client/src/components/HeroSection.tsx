@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Github, Send, Youtube, FileText, ChevronDown, ArrowRight } from "lucide-react";
 import { ParticleBackground } from "./ParticleBackground";
+import { useLanguage } from "@/lib/i18n";
 
 const socialLinks = [
   { icon: Github, label: "GitHub", href: "https://github.com/Rai220", color: "hover:border-primary/60 hover:text-primary" },
@@ -10,16 +11,17 @@ const socialLinks = [
   { icon: FileText, label: "Habr", href: "https://habr.com/ru/users/Rai220/", color: "hover:border-accent/60 hover:text-accent" },
 ];
 
-const metrics = [
-  { value: "Top 1.5%", label: "PyPI worldwide" },
-  { value: "77K+", label: "downloads / мес" },
-  { value: "$680K+", label: "привлечено" },
-];
-
 export function HeroSection() {
+  const { t } = useLanguage();
   const [typedText, setTypedText] = useState("");
   const fullText = "KONSTANTIN KRESTNIKOV";
   const [showCursor, setShowCursor] = useState(true);
+
+  const metrics = [
+    { value: "Top 1.5%", label: "PyPI worldwide" },
+    { value: "77K+", label: t("hero_metric_downloads") },
+    { value: "$680K+", label: t("hero_metric_raised") },
+  ];
 
   useEffect(() => {
     let idx = 0;
@@ -72,7 +74,7 @@ export function HeroSection() {
             transition={{ delay: 0.3 }}
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            Открыт к предложениям: R&D Lead / AI Visionary
+            {t("hero_badge")}
           </motion.div>
 
           <motion.div
@@ -94,15 +96,15 @@ export function HeroSection() {
             transition={{ delay: 0.7, duration: 0.8 }}
           >
             <p className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground">
-              Под моим руководством создана библиотека gigachat —{" "}
-              <span className="text-gradient-accent">top 1.5% библиотек мира на PyPI</span>
+              {t("hero_subtitle")}{" "}
+              <span className="text-gradient-accent">{t("hero_highlight")}</span>
             </p>
             <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              CTO GigaChain @ Сбер &middot; Выбрал стратегию Сбера по внедрению AI-агентов через OpenSource &middot; e/acc
+              {t("hero_role")}
             </p>
             <p className="text-sm text-muted-foreground/70 max-w-xl mx-auto">
-              Визионер AGI-эры, который видит куда идёт AI — и умеет это строить руками.
-              От прототипа до enterprise-платформы с десятками тысяч пользователей.
+              {t("hero_desc1")}
+              {" "}{t("hero_desc2")}
             </p>
           </motion.div>
 
@@ -131,7 +133,7 @@ export function HeroSection() {
               onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
               className="group flex items-center gap-2 px-6 py-2.5 rounded-xl bg-primary/10 border border-primary/30 text-primary text-sm font-semibold hover:bg-primary/20 hover:border-primary/50 transition-all duration-300"
             >
-              Обсудить сотрудничество
+              {t("hero_cta")}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </motion.div>

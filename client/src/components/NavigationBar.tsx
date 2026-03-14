@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
-
-const navLinks = [
-  { label: "Impact", href: "#impact" },
-  { label: "Видение", href: "#vision" },
-  { label: "Продукты", href: "#projects" },
-  { label: "Медиа", href: "#media" },
-  { label: "Контакты", href: "#contact" },
-];
+import { Menu, X, Globe } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 export function NavigationBar() {
+  const { lang, setLang, t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+
+  const navLinks = [
+    { label: "Impact", href: "#impact" },
+    { label: t("nav_vision"), href: "#vision" },
+    { label: t("nav_products"), href: "#projects" },
+    { label: t("nav_media"), href: "#media" },
+    { label: t("nav_contacts"), href: "#contact" },
+  ];
 
   useEffect(() => {
     const onScroll = () => {
@@ -31,13 +33,15 @@ export function NavigationBar() {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [lang]);
 
   const scrollTo = (href: string) => {
     setMobileOpen(false);
     const el = document.querySelector(href);
     el?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const toggleLang = () => setLang(lang === "ru" ? "en" : "ru");
 
   return (
     <>
@@ -63,32 +67,49 @@ export function NavigationBar() {
                 <span className="text-primary font-mono font-bold text-sm">KK</span>
               </div>
               <span className="font-mono text-sm font-semibold text-foreground hidden sm:block">
-                Kirill Krestnikov
+                Konstantin Krestnikov
               </span>
             </motion.a>
 
-            <nav className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => scrollTo(link.href)}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                    activeSection === link.href.slice(1)
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
-                  }`}
-                >
-                  {link.label}
-                </button>
-              ))}
-            </nav>
+            <div className="hidden md:flex items-center gap-1">
+              <nav className="flex items-center gap-1">
+                {navLinks.map((link) => (
+                  <button
+                    key={link.href}
+                    onClick={() => scrollTo(link.href)}
+                    className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                      activeSection === link.href.slice(1)
+                        ? "text-primary bg-primary/10"
+                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                ))}
+              </nav>
+              <button
+                onClick={toggleLang}
+                className="ml-2 flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/40 bg-white/[0.02] text-muted-foreground text-xs font-mono hover:text-primary hover:border-primary/40 transition-all duration-300"
+              >
+                <Globe className="w-3.5 h-3.5" />
+                {lang === "ru" ? "EN" : "RU"}
+              </button>
+            </div>
 
-            <button
-              className="md:hidden p-2 text-foreground"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            <div className="flex items-center gap-2 md:hidden">
+              <button
+                onClick={toggleLang}
+                className="p-2 text-muted-foreground text-xs font-mono hover:text-primary transition-colors"
+              >
+                <Globe className="w-4 h-4" />
+              </button>
+              <button
+                className="p-2 text-foreground"
+                onClick={() => setMobileOpen(!mobileOpen)}
+              >
+                {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
         </div>
       </motion.header>

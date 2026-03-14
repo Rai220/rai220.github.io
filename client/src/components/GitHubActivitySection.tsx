@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { GitCommit, GitPullRequest, Bug, Github } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 import type { GitHubActivity } from "@shared/schema";
 
 interface GitHubActivitySectionProps {
@@ -7,6 +8,8 @@ interface GitHubActivitySectionProps {
 }
 
 export function GitHubActivitySection({ activity }: GitHubActivitySectionProps) {
+  const { t } = useLanguage();
+
   const getColor = (count: number) => {
     if (count === 0) return "bg-white/[0.03]";
     if (count <= 2) return "bg-primary/25";
@@ -16,11 +19,11 @@ export function GitHubActivitySection({ activity }: GitHubActivitySectionProps) 
   };
 
   const getLevel = (count: number) => {
-    if (count === 0) return "Нет активности";
-    if (count <= 2) return "Низкая";
-    if (count <= 4) return "Средняя";
-    if (count <= 6) return "Высокая";
-    return "Очень высокая";
+    if (count === 0) return t("github_noActivity");
+    if (count <= 2) return t("github_low");
+    if (count <= 4) return t("github_medium");
+    if (count <= 6) return t("github_high");
+    return t("github_veryHigh");
   };
 
   const groupByWeek = (contributions: Array<{ date: string; count: number }>) => {
@@ -47,7 +50,7 @@ export function GitHubActivitySection({ activity }: GitHubActivitySectionProps) 
   const total = activity.contributionGraph.reduce((s, d) => s + d.count, 0);
 
   const statCards = [
-    { icon: GitCommit, label: "Коммиты", value: activity.totalCommits, color: "text-primary", bg: "bg-primary/5 border-primary/10" },
+    { icon: GitCommit, label: t("github_commits"), value: activity.totalCommits, color: "text-primary", bg: "bg-primary/5 border-primary/10" },
     { icon: GitPullRequest, label: "Pull Requests", value: activity.totalPRs, color: "text-secondary", bg: "bg-secondary/5 border-secondary/10" },
     { icon: Bug, label: "Issues", value: activity.totalIssues, color: "text-accent", bg: "bg-accent/5 border-accent/10" },
   ];
@@ -71,7 +74,7 @@ export function GitHubActivitySection({ activity }: GitHubActivitySectionProps) 
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
         >
-          <span className="text-gradient">GitHub активность</span>
+          <span className="text-gradient">{t("github_title")}</span>
         </motion.h2>
       </div>
 
@@ -89,7 +92,7 @@ export function GitHubActivitySection({ activity }: GitHubActivitySectionProps) 
               {total.toLocaleString()} <span className="text-muted-foreground font-normal text-sm">contributions</span>
             </span>
           </div>
-          <span className="text-xs font-mono text-muted-foreground/60">последний год</span>
+          <span className="text-xs font-mono text-muted-foreground/60">{t("github_lastYear")}</span>
         </div>
 
         <div className="mb-8 overflow-x-auto pb-2">
