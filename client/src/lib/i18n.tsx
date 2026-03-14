@@ -106,6 +106,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try { localStorage.setItem("lang", lang); } catch {}
     document.documentElement.lang = lang;
+    document.title = lang === "en"
+      ? "Konstantin Krestnikov — CTO GigaChain"
+      : "Konstantin Krestnikov — CTO GigaChain";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", lang === "en"
+        ? "Konstantin Krestnikov — CTO GigaChain. AI developer portfolio. AI agents, LLM applications, robotics."
+        : "Konstantin Krestnikov — CTO GigaChain. Портфолио AI-разработчика. AI-агенты, LLM-приложения, робототехника.");
+    }
   }, [lang]);
 
   const t = (key: string): string => {
