@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Youtube, Send, Eye, Calendar, Play, ArrowUpRight } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 import type { Video, Post } from "@shared/schema";
 
 interface ContentSectionProps {
@@ -8,6 +9,8 @@ interface ContentSectionProps {
 }
 
 export function ContentSection({ videos, posts }: ContentSectionProps) {
+  const { t } = useLanguage();
+
   return (
     <>
       <div className="mb-16">
@@ -27,7 +30,7 @@ export function ContentSection({ videos, posts }: ContentSectionProps) {
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
         >
-          <span className="text-gradient">Контент и медиа</span>
+          <span className="text-gradient">{t("content_title")}</span>
         </motion.h2>
       </div>
 
@@ -43,7 +46,7 @@ export function ContentSection({ videos, posts }: ContentSectionProps) {
           </div>
           <div>
             <h3 className="text-lg font-bold text-foreground">YouTube</h3>
-            <p className="text-xs text-muted-foreground font-mono">1K+ подписчиков</p>
+            <p className="text-xs text-muted-foreground font-mono">{t("content_subscribers")}</p>
           </div>
         </motion.div>
 
@@ -98,8 +101,8 @@ export function ContentSection({ videos, posts }: ContentSectionProps) {
             <Send className="w-4 h-4 text-secondary" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-foreground">Блог RoboFuture</h3>
-            <p className="text-xs text-muted-foreground font-mono">Telegram канал</p>
+            <h3 className="text-lg font-bold text-foreground">{t("content_blog")}</h3>
+            <p className="text-xs text-muted-foreground font-mono">{t("content_channel")}</p>
           </div>
         </motion.div>
 
@@ -130,7 +133,7 @@ export function ContentSection({ videos, posts }: ContentSectionProps) {
               </p>
               <div className="flex items-center gap-1 text-xs text-muted-foreground/50 mt-auto pt-3 border-t border-border/30">
                 <Eye className="w-3 h-3" />
-                <span>{post.views} реакций</span>
+                <span>{post.views} {t("content_reactions")}</span>
               </div>
             </motion.a>
           ))}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Send, Github, Linkedin, ArrowUpRight, Terminal } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const contacts = [
   { icon: Mail, label: "Email", value: "k.krestnikov@gmail.com", href: "mailto:k.krestnikov@gmail.com", color: "text-primary", borderColor: "hover:border-primary/40", hoverBg: "hover:bg-primary/5" },
@@ -10,6 +11,7 @@ const contacts = [
 ];
 
 export function ContactSection() {
+  const { t } = useLanguage();
   const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export function ContactSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <span className="text-gradient">Давайте поговорим</span>
+            <span className="text-gradient">{t("contact_title")}</span>
           </motion.h2>
           <motion.p
             className="text-muted-foreground text-sm md:text-base mt-3 max-w-md mx-auto"
@@ -49,7 +51,7 @@ export function ContactSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            R&D Lead &middot; AI Visionary &middot; CTO &middot; Консультации по AI-стратегии
+            R&D Lead &middot; AI Visionary &middot; CTO &middot; {t("contact_subtitle")}
           </motion.p>
         </div>
 
@@ -70,8 +72,8 @@ export function ContactSection() {
             <div className="glass rounded-lg p-4">
               <div className="text-primary/80 text-sm font-mono mb-1">&gt; contact --list</div>
               <div className="text-muted-foreground/50 text-xs font-mono space-y-0.5">
-                <div>Инициализация...</div>
-                <div className="text-primary/60">&#10003; Контакты загружены</div>
+                <div>{t("contact_init")}</div>
+                <div className="text-primary/60">&#10003; {t("contact_loaded")}</div>
               </div>
             </div>
           </div>

@@ -9,6 +9,7 @@ import { ContactSection } from "@/components/ContactSection";
 import { GitHubActivitySection } from "@/components/GitHubActivitySection";
 import { PublicationsSection } from "@/components/PublicationsSection";
 import { CTABanner } from "@/components/CTABanner";
+import { useLanguage } from "@/lib/i18n";
 import type { Project, Stat, Skill, Video, Post, Article, GitHubActivity } from "@shared/schema";
 
 function Section({ id, children, className = "" }: { id?: string; children: React.ReactNode; className?: string }) {
@@ -35,12 +36,15 @@ function LoadingSkeleton() {
 }
 
 export default function Home() {
-  const { data: stats = [], isLoading: statsLoading } = useQuery<Stat[]>({ queryKey: ["/api/stats"] });
-  const { data: projects = [], isLoading: projectsLoading } = useQuery<Project[]>({ queryKey: ["/api/projects"] });
-  const { data: skills = [], isLoading: skillsLoading } = useQuery<Skill[]>({ queryKey: ["/api/skills"] });
-  const { data: videos = [], isLoading: videosLoading } = useQuery<Video[]>({ queryKey: ["/api/videos"] });
-  const { data: posts = [], isLoading: postsLoading } = useQuery<Post[]>({ queryKey: ["/api/posts"] });
-  const { data: articles = [], isLoading: articlesLoading } = useQuery<Article[]>({ queryKey: ["/api/articles"] });
+  const { lang } = useLanguage();
+  const langParam = { lang };
+
+  const { data: stats = [], isLoading: statsLoading } = useQuery<Stat[]>({ queryKey: ["/api/stats", langParam] });
+  const { data: projects = [], isLoading: projectsLoading } = useQuery<Project[]>({ queryKey: ["/api/projects", langParam] });
+  const { data: skills = [], isLoading: skillsLoading } = useQuery<Skill[]>({ queryKey: ["/api/skills", langParam] });
+  const { data: videos = [], isLoading: videosLoading } = useQuery<Video[]>({ queryKey: ["/api/videos", langParam] });
+  const { data: posts = [], isLoading: postsLoading } = useQuery<Post[]>({ queryKey: ["/api/posts", langParam] });
+  const { data: articles = [], isLoading: articlesLoading } = useQuery<Article[]>({ queryKey: ["/api/articles", langParam] });
   const { data: githubActivity, isLoading: githubActivityLoading } = useQuery<GitHubActivity>({ queryKey: ["/api/github-activity"] });
 
   return (

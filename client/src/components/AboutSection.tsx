@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Rocket, Bot, Briefcase, TrendingUp, Download, Users, Star, FileText } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 import type { Stat } from "@shared/schema";
 
 interface AboutSectionProps {
@@ -29,49 +30,39 @@ const iconMap: Record<string, any> = {
   stars: Star, followers: Users, repos: FileText, activity: TrendingUp,
 };
 
-const positions = [
-  {
-    icon: Rocket,
-    badge: "Сейчас",
-    badgeColor: "text-primary border-primary/30 bg-primary/5",
-    title: "CTO GigaChain",
-    org: "GigaChat / Сбер",
-    items: [
-      "Под моим руководством создана библиотека gigachat — top 1.5% всех библиотек мира по скачиваниям на PyPI (48K+/мес)",
-      "Выбрана стратегия Сбера по внедрению AI-агентов через взаимодействие с OpenSource",
-      "77K+ суммарных загрузок/мес на PyPI, определяю SDK-стратегию GigaChat",
-    ],
-    borderColor: "border-primary/20 hover:border-primary/40",
-  },
-  {
-    icon: Bot,
-    badge: "2012–2017",
-    badgeColor: "text-secondary border-secondary/30 bg-secondary/5",
-    title: "Co-founder & Head of AI",
-    org: "Cubic Robotics",
-    items: [
-      "Первый AI-голосовой спикер с V.O.I.S. — продажи в 40 странах",
-      "$180K+ на Indiegogo (top 2% кампаний) + $500K инвестиций",
-      "Публикация в РБК, разработка voice OS с нуля",
-    ],
-    borderColor: "border-secondary/20 hover:border-secondary/40",
-  },
-  {
-    icon: Briefcase,
-    badge: "2019–2021",
-    badgeColor: "text-accent border-accent/30 bg-accent/5",
-    title: "Head of AI",
-    org: "The Coach",
-    items: [
-      "AI-система для персонализированного коучинга",
-      "ML-пайплайны для анализа поведения пользователей",
-      "Перевёл R&D отдел из эксперимента в продакшен",
-    ],
-    borderColor: "border-accent/20 hover:border-accent/40",
-  },
-];
-
 export function AboutSection({ stats }: AboutSectionProps) {
+  const { t } = useLanguage();
+
+  const positions = [
+    {
+      icon: Rocket,
+      badge: t("about_now"),
+      badgeColor: "text-primary border-primary/30 bg-primary/5",
+      title: "CTO GigaChain",
+      org: t("about_org1"),
+      items: [t("about_item1_1"), t("about_item1_2"), t("about_item1_3")],
+      borderColor: "border-primary/20 hover:border-primary/40",
+    },
+    {
+      icon: Bot,
+      badge: "2012–2017",
+      badgeColor: "text-secondary border-secondary/30 bg-secondary/5",
+      title: "Co-founder & Head of AI",
+      org: "Cubic Robotics",
+      items: [t("about_item2_1"), t("about_item2_2"), t("about_item2_3")],
+      borderColor: "border-secondary/20 hover:border-secondary/40",
+    },
+    {
+      icon: Briefcase,
+      badge: "2019–2021",
+      badgeColor: "text-accent border-accent/30 bg-accent/5",
+      title: "Head of AI",
+      org: "The Coach",
+      items: [t("about_item3_1"), t("about_item3_2"), t("about_item3_3")],
+      borderColor: "border-accent/20 hover:border-accent/40",
+    },
+  ];
+
   return (
     <>
       <div className="mb-16">
@@ -80,10 +71,10 @@ export function AboutSection({ stats }: AboutSectionProps) {
           <span className="text-xs font-mono text-primary uppercase tracking-[0.3em]">Impact</span>
         </motion.div>
         <motion.h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-          <span className="text-gradient">Что я построил</span>
+          <span className="text-gradient">{t("about_title")}</span>
         </motion.h2>
         <motion.p className="text-muted-foreground text-base md:text-lg max-w-2xl" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-          Библиотека из top 1.5% мира на PyPI. Агентная архитектура, выбранная Сбером. Продукт, который привлёк $680K+ инвестиций.
+          {t("about_subtitle")}
         </motion.p>
       </div>
 
@@ -109,7 +100,7 @@ export function AboutSection({ stats }: AboutSectionProps) {
           <span className="text-xs font-mono text-secondary uppercase tracking-[0.3em]">Track Record</span>
         </motion.div>
         <motion.h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-          От стартапа до enterprise-платформы
+          {t("about_track_title")}
         </motion.h3>
       </div>
 

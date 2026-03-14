@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FileText, ExternalLink, Award, Trophy } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 import type { Article } from "@shared/schema";
 
 interface PublicationsSectionProps {
@@ -7,6 +8,8 @@ interface PublicationsSectionProps {
 }
 
 export function PublicationsSection({ articles }: PublicationsSectionProps) {
+  const { t } = useLanguage();
+
   return (
     <>
       <div className="mb-16">
@@ -26,7 +29,7 @@ export function PublicationsSection({ articles }: PublicationsSectionProps) {
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
         >
-          <span className="text-gradient-accent">Публикации</span>
+          <span className="text-gradient-accent">{t("publications_title")}</span>
         </motion.h2>
       </div>
 

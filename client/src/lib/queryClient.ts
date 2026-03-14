@@ -29,12 +29,20 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    let url = queryKey.join("/") as string;
-    
+    const base = queryKey[0] as string;
+    const params = queryKey[1] as Record<string, string> | undefined;
+
+    let url: string;
     if (import.meta.env.PROD) {
-      url = `${url}.json`;
+      url = `${base}.json`;
+    } else {
+      url = base;
+      if (params) {
+        const qs = new URLSearchParams(params).toString();
+        if (qs) url += `?${qs}`;
+      }
     }
-    
+
     const res = await fetch(url, {
       credentials: "include",
     });
