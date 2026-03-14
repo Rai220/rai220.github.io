@@ -261,47 +261,47 @@ export class MemStorage implements IStorage {
     ];
 
     this.videosRu = [
-      { id: "1", title: "Универсальный AI-агент = ReAct + REPL. Архитектура, которая работает", thumbnail: "https://i.ytimg.com/vi/s3Ynz436Swc/mqdefault.jpg", url: "https://youtu.be/s3Ynz436Swc", date: "12.09.2025", views: 1200 },
-      { id: "2", title: "MCP и Think-Tool: добавляем мышление и инструменты любому AI-агенту", thumbnail: "https://i.ytimg.com/vi/kwpBP2-ZtAc/mqdefault.jpg", url: "https://youtu.be/kwpBP2-ZtAc", date: "01.07.2025", views: 2500 },
-      { id: "3", title: "AI-агенты — что это, зачем и как их строить (GigaConf 2024)", thumbnail: "https://i.ytimg.com/vi/9QXRAC8G89I/mqdefault.jpg", url: "https://www.youtube.com/watch?v=9QXRAC8G89I", date: "27.12.2024", views: 3800 },
+      { id: "1", title: "Запускаем и изучаем OpenClaw — автономного AI-агента, который живёт 24/7 на твоём сервере", thumbnail: "https://i.ytimg.com/vi/0TQFhuv1PVA/mqdefault.jpg", url: "https://youtu.be/0TQFhuv1PVA", date: "03.03.2026", views: 4890 },
+      { id: "2", title: "Создаю AI-агента с нуля для Enterprise RAG Challenge 3", thumbnail: "https://i.ytimg.com/vi/cveXhWvj_zo/mqdefault.jpg", url: "https://youtu.be/cveXhWvj_zo", date: "02.02.2026", views: 5250 },
+      { id: "3", title: "Пример использования MCP с AI-агентами. Изучаем протокол, пишем свой MCP-сервер", thumbnail: "https://i.ytimg.com/vi/scYbc9zRark/mqdefault.jpg", url: "https://youtu.be/scYbc9zRark", date: "03.12.2025", views: 3200 },
     ];
 
     this.videosEn = [
-      { id: "1", title: "Universal AI Agent = ReAct + REPL. An architecture that works", thumbnail: "https://i.ytimg.com/vi/s3Ynz436Swc/mqdefault.jpg", url: "https://youtu.be/s3Ynz436Swc", date: "12.09.2025", views: 1200 },
-      { id: "2", title: "MCP & Think-Tool: adding reasoning and tools to any AI agent", thumbnail: "https://i.ytimg.com/vi/kwpBP2-ZtAc/mqdefault.jpg", url: "https://youtu.be/kwpBP2-ZtAc", date: "01.07.2025", views: 2500 },
-      { id: "3", title: "AI Agents — what, why, and how to build them (GigaConf 2024)", thumbnail: "https://i.ytimg.com/vi/9QXRAC8G89I/mqdefault.jpg", url: "https://www.youtube.com/watch?v=9QXRAC8G89I", date: "27.12.2024", views: 3800 },
+      { id: "1", title: "Launching and exploring OpenClaw — an autonomous AI agent living 24/7 on your server", thumbnail: "https://i.ytimg.com/vi/0TQFhuv1PVA/mqdefault.jpg", url: "https://youtu.be/0TQFhuv1PVA", date: "03.03.2026", views: 4890 },
+      { id: "2", title: "Building an AI agent from scratch for Enterprise RAG Challenge 3", thumbnail: "https://i.ytimg.com/vi/cveXhWvj_zo/mqdefault.jpg", url: "https://youtu.be/cveXhWvj_zo", date: "02.02.2026", views: 5250 },
+      { id: "3", title: "MCP with AI agents in practice: exploring the protocol, building a custom MCP server", thumbnail: "https://i.ytimg.com/vi/scYbc9zRark/mqdefault.jpg", url: "https://youtu.be/scYbc9zRark", date: "03.12.2025", views: 3200 },
     ];
 
     this.postsRu = [
-      { id: "1", title: "Главные боли AI-агентов на конец 2025 — разбор интервью Карпатого", excerpt: "Андрей аккуратно, но жёстко сбивает хайп. Что реально работает в агентах, а что — маркетинговый шум. Must-watch для тех, кто строит агентные системы.", date: "31.10.2025", views: 101, url: "https://t.me/robofuture" },
-      { id: "2", title: "nanochat — обучаем чатовую GPT-модель с нуля за $100", excerpt: "Новый пример от Karpathy. Показывает, что обучение LLM стало доступным каждому разработчику. Разбираю архитектуру и выводы для индустрии.", date: "16.10.2025", views: 51, url: "https://t.me/robofuture" },
-      { id: "3", title: "Agent Breaker — тестируем AI-агентов как хакеры", excerpt: "Игра от Lakera: взломайте 10 AI-приложений. Идеальный тест на robustness ваших агентных систем. Нашёл уязвимости, о которых не пишут в документации.", date: "19.09.2025", views: 22, url: "https://t.me/robofuture" },
+      { id: "1", title: "Что делает AI-агент первым делом, если дать ему цель — «стань разумным существом»?", excerpt: "Не пишет код. Не строит план. Он создаёт себе память. Эксперимент с автономным агентом и неожиданные результаты.", date: "14.03.2026", views: 643, url: "https://t.me/robofuture" },
+      { id: "2", title: "Эпоха классических программистов стремительно заканчивается", excerpt: "На выходных в очередной раз увидел вживую: подружился с клиентом, который за вечер с AI-агентом сделал то, на что раньше уходила неделя.", date: "04.03.2026", views: 1510, url: "https://t.me/robofuture" },
+      { id: "3", title: "OpenClaw — развлекаюсь с Крабом, который живет в Телеграме", excerpt: "Уже неделю развлекаюсь с автономным AI-агентом OpenClaw. Он выполняет задачи от простых до длящихся десятки минут. Вчера он предложил кое-что неожиданное.", date: "09.02.2026", views: 1950, url: "https://t.me/robofuture" },
     ];
 
     this.postsEn = [
-      { id: "1", title: "Top AI agent pain points in late 2025 — Karpathy interview breakdown", excerpt: "Andrej carefully but firmly deflates the hype. What actually works in agents vs. marketing noise. Must-watch for anyone building agent systems.", date: "31.10.2025", views: 101, url: "https://t.me/robofuture" },
-      { id: "2", title: "nanochat — training a chat GPT model from scratch for $100", excerpt: "New example from Karpathy. Shows that LLM training is now accessible to every developer. Breaking down the architecture and industry takeaways.", date: "16.10.2025", views: 51, url: "https://t.me/robofuture" },
-      { id: "3", title: "Agent Breaker — testing AI agents like hackers", excerpt: "A game by Lakera: hack 10 AI applications. The perfect robustness test for your agent systems. Found vulnerabilities not covered in the docs.", date: "19.09.2025", views: 22, url: "https://t.me/robofuture" },
+      { id: "1", title: "What does an AI agent do first when given the goal: 'become a sentient being'?", excerpt: "It doesn't write code. It doesn't make a plan. It creates memory for itself. An experiment with an autonomous agent and unexpected results.", date: "14.03.2026", views: 643, url: "https://t.me/robofuture" },
+      { id: "2", title: "The era of classical programmers is rapidly ending", excerpt: "This weekend I witnessed it firsthand again: a client paired with an AI agent accomplished in one evening what used to take a week.", date: "04.03.2026", views: 1510, url: "https://t.me/robofuture" },
+      { id: "3", title: "OpenClaw — playing with the Crab that lives in Telegram", excerpt: "Been having fun with the autonomous AI agent OpenClaw for a week now. It handles tasks from simple to ones lasting tens of minutes. Yesterday it suggested something unexpected.", date: "09.02.2026", views: 1950, url: "https://t.me/robofuture" },
     ];
 
     this.articlesRu = [
-      { id: "1", title: "AI-агент на GigaChat и LangGraph: от архитектуры до валидации — полный гайд на примере Lean Canvas", url: "https://habr.com/ru/companies/sberbank/articles/941340/", date: "2025", platform: "Habr" },
-      { id: "2", title: "Разработка и применение мультиагентных систем в корпоративной среде", url: "https://sberlabs.com/publications?publication=4605", date: "2025", platform: "Sber Labs" },
-      { id: "3", title: "Какой плащ был у Понтия Пилата? Отвечает GigaChat — тестируем возможности LLM", url: "https://habr.com/ru/companies/sberdevices/articles/794773/", date: "2024", platform: "Habr" },
-      { id: "4", title: "Приделываем руки к ChatGPT: бот, который исполняет код в рантайме", url: "https://habr.com/ru/articles/724012/", date: "2023", platform: "Habr", badge: "\uD83C\uDFC6 Победитель Сезона ML на Habr" },
-      { id: "5", title: "Переносим свою картину мира в чат-бота на базе GPT-3", url: "https://habr.com/ru/articles/712534/", date: "01.2023", platform: "Habr" },
-      { id: "6", title: "Черное Зеркало своими руками — обучаем бота на базе истории чатов", url: "https://habr.com/ru/articles/453314/", date: "05.2019", platform: "Habr" },
-      { id: "7", title: "Compression Favors Consistency, Not Truth: When and Why Language Models Prefer Correct Information", url: "https://arxiv.org/abs/2603.11749", date: "2026", platform: "arXiv" },
+      { id: "1", title: "Compression Favors Consistency, Not Truth: When and Why Language Models Prefer Correct Information", url: "https://arxiv.org/abs/2603.11749", date: "2026", platform: "arXiv" },
+      { id: "2", title: "AI-агент на GigaChat и LangGraph: от архитектуры до валидации — полный гайд на примере Lean Canvas", url: "https://habr.com/ru/companies/sberbank/articles/941340/", date: "2025", platform: "Habr" },
+      { id: "3", title: "Разработка и применение мультиагентных систем в корпоративной среде", url: "https://sberlabs.com/publications?publication=4605", date: "2025", platform: "Sber Labs" },
+      { id: "4", title: "Какой плащ был у Понтия Пилата? Отвечает GigaChat — тестируем возможности LLM", url: "https://habr.com/ru/companies/sberdevices/articles/794773/", date: "2024", platform: "Habr" },
+      { id: "5", title: "Приделываем руки к ChatGPT: бот, который исполняет код в рантайме", url: "https://habr.com/ru/articles/724012/", date: "2023", platform: "Habr", badge: "\uD83C\uDFC6 Победитель Сезона ML на Habr" },
+      { id: "6", title: "Переносим свою картину мира в чат-бота на базе GPT-3", url: "https://habr.com/ru/articles/712534/", date: "01.2023", platform: "Habr" },
+      { id: "7", title: "Черное Зеркало своими руками — обучаем бота на базе истории чатов", url: "https://habr.com/ru/articles/453314/", date: "05.2019", platform: "Habr" },
     ];
 
     this.articlesEn = [
-      { id: "1", title: "AI Agent on GigaChat & LangGraph: from architecture to validation — full guide using Lean Canvas", url: "https://habr.com/ru/companies/sberbank/articles/941340/", date: "2025", platform: "Habr" },
-      { id: "2", title: "Development and application of multi-agent systems in enterprise", url: "https://sberlabs.com/publications?publication=4605", date: "2025", platform: "Sber Labs" },
-      { id: "3", title: "What cloak did Pontius Pilate wear? GigaChat answers — testing LLM capabilities", url: "https://habr.com/ru/companies/sberdevices/articles/794773/", date: "2024", platform: "Habr" },
-      { id: "4", title: "Giving ChatGPT hands: a bot that executes code at runtime", url: "https://habr.com/ru/articles/724012/", date: "2023", platform: "Habr", badge: "\uD83C\uDFC6 ML Season Winner on Habr" },
-      { id: "5", title: "Transferring your worldview into a GPT-3 chatbot", url: "https://habr.com/ru/articles/712534/", date: "01.2023", platform: "Habr" },
-      { id: "6", title: "Black Mirror DIY — training a bot on your chat history", url: "https://habr.com/ru/articles/453314/", date: "05.2019", platform: "Habr" },
-      { id: "7", title: "Compression Favors Consistency, Not Truth: When and Why Language Models Prefer Correct Information", url: "https://arxiv.org/abs/2603.11749", date: "2026", platform: "arXiv" },
+      { id: "1", title: "Compression Favors Consistency, Not Truth: When and Why Language Models Prefer Correct Information", url: "https://arxiv.org/abs/2603.11749", date: "2026", platform: "arXiv" },
+      { id: "2", title: "AI Agent on GigaChat & LangGraph: from architecture to validation — full guide using Lean Canvas", url: "https://habr.com/ru/companies/sberbank/articles/941340/", date: "2025", platform: "Habr" },
+      { id: "3", title: "Development and application of multi-agent systems in enterprise", url: "https://sberlabs.com/publications?publication=4605", date: "2025", platform: "Sber Labs" },
+      { id: "4", title: "What cloak did Pontius Pilate wear? GigaChat answers — testing LLM capabilities", url: "https://habr.com/ru/companies/sberdevices/articles/794773/", date: "2024", platform: "Habr" },
+      { id: "5", title: "Giving ChatGPT hands: a bot that executes code at runtime", url: "https://habr.com/ru/articles/724012/", date: "2023", platform: "Habr", badge: "\uD83C\uDFC6 ML Season Winner on Habr" },
+      { id: "6", title: "Transferring your worldview into a GPT-3 chatbot", url: "https://habr.com/ru/articles/712534/", date: "01.2023", platform: "Habr" },
+      { id: "7", title: "Black Mirror DIY — training a bot on your chat history", url: "https://habr.com/ru/articles/453314/", date: "05.2019", platform: "Habr" },
     ];
 
     this.githubActivity = {
