@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useRef, type ReactNode } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type Language = "ru" | "en";
 
@@ -94,6 +95,8 @@ const LanguageContext = createContext<LanguageContextType>({
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
+  const queryClient = useQueryClient();
+  const isFirstRender = useRef(true);
   const [lang, setLang] = useState<Language>(() => {
     try {
       const stored = localStorage.getItem("lang");
@@ -114,6 +117,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       metaDesc.setAttribute("content", lang === "en"
         ? "Konstantin Krestnikov — CTO GigaChain. AI developer portfolio. AI agents, LLM applications, robotics."
         : "Konstantin Krestnikov — CTO GigaChain. Портфолио AI-разработчика. AI-агенты, LLM-приложения, робототехника.");
+    }
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      queryClient.invalidateQueries();
     }
   }, [lang]);
 
