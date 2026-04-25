@@ -25,3 +25,7 @@ npm run build
 ```
 
 The built site will be in `dist/public` directory.
+
+## Analytics
+
+The production build supports Google Analytics 4. Set the GitHub Actions repository variable `GA_MEASUREMENT_ID` to your GA4 measurement ID, for example `G-XXXXXXXXXX`.
