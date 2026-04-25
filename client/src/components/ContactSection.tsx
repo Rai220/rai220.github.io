@@ -20,8 +20,8 @@ export function ContactSection() {
   }, []);
 
   return (
-    <section className="py-32 px-4 relative overflow-hidden" id="contact">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/30 to-card/50" />
+    <section className="py-20 px-4 relative overflow-hidden" id="contact">
+      <div className="absolute inset-0 console-grid opacity-20" />
 
       <div className="container mx-auto max-w-4xl relative z-10">
         <div className="mb-16 text-center">
@@ -42,7 +42,7 @@ export function ContactSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <span className="text-gradient">{t("contact_title")}</span>
+            {t("contact_title")}
           </motion.h2>
           <motion.p
             className="text-muted-foreground text-sm md:text-base mt-3 max-w-md mx-auto"
@@ -51,12 +51,12 @@ export function ContactSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            R&D Lead &middot; AI Visionary &middot; CTO &middot; {t("contact_subtitle")}
+            external AI/R&D architect &middot; {t("contact_subtitle")}
           </motion.p>
         </div>
 
         <motion.div
-          className="card-premium p-6 md:p-10"
+          className="terminal-panel p-6 md:p-10"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -69,8 +69,8 @@ export function ContactSection() {
               <span>~</span>
               <span className="text-secondary/70">$</span>
             </div>
-            <div className="glass rounded-lg p-4">
-              <div className="text-primary/80 text-sm font-mono mb-1">&gt; contact --list</div>
+            <div className="rounded-md border border-border/70 bg-background/80 p-4">
+              <div className="text-primary/80 text-sm font-mono mb-1">&gt; contact --mode consulting --mentor teams</div>
               <div className="text-muted-foreground/50 text-xs font-mono space-y-0.5">
                 <div>{t("contact_init")}</div>
                 <div className="text-primary/60">&#10003; {t("contact_loaded")}</div>
@@ -85,13 +85,13 @@ export function ContactSection() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`group flex items-center gap-4 p-5 rounded-xl border border-border/50 bg-white/[0.01] ${borderColor} ${hoverBg} transition-all duration-500 cursor-pointer`}
+                className={`group flex items-center gap-4 p-5 rounded-md border border-border/60 bg-background/60 ${borderColor} ${hoverBg} transition-colors cursor-pointer`}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 + i * 0.1 }}
               >
-                <div className="w-11 h-11 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-white/20 transition-colors">
+                <div className="w-11 h-11 rounded-md bg-card border border-border/70 flex items-center justify-center flex-shrink-0 group-hover:border-white/20 transition-colors">
                   <Icon className={`w-5 h-5 ${color} opacity-70 group-hover:opacity-100 transition-opacity`} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -103,7 +103,7 @@ export function ContactSection() {
             ))}
           </div>
 
-          <div className="mt-8 glass rounded-lg p-4 font-mono text-sm">
+          <div className="mt-8 rounded-md border border-primary/20 bg-primary/5 p-4 font-mono text-sm">
             <div className="flex items-center gap-2 text-muted-foreground/40">
               <span className="text-primary/50">&gt;</span>
               <span>status: <span className="text-primary/70">ready_to_connect</span></span>

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FileText, ExternalLink, Award, Trophy } from "lucide-react";
+import { FileText, ExternalLink, Trophy } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import type { Article } from "@shared/schema";
 
@@ -12,15 +12,15 @@ export function PublicationsSection({ articles }: PublicationsSectionProps) {
 
   return (
     <>
-      <div className="mb-16">
+      <div className="mb-12">
         <motion.div
           className="flex items-center gap-3 mb-4"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-accent/60 to-transparent" />
-          <span className="text-xs font-mono text-accent uppercase tracking-[0.3em]">Publications</span>
+          <div className="h-px flex-1 max-w-[60px] bg-primary/60" />
+          <span className="text-xs font-mono text-primary uppercase tracking-[0.25em]">research</span>
         </motion.div>
         <motion.h2
           className="text-3xl md:text-5xl font-bold tracking-tight"
@@ -29,19 +29,19 @@ export function PublicationsSection({ articles }: PublicationsSectionProps) {
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
         >
-          <span className="text-gradient-accent">{t("publications_title")}</span>
+          {t("publications_title")}
         </motion.h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {articles.map((article, i) => (
           <motion.a
             key={article.id}
             href={article.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`group card-premium p-6 flex flex-col cursor-pointer ${
-              article.badge ? "border-amber-500/20 hover:border-amber-500/40" : ""
+            className={`group terminal-panel p-5 flex flex-col cursor-pointer ${
+              article.badge ? "border-primary/40" : ""
             }`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -49,15 +49,15 @@ export function PublicationsSection({ articles }: PublicationsSectionProps) {
             transition={{ delay: 0.08 * i, duration: 0.5 }}
           >
             {article.badge && (
-              <div className="flex items-center gap-2 mb-4 px-3 py-1.5 rounded-lg bg-amber-500/5 border border-amber-500/20 w-fit">
-                <Trophy className="w-3.5 h-3.5 text-amber-400" />
-                <span className="text-xs font-mono text-amber-400">{article.badge}</span>
+              <div className="flex items-center gap-2 mb-4 px-3 py-1.5 rounded-md bg-primary/5 border border-primary/20 w-fit">
+                <Trophy className="w-3.5 h-3.5 text-primary" />
+                <span className="text-xs font-mono text-primary">{article.badge}</span>
               </div>
             )}
 
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-md bg-background border border-border/70 flex items-center justify-center">
                   <FileText className="w-4 h-4 text-foreground/50" />
                 </div>
                 <div>

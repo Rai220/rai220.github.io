@@ -4,48 +4,49 @@ export type Language = "ru" | "en";
 
 const translations: Record<string, Record<Language, string>> = {
   // Nav
-  nav_vision: { ru: "Видение", en: "Vision" },
-  nav_products: { ru: "Продукты", en: "Products" },
-  nav_media: { ru: "Медиа", en: "Media" },
+  nav_impact: { ru: "Доказательства", en: "Proof" },
+  nav_services: { ru: "Для компаний", en: "For companies" },
+  nav_products: { ru: "Системы", en: "Systems" },
+  nav_research: { ru: "Research", en: "Research" },
   nav_contacts: { ru: "Контакты", en: "Contact" },
 
   // Hero
-  hero_badge: { ru: "Открыт к предложениям: R&D Lead / AI Visionary", en: "Open to opportunities: R&D Lead / AI Visionary" },
-  hero_subtitle: { ru: "Под моим руководством создана библиотека gigachat —", en: "Under my leadership, the gigachat library was created —" },
-  hero_highlight: { ru: "top 1.5% библиотек мира на PyPI", en: "top 1.5% of libraries worldwide on PyPI" },
-  hero_role: { ru: "CTO GigaChain @ Сбер \u00b7 Выбрал стратегию Сбера по внедрению AI-агентов через OpenSource \u00b7 e/acc", en: "CTO GigaChain @ Sber \u00b7 Defined Sber's AI agent strategy through OpenSource \u00b7 e/acc" },
-  hero_desc1: { ru: "Визионер AGI-эры, который видит куда идёт AI — и умеет это строить руками.", en: "An AGI-era visionary who sees where AI is heading — and knows how to build it." },
-  hero_desc2: { ru: "От прототипа до enterprise-платформы с десятками тысяч пользователей.", en: "From prototype to enterprise platform with tens of thousands of users." },
-  hero_cta: { ru: "Обсудить сотрудничество", en: "Discuss collaboration" },
+  hero_badge: { ru: "AI R&D Architect / Agentic Systems / Research", en: "AI R&D Architect / Agentic Systems / Research" },
+  hero_subtitle: { ru: "Помогаю компаниям строить AI-агентов, SDK и R&D-системы, которые доходят до продакшена.", en: "I help companies build AI agents, SDKs, and R&D systems that reach production." },
+  hero_highlight: { ru: "Эксперт экстра-класса для сложных AI-задач", en: "Senior expert for hard AI problems" },
+  hero_role: { ru: "CTO GigaChain @ Сбер. Автор top 1.5% PyPI SDK, исследователь LLM и практик enterprise AI.", en: "CTO GigaChain @ Sber. Author of a top 1.5% PyPI SDK, LLM researcher, and enterprise AI builder." },
+  hero_desc1: { ru: "Консультации, менторство инженерных команд, аудит архитектуры, прототипы и доведение агентных систем до рабочего результата.", en: "Consulting, engineering mentorship, architecture audits, prototypes, and production-grade agent systems." },
+  hero_desc2: { ru: "Без AI-театра: стратегия, код, метрики, запуск.", en: "No AI theater: strategy, code, metrics, launch." },
+  hero_cta: { ru: "Обсудить задачу компании", en: "Discuss a company problem" },
   hero_metric_downloads: { ru: "downloads / мес", en: "downloads / mo" },
-  hero_metric_raised: { ru: "привлечено", en: "raised" },
+  hero_metric_raised: { ru: "инвестиций", en: "raised" },
 
   // About / Impact
-  about_title: { ru: "Что я построил", en: "What I've built" },
-  about_subtitle: { ru: "Библиотека из top 1.5% мира на PyPI. Агентная архитектура, выбранная Сбером. Продукт, который привлёк $680K+ инвестиций.", en: "A top 1.5% library on PyPI worldwide. Agent architecture chosen by Sber. A product that raised $680K+ in investment." },
-  about_track_title: { ru: "От стартапа до enterprise-платформы", en: "From startup to enterprise platform" },
+  about_title: { ru: "Доказательства, а не обещания", en: "Proof, not promises" },
+  about_subtitle: { ru: "Я соединяю исследовательскую глубину, инженерную реализацию и бизнес-результат: от open-source SDK до enterprise-архитектуры и hardware-продуктов.", en: "I connect research depth, engineering execution, and business outcomes: from open-source SDKs to enterprise architecture and hardware products." },
+  about_track_title: { ru: "Где я даю ценность", en: "Where I create value" },
   about_now: { ru: "Сейчас", en: "Current" },
   about_org1: { ru: "GigaChat / Сбер", en: "GigaChat / Sber" },
-  about_item1_1: { ru: "Под моим руководством создана библиотека gigachat — top 1.5% всех библиотек мира по скачиваниям на PyPI (48K+/мес)", en: "Under my leadership, the gigachat library was created — top 1.5% of all libraries on PyPI by downloads (48K+/mo)" },
-  about_item1_2: { ru: "Выбрана стратегия Сбера по внедрению AI-агентов через взаимодействие с OpenSource", en: "Defined Sber's strategy for AI agent adoption through OpenSource collaboration" },
-  about_item1_3: { ru: "77K+ суммарных загрузок/мес на PyPI, определяю SDK-стратегию GigaChat", en: "77K+ total downloads/mo on PyPI, defining GigaChat SDK strategy" },
-  about_item2_1: { ru: "Первый AI-голосовой спикер с V.O.I.S. — продажи в 40 странах", en: "First AI voice speaker with V.O.I.S. — sales in 40 countries" },
-  about_item2_2: { ru: "$180K+ на Indiegogo (top 2% кампаний) + $500K инвестиций", en: "$180K+ on Indiegogo (top 2% campaigns) + $500K investment" },
-  about_item2_3: { ru: "Публикация в РБК, разработка voice OS с нуля", en: "Featured in RBC, built voice OS from scratch" },
-  about_item3_1: { ru: "AI-система для персонализированного коучинга", en: "AI system for personalized coaching" },
-  about_item3_2: { ru: "ML-пайплайны для анализа поведения пользователей", en: "ML pipelines for user behavior analysis" },
-  about_item3_3: { ru: "Перевёл R&D отдел из эксперимента в продакшен", en: "Transitioned R&D department from experiment to production" },
+  about_item1_1: { ru: "Создал и развиваю SDK/агентную платформу для GigaChat: 77K+ загрузок в месяц и top 1.5% PyPI.", en: "Built and lead SDK/agent platform work for GigaChat: 77K+ downloads/mo and top 1.5% on PyPI." },
+  about_item1_2: { ru: "Проектирую agentic architecture: инструменты, оркестрация, интеграции, developer experience.", en: "Design agentic architecture: tools, orchestration, integrations, and developer experience." },
+  about_item1_3: { ru: "Помогаю командам переходить от AI-демо к системам, которые можно поддерживать и масштабировать.", en: "Help teams move from AI demos to maintainable and scalable systems." },
+  about_item2_1: { ru: "Аудит AI-стратегии, выбор use cases, архитектурная карта и план внедрения.", en: "AI strategy audits, use-case selection, architecture map, and adoption plan." },
+  about_item2_2: { ru: "Менторство CTO, R&D-лидов и инженерных команд по LLM, агентам, SDK и платформам.", en: "Mentorship for CTOs, R&D leads, and engineering teams on LLMs, agents, SDKs, and platforms." },
+  about_item2_3: { ru: "Hands-on прототипы: код, benchmark, интеграции, критерии готовности к продакшену.", en: "Hands-on prototypes: code, benchmarks, integrations, production-readiness criteria." },
+  about_item3_1: { ru: "Исследую поведение LLM и проверяю гипотезы экспериментами, а не только интуицией.", en: "Research LLM behavior and test hypotheses with experiments, not intuition alone." },
+  about_item3_2: { ru: "Новая работа на arXiv: Truth as a Compression Artifact in Language Model Training.", en: "New arXiv paper: Truth as a Compression Artifact in Language Model Training." },
+  about_item3_3: { ru: "Фокус: почему модели выбирают устойчивые паттерны и как это влияет на надёжность AI-систем.", en: "Focus: why models prefer consistent patterns and what it means for reliable AI systems." },
 
   // Skills / Vision
-  skills_title: { ru: "Почему AI-агенты — это всё", en: "Why AI agents are everything" },
-  skills_subtitle: { ru: "Мы стоим на пороге AGI-революции. Вопрос не «будет ли», а «кто окажется готов».", en: "We're on the verge of the AGI revolution. The question isn't \"if\" but \"who will be ready\"." },
-  skills_thesis: { ru: "Мой тезис", en: "My thesis" },
-  skills_value: { ru: "Что я даю компании", en: "What I bring to a company" },
-  skills_stack: { ru: "Стек", en: "Stack" },
+  skills_title: { ru: "Что я могу сделать для компании", en: "What I can do for a company" },
+  skills_subtitle: { ru: "Форматы работы простые: консультация, менторство, архитектурный аудит или hands-on построение прототипа вместе с командой.", en: "Simple engagement formats: consulting, mentorship, architecture audit, or hands-on prototype delivery with your team." },
+  skills_thesis: { ru: "Коротко о подходе", en: "Approach in short" },
+  skills_value: { ru: "Форматы работы", en: "Engagement formats" },
+  skills_stack: { ru: "Технологический контур", en: "Technology scope" },
 
   // Projects
-  projects_title: { ru: "Избранные проекты", en: "Featured projects" },
-  projects_subtitle: { ru: "Open-source инструменты и платформы для разработки AI-агентов", en: "Open-source tools and platforms for AI agent development" },
+  projects_title: { ru: "Системы, которые уже работают", en: "Systems already working" },
+  projects_subtitle: { ru: "Не витрина pet-проектов, а инструменты, вокруг которых строятся разработка, интеграции и агентные сценарии.", en: "Not a shelf of pet projects, but tools used for development, integrations, and agent workflows." },
 
   // Content & Media
   content_title: { ru: "Контент и медиа", en: "Content & media" },
@@ -55,7 +56,7 @@ const translations: Record<string, Record<Language, string>> = {
   content_reactions: { ru: "реакций", en: "reactions" },
 
   // Publications
-  publications_title: { ru: "Публикации", en: "Publications" },
+  publications_title: { ru: "Research и публичная экспертиза", en: "Research and public expertise" },
 
   // GitHub Activity
   github_title: { ru: "GitHub активность", en: "GitHub activity" },
@@ -68,17 +69,17 @@ const translations: Record<string, Record<Language, string>> = {
   github_veryHigh: { ru: "Очень высокая", en: "Very high" },
 
   // CTA
-  cta_title1: { ru: "Ищете R&D лида,", en: "Looking for an R&D lead" },
-  cta_title2: { ru: "который понимает будущее AI?", en: "who understands the future of AI?" },
-  cta_desc1: { ru: "Автор библиотеки из top 1.5% PyPI. Определил агентную архитектуру Сбера.", en: "Author of a top 1.5% PyPI library. Defined Sber's agent architecture." },
-  cta_desc2: { ru: "Готов сделать то же для вашей компании.", en: "Ready to do the same for your company." },
-  cta_button: { ru: "Давайте поговорим", en: "Let's talk" },
+  cta_title1: { ru: "Нужна AI-система,", en: "Need an AI system" },
+  cta_title2: { ru: "а не презентация?", en: "not a slide deck?" },
+  cta_desc1: { ru: "Разберу задачу, предложу архитектуру и помогу команде довести решение до рабочего состояния.", en: "I can break down the problem, propose architecture, and help the team ship a working system." },
+  cta_desc2: { ru: "Подходит для консультаций, менторства и временной роли external AI/R&D architect.", en: "Useful for consulting, mentorship, and external AI/R&D architect engagements." },
+  cta_button: { ru: "Запросить консультацию", en: "Request consultation" },
 
   // Contact
-  contact_title: { ru: "Давайте поговорим", en: "Let's talk" },
-  contact_subtitle: { ru: "Консультации по AI-стратегии", en: "AI Strategy Consulting" },
-  contact_init: { ru: "Инициализация...", en: "Initializing..." },
-  contact_loaded: { ru: "Контакты загружены", en: "Contacts loaded" },
+  contact_title: { ru: "Обсудим вашу AI-задачу", en: "Let's discuss your AI problem" },
+  contact_subtitle: { ru: "консалтинг, менторство, архитектура agentic AI", en: "consulting, mentorship, agentic AI architecture" },
+  contact_init: { ru: "Проверяю доступные каналы...", en: "Checking available channels..." },
+  contact_loaded: { ru: "Готов к консультациям и проектной работе", en: "Available for consulting and project work" },
 };
 
 interface LanguageContextType {

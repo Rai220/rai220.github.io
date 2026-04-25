@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Github, Send, Youtube, FileText, ChevronDown, ArrowRight } from "lucide-react";
-import { ParticleBackground } from "./ParticleBackground";
+import { Github, Send, Youtube, FileText, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
 const socialLinks = [
@@ -13,152 +11,110 @@ const socialLinks = [
 
 export function HeroSection() {
   const { t } = useLanguage();
-  const [typedText, setTypedText] = useState("");
-  const fullText = "KONSTANTIN KRESTNIKOV";
-  const [showCursor, setShowCursor] = useState(true);
 
   const metrics = [
-    { value: "Top 1.5%", label: "PyPI worldwide" },
+    { value: "top 1.5%", label: "PyPI" },
     { value: "77K+", label: t("hero_metric_downloads") },
-    { value: "$680K+", label: t("hero_metric_raised") },
+    { value: "arXiv 2026", label: "LLM research" },
   ];
 
-  useEffect(() => {
-    let idx = 0;
-    const timer = setInterval(() => {
-      if (idx <= fullText.length) { setTypedText(fullText.slice(0, idx)); idx++; }
-      else clearInterval(timer);
-    }, 70);
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => setShowCursor(p => !p), 530);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden" id="hero">
-      <div className="absolute inset-0 animated-gradient-bg" />
-      <ParticleBackground />
+    <section className="relative min-h-screen flex items-center overflow-hidden border-b border-border/70" id="hero">
+      <div className="absolute inset-0 console-grid opacity-40" />
+      <div className="absolute inset-x-0 top-0 h-px bg-primary/40" />
 
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.02]">
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,157,0.08) 2px, rgba(0,255,157,0.08) 4px)',
-        }} />
-      </div>
-
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[128px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-[128px] pointer-events-none" />
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-5xl mx-auto text-center">
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-center pt-24 pb-16">
           <motion.div
-            className="mb-5 flex justify-center"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, type: "spring", damping: 15 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
           >
-            <div className="relative">
-              <div className="absolute -inset-3 bg-gradient-to-r from-primary/20 via-secondary/10 to-accent/20 rounded-full blur-2xl animate-pulse-slow" />
-              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-primary/30 ring-4 ring-primary/10">
-                <img src="https://avatars.githubusercontent.com/u/1329774?v=4" alt="Konstantin Krestnikov" className="w-full h-full object-cover" />
-              </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-primary/30 bg-primary/5 text-xs font-mono text-primary mb-6">
+              <span className="w-2 h-2 rounded-full bg-primary" />
+              {t("hero_badge")}
+            </div>
+
+            <p className="font-mono text-sm text-muted-foreground mb-4">&gt; whoami</p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight leading-[0.95] mb-6">
+              Konstantin Krestnikov
+              <span className="block text-primary">AI systems architect</span>
+            </h1>
+
+            <p className="text-xl md:text-2xl font-semibold text-foreground mb-4 max-w-3xl">
+              {t("hero_highlight")}
+            </p>
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl mb-4">
+              {t("hero_subtitle")}
+            </p>
+            <p className="text-sm md:text-base text-muted-foreground/80 leading-relaxed max-w-2xl mb-8">
+              {t("hero_role")} {t("hero_desc1")} {t("hero_desc2")}
+            </p>
+
+            <div className="flex flex-wrap gap-3 mb-8">
+              <a
+                href="#contact"
+                onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
+                className="group flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
+              >
+                {t("hero_cta")}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a
+                href="#services"
+                onClick={(e) => { e.preventDefault(); document.getElementById("services")?.scrollIntoView({ behavior: "smooth" }); }}
+                className="px-5 py-3 rounded-md border border-border/80 bg-card/70 text-sm font-semibold text-foreground hover:border-primary/50 transition-colors"
+              >
+                {t("nav_services")}
+              </a>
+            </div>
+
+            <div className="flex flex-wrap gap-2.5 items-center">
+              {socialLinks.map(({ icon: Icon, label, href, color }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  className={`group flex items-center gap-2 px-3 py-2 rounded-md border border-border/60 bg-card/60 text-muted-foreground text-sm transition-colors ${color}`}>
+                  <Icon className="w-4 h-4" />
+                  <span className="font-medium">{label}</span>
+                </a>
+              ))}
             </div>
           </motion.div>
 
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-xs font-mono text-primary mb-6"
-            initial={{ opacity: 0, y: 10 }}
+            className="terminal-panel p-5 md:p-6"
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.15, duration: 0.7 }}
           >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            {t("hero_badge")}
-          </motion.div>
-
-          <motion.div
-            className="mb-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          >
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold font-mono tracking-tight">
-              <span className="text-gradient">{typedText}</span>
-              <span className={`inline-block w-[3px] h-[0.8em] bg-primary ml-1 rounded-sm align-middle ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100`} />
-            </h1>
-          </motion.div>
-
-          <motion.div
-            className="space-y-3 mb-10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-          >
-            <p className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground">
-              {t("hero_subtitle")}{" "}
-              <span className="text-gradient-accent">{t("hero_highlight")}</span>
-            </p>
-            <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              {t("hero_role")}
-            </p>
-            <p className="text-sm text-muted-foreground/70 max-w-xl mx-auto">
-              {t("hero_desc1")}
-              {" "}{t("hero_desc2")}
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="flex flex-wrap justify-center gap-6 md:gap-10 mb-10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9 }}
-          >
-            {metrics.map(m => (
-              <div key={m.label} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold font-mono text-gradient">{m.value}</div>
-                <div className="text-[11px] text-muted-foreground/60 uppercase tracking-wider mt-1">{m.label}</div>
+            <div className="flex items-center gap-2 border-b border-border/60 pb-3 mb-4 font-mono text-xs text-muted-foreground">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+              <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+              <span className="w-2.5 h-2.5 rounded-full bg-primary/70" />
+              <span className="ml-2">harness://expert-profile</span>
+            </div>
+            <div className="space-y-4 font-mono">
+              <div className="text-sm text-muted-foreground">&gt; load proof</div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {metrics.map(m => (
+                  <div key={m.label} className="rounded-md border border-border/70 bg-background/70 p-4">
+                    <div className="text-2xl font-bold text-primary">{m.value}</div>
+                    <div className="text-[11px] text-muted-foreground uppercase tracking-wider mt-1">{m.label}</div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </motion.div>
-
-          <motion.div
-            className="flex flex-wrap gap-3 justify-center items-center mb-10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1 }}
-          >
-            <a
-              href="#contact"
-              onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
-              className="group flex items-center gap-2 px-6 py-2.5 rounded-xl bg-primary/10 border border-primary/30 text-primary text-sm font-semibold hover:bg-primary/20 hover:border-primary/50 transition-all duration-300"
-            >
-              {t("hero_cta")}
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </motion.div>
-
-          <motion.div
-            className="flex flex-wrap gap-2.5 justify-center items-center mb-14"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.3 }}
-          >
-            {socialLinks.map(({ icon: Icon, label, href, color }) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                className={`group flex items-center gap-2 px-4 py-2 rounded-xl border border-border/40 bg-white/[0.02] text-muted-foreground text-sm transition-all duration-500 ${color}`}>
-                <Icon className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-                <span className="font-medium">{label}</span>
-              </a>
-            ))}
-          </motion.div>
-
-          <motion.div className="flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}>
-            <button onClick={() => document.getElementById("impact")?.scrollIntoView({ behavior: "smooth" })}
-              className="group flex flex-col items-center gap-2 text-muted-foreground/40 hover:text-primary/60 transition-colors">
-              <span className="text-[10px] font-mono uppercase tracking-[0.3em]">Scroll</span>
-              <ChevronDown className="w-4 h-4 animate-bounce" />
-            </button>
+              <div className="space-y-3 text-sm text-muted-foreground">
+                {[
+                  "agentic AI architecture",
+                  "LLM SDK / platform engineering",
+                  "consulting & team mentorship",
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-primary" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

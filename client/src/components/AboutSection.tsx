@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Rocket, Bot, Briefcase, TrendingUp, Download, Users, Star, FileText } from "lucide-react";
+import { Rocket, Bot, Briefcase, TrendingUp, Users, Star, FileText } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import type { Stat } from "@shared/schema";
 
@@ -38,34 +38,34 @@ export function AboutSection({ stats }: AboutSectionProps) {
       icon: Rocket,
       badge: t("about_now"),
       badgeColor: "text-primary border-primary/30 bg-primary/5",
-      title: "CTO GigaChain",
+      title: "Enterprise AI builder",
       org: t("about_org1"),
       items: [t("about_item1_1"), t("about_item1_2"), t("about_item1_3")],
-      borderColor: "border-primary/20 hover:border-primary/40",
+      borderColor: "border-primary/25",
     },
     {
       icon: Bot,
-      badge: "2012–2017",
+      badge: "consulting",
       badgeColor: "text-secondary border-secondary/30 bg-secondary/5",
-      title: "Co-founder & Head of AI",
-      org: "Cubic Robotics",
+      title: "External AI/R&D architect",
+      org: "Companies, CTOs, engineering teams",
       items: [t("about_item2_1"), t("about_item2_2"), t("about_item2_3")],
-      borderColor: "border-secondary/20 hover:border-secondary/40",
+      borderColor: "border-secondary/25",
     },
     {
       icon: Briefcase,
-      badge: "2019–2021",
+      badge: "research",
       badgeColor: "text-accent border-accent/30 bg-accent/5",
-      title: "Head of AI",
-      org: "The Coach",
+      title: "LLM researcher",
+      org: "arXiv 2603.11749",
       items: [t("about_item3_1"), t("about_item3_2"), t("about_item3_3")],
-      borderColor: "border-accent/20 hover:border-accent/40",
+      borderColor: "border-accent/25",
     },
   ];
 
   return (
     <>
-      <div className="mb-16">
+      <div className="mb-12">
         <motion.div className="flex items-center gap-3 mb-4" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
           <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-primary/60 to-transparent" />
           <span className="text-xs font-mono text-primary uppercase tracking-[0.3em]">Impact</span>
@@ -73,18 +73,18 @@ export function AboutSection({ stats }: AboutSectionProps) {
         <motion.h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
           <span className="text-gradient">{t("about_title")}</span>
         </motion.h2>
-        <motion.p className="text-muted-foreground text-base md:text-lg max-w-2xl" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+        <motion.p className="text-muted-foreground text-base md:text-lg max-w-3xl" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
           {t("about_subtitle")}
         </motion.p>
       </div>
 
-      <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-20"
+      <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-16"
         initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
         {stats.map((stat, i) => {
           const Icon = iconMap[stat.icon] || TrendingUp;
           return (
-            <motion.div key={stat.id} className="card-premium p-5 group" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 * i, duration: 0.5 }}>
-              <Icon className="w-5 h-5 text-primary/50 mb-3 group-hover:text-primary transition-colors" />
+            <motion.div key={stat.id} className="card-premium p-5 group" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.06 * i, duration: 0.4 }}>
+              <Icon className="w-5 h-5 text-primary/60 mb-3" />
               <div className="text-2xl md:text-3xl font-bold font-mono text-foreground mb-1">
                 {stat.displayValue || <AnimatedCounter end={stat.value} />}
               </div>
@@ -94,21 +94,21 @@ export function AboutSection({ stats }: AboutSectionProps) {
         })}
       </motion.div>
 
-      <div className="mb-10">
+      <div className="mb-8">
         <motion.div className="flex items-center gap-3 mb-4" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
           <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-secondary/60 to-transparent" />
-          <span className="text-xs font-mono text-secondary uppercase tracking-[0.3em]">Track Record</span>
+          <span className="text-xs font-mono text-secondary uppercase tracking-[0.3em]">Value</span>
         </motion.div>
         <motion.h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
           {t("about_track_title")}
         </motion.h3>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {positions.map((pos, i) => {
           const Icon = pos.icon;
           return (
-            <motion.div key={i} className={`group card-premium p-7 ${pos.borderColor} transition-all duration-500`}
+            <motion.div key={i} className={`group card-premium p-6 ${pos.borderColor}`}
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 * i, duration: 0.5 }}>
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center">

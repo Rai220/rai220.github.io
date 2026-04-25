@@ -27,28 +27,28 @@ export class MemStorage implements IStorage {
 
   constructor() {
     this.statsRu = [
-      { id: "1", label: "Top PyPI worldwide", value: 15, icon: "stars", displayValue: "1.5%" },
-      { id: "2", label: "PyPI Downloads / мес", value: 77000, icon: "activity", displayValue: "77K+" },
-      { id: "3", label: "Stars GigaChain", value: 543, icon: "stars", displayValue: "543" },
-      { id: "4", label: "TG Подписчики", value: 1563, icon: "activity" },
-      { id: "5", label: "GitHub Followers", value: 119, icon: "followers" },
-      { id: "6", label: "Стран — Cubic", value: 40, icon: "activity" },
+      { id: "1", label: "PyPI worldwide", value: 15, icon: "stars", displayValue: "top 1.5%" },
+      { id: "2", label: "SDK downloads / mo", value: 77000, icon: "activity", displayValue: "77K+" },
+      { id: "3", label: "GigaChain stars", value: 543, icon: "stars", displayValue: "543" },
+      { id: "4", label: "arXiv paper", value: 2026, icon: "repos", displayValue: "2026" },
+      { id: "5", label: "product funding", value: 680000, icon: "activity", displayValue: "$680K+" },
+      { id: "6", label: "Cubic sales countries", value: 40, icon: "activity", displayValue: "40" },
     ];
 
     this.statsEn = [
-      { id: "1", label: "Top PyPI worldwide", value: 15, icon: "stars", displayValue: "1.5%" },
-      { id: "2", label: "PyPI Downloads / mo", value: 77000, icon: "activity", displayValue: "77K+" },
-      { id: "3", label: "Stars GigaChain", value: 543, icon: "stars", displayValue: "543" },
-      { id: "4", label: "TG Subscribers", value: 1563, icon: "activity" },
-      { id: "5", label: "GitHub Followers", value: 119, icon: "followers" },
-      { id: "6", label: "Countries — Cubic", value: 40, icon: "activity" },
+      { id: "1", label: "PyPI worldwide", value: 15, icon: "stars", displayValue: "top 1.5%" },
+      { id: "2", label: "SDK downloads / mo", value: 77000, icon: "activity", displayValue: "77K+" },
+      { id: "3", label: "GigaChain stars", value: 543, icon: "stars", displayValue: "543" },
+      { id: "4", label: "arXiv paper", value: 2026, icon: "repos", displayValue: "2026" },
+      { id: "5", label: "product funding", value: 680000, icon: "activity", displayValue: "$680K+" },
+      { id: "6", label: "Cubic sales countries", value: 40, icon: "activity", displayValue: "40" },
     ];
 
     this.projectsRu = [
       {
         id: "1",
         title: "gigachat",
-        description: "Официальная Python-библиотека GigaChat API — top 1.5% всех пакетов мира по загрузкам на PyPI (48K+/мес). Стандарт интеграции для тысяч разработчиков. Ключевой SDK экосистемы GigaChat.",
+        description: "Official Python SDK for GigaChat API. A developer platform example: clear API, documentation, stability, and 77K+ monthly downloads.",
         tech: ["Python", "SDK", "API", "PyPI Top 1.5%"],
         stars: 136,
         language: "Python",
@@ -58,7 +58,7 @@ export class MemStorage implements IStorage {
       {
         id: "2",
         title: "GigaChain",
-        description: "Платформа для разработки LLM-приложений и AI-агентов. Выбранная агентная архитектура для всего Сбера. 543 stars, индустриальный стандарт GigaChat-экосистемы.",
+        description: "Platform for LLM applications and AI agents. Architecture for enterprise workflows: tools, memory, orchestration, integrations.",
         tech: ["Python", "LangChain", "LLM", "Agents"],
         stars: 543,
         language: "Python",
@@ -68,7 +68,7 @@ export class MemStorage implements IStorage {
       {
         id: "3",
         title: "langchain-gigachat",
-        description: "Интеграция GigaChat с LangChain. 29K+ загрузок/мес на PyPI. Позволяет использовать российскую LLM в глобальной экосистеме AI-агентов.",
+        description: "GigaChat integration with LangChain. Speeds up LLM adoption in existing agent pipelines and lowers the cost of a first production prototype.",
         tech: ["Python", "LangChain", "Integration"],
         stars: 40,
         language: "Python",
@@ -131,7 +131,7 @@ export class MemStorage implements IStorage {
       {
         id: "1",
         title: "gigachat",
-        description: "Official GigaChat API Python library — top 1.5% of all PyPI packages by downloads (48K+/mo). Integration standard for thousands of developers. Key SDK of the GigaChat ecosystem.",
+        description: "Official Python SDK for the GigaChat API. A developer platform done right: clear API, documentation, stability, and 77K+ monthly downloads.",
         tech: ["Python", "SDK", "API", "PyPI Top 1.5%"],
         stars: 136,
         language: "Python",
@@ -141,7 +141,7 @@ export class MemStorage implements IStorage {
       {
         id: "2",
         title: "GigaChain",
-        description: "Platform for building LLM applications and AI agents. The agent architecture chosen by Sber. 543 stars, an industry standard of the GigaChat ecosystem.",
+        description: "Platform for LLM applications and AI agents. Architecture for enterprise scenarios: tools, memory, orchestration, and integrations.",
         tech: ["Python", "LangChain", "LLM", "Agents"],
         stars: 543,
         language: "Python",
@@ -151,7 +151,7 @@ export class MemStorage implements IStorage {
       {
         id: "3",
         title: "langchain-gigachat",
-        description: "GigaChat integration with LangChain. 29K+ downloads/mo on PyPI. Enables using a Russian LLM within the global AI agent ecosystem.",
+        description: "GigaChat integration with LangChain. Speeds up LLM adoption in existing agent pipelines and lowers the cost of the first production prototype.",
         tech: ["Python", "LangChain", "Integration"],
         stars: 40,
         language: "Python",
@@ -211,53 +211,53 @@ export class MemStorage implements IStorage {
     ];
 
     this.skillsRu = [
-      { id: "tag-1", name: "AI Agents Architecture", proficiency: 0, category: "tags" },
-      { id: "tag-2", name: "LLM Platforms", proficiency: 0, category: "tags" },
-      { id: "tag-3", name: "R&D Leadership", proficiency: 0, category: "tags" },
-      { id: "tag-4", name: "0\u21921 Products", proficiency: 0, category: "tags" },
-      { id: "tag-5", name: "AGI Strategy", proficiency: 0, category: "tags" },
-      { id: "tag-6", name: "e/acc", proficiency: 0, category: "tags" },
-      { id: "thesis-1", name: "AI-агенты — это новый интерфейс между бизнесом и технологиями. Через 2\u20133 года каждый enterprise-процесс будет управляться агентом.", proficiency: 0, category: "thesis" },
-      { id: "thesis-2", name: "Побеждают не те, кто \"внедряет AI\", а те, кто перестраивает архитектуру бизнеса вокруг автономных агентных систем.", proficiency: 0, category: "thesis" },
-      { id: "thesis-3", name: "MCP-серверы, thinking tools и оркестрация агентов — это инфраструктурный слой, который определит победителей AGI-эры.", proficiency: 0, category: "thesis" },
-      { id: "value-1", name: "Стратегическое видение: какие AI-продукты строить, а какие — убьют конкурентов через год.", proficiency: 0, category: "value" },
-      { id: "value-2", name: "Архитектура агентных платформ: от идеи до enterprise-grade системы, работающей в продакшене.", proficiency: 0, category: "value" },
-      { id: "value-3", name: "Руки + голова: сам проектирую, пишу код и вывожу в прод — без месяцев \"исследований\" и презентаций.", proficiency: 0, category: "value" },
-      { id: "value-4", name: "Доказанный track record: платформы с 77K+ загрузок/мес, $680K+ привлечённых инвестиций, enterprise-внедрения.", proficiency: 0, category: "value" },
+      { id: "tag-1", name: "agentic AI", proficiency: 0, category: "tags" },
+      { id: "tag-2", name: "LLM SDK / platforms", proficiency: 0, category: "tags" },
+      { id: "tag-3", name: "R&D leadership", proficiency: 0, category: "tags" },
+      { id: "tag-4", name: "architecture audit", proficiency: 0, category: "tags" },
+      { id: "tag-5", name: "team mentorship", proficiency: 0, category: "tags" },
+      { id: "tag-6", name: "research-backed AI", proficiency: 0, category: "tags" },
+      { id: "thesis-1", name: "Начинаю с бизнес-процесса и ограничений, а не с модной модели. AI должен давать измеримый результат.", proficiency: 0, category: "thesis" },
+      { id: "thesis-2", name: "Хорошая agentic-система — это не один промпт, а harness: инструменты, память, проверки, наблюдаемость и контракты.", proficiency: 0, category: "thesis" },
+      { id: "thesis-3", name: "Команда должна понимать архитектуру. Поэтому я не только строю, но и менторю инженеров и лидов.", proficiency: 0, category: "thesis" },
+      { id: "value-1", name: "AI strategy session: разбор задачи, use cases, риски, карта внедрения.", proficiency: 0, category: "value" },
+      { id: "value-2", name: "Architecture review: аудит текущих LLM/agent решений и план, что менять.", proficiency: 0, category: "value" },
+      { id: "value-3", name: "Prototype sprint: рабочий agent/SDK/RAG-прототип с кодом и критериями качества.", proficiency: 0, category: "value" },
+      { id: "value-4", name: "Mentorship: регулярные сессии для CTO, R&D-лидов и инженерных команд.", proficiency: 0, category: "value" },
       { id: "tech-1", name: "Python", proficiency: 0, category: "tech" },
       { id: "tech-2", name: "LangChain / LangGraph", proficiency: 0, category: "tech" },
-      { id: "tech-3", name: "MCP Servers", proficiency: 0, category: "tech" },
-      { id: "tech-4", name: "LLM Orchestration", proficiency: 0, category: "tech" },
-      { id: "tech-5", name: "RAG / Vector Stores", proficiency: 0, category: "tech" },
-      { id: "tech-6", name: "Multi-Agent Systems", proficiency: 0, category: "tech" },
-      { id: "tech-7", name: "API Design", proficiency: 0, category: "tech" },
-      { id: "tech-8", name: "Robotics / IoT", proficiency: 0, category: "tech" },
-      { id: "tech-9", name: "Product Strategy", proficiency: 0, category: "tech" },
+      { id: "tech-3", name: "MCP / tools", proficiency: 0, category: "tech" },
+      { id: "tech-4", name: "LLM orchestration", proficiency: 0, category: "tech" },
+      { id: "tech-5", name: "RAG / evals", proficiency: 0, category: "tech" },
+      { id: "tech-6", name: "multi-agent systems", proficiency: 0, category: "tech" },
+      { id: "tech-7", name: "SDK/API design", proficiency: 0, category: "tech" },
+      { id: "tech-8", name: "observability", proficiency: 0, category: "tech" },
+      { id: "tech-9", name: "product strategy", proficiency: 0, category: "tech" },
     ];
 
     this.skillsEn = [
-      { id: "tag-1", name: "AI Agents Architecture", proficiency: 0, category: "tags" },
-      { id: "tag-2", name: "LLM Platforms", proficiency: 0, category: "tags" },
-      { id: "tag-3", name: "R&D Leadership", proficiency: 0, category: "tags" },
-      { id: "tag-4", name: "0\u21921 Products", proficiency: 0, category: "tags" },
-      { id: "tag-5", name: "AGI Strategy", proficiency: 0, category: "tags" },
-      { id: "tag-6", name: "e/acc", proficiency: 0, category: "tags" },
-      { id: "thesis-1", name: "AI agents are the new interface between business and technology. In 2\u20133 years, every enterprise process will be managed by an agent.", proficiency: 0, category: "thesis" },
-      { id: "thesis-2", name: "Winners aren't those who \"adopt AI\" — they're the ones who rebuild their business architecture around autonomous agent systems.", proficiency: 0, category: "thesis" },
-      { id: "thesis-3", name: "MCP servers, thinking tools, and agent orchestration are the infrastructure layer that will determine the winners of the AGI era.", proficiency: 0, category: "thesis" },
-      { id: "value-1", name: "Strategic vision: which AI products to build, and which ones will kill competitors within a year.", proficiency: 0, category: "value" },
-      { id: "value-2", name: "Agent platform architecture: from idea to enterprise-grade production system.", proficiency: 0, category: "value" },
-      { id: "value-3", name: "Hands-on leader: I design, code, and ship to production — no months of \"research\" and presentations.", proficiency: 0, category: "value" },
-      { id: "value-4", name: "Proven track record: platforms with 77K+ downloads/mo, $680K+ raised, enterprise deployments.", proficiency: 0, category: "value" },
+      { id: "tag-1", name: "agentic AI", proficiency: 0, category: "tags" },
+      { id: "tag-2", name: "LLM SDK / platforms", proficiency: 0, category: "tags" },
+      { id: "tag-3", name: "R&D leadership", proficiency: 0, category: "tags" },
+      { id: "tag-4", name: "architecture audit", proficiency: 0, category: "tags" },
+      { id: "tag-5", name: "team mentorship", proficiency: 0, category: "tags" },
+      { id: "tag-6", name: "research-backed AI", proficiency: 0, category: "tags" },
+      { id: "thesis-1", name: "I start with the business process and constraints, not the fashionable model. AI must create measurable results.", proficiency: 0, category: "thesis" },
+      { id: "thesis-2", name: "A solid agentic system is not one prompt. It is a harness: tools, memory, checks, observability, and contracts.", proficiency: 0, category: "thesis" },
+      { id: "thesis-3", name: "The team must understand the architecture. I build systems and mentor engineers and leaders at the same time.", proficiency: 0, category: "thesis" },
+      { id: "value-1", name: "AI strategy session: problem breakdown, use cases, risks, and adoption map.", proficiency: 0, category: "value" },
+      { id: "value-2", name: "Architecture review: audit current LLM/agent solutions and define what to change.", proficiency: 0, category: "value" },
+      { id: "value-3", name: "Prototype sprint: working agent/SDK/RAG prototype with code and quality criteria.", proficiency: 0, category: "value" },
+      { id: "value-4", name: "Mentorship: recurring sessions for CTOs, R&D leads, and engineering teams.", proficiency: 0, category: "value" },
       { id: "tech-1", name: "Python", proficiency: 0, category: "tech" },
       { id: "tech-2", name: "LangChain / LangGraph", proficiency: 0, category: "tech" },
-      { id: "tech-3", name: "MCP Servers", proficiency: 0, category: "tech" },
-      { id: "tech-4", name: "LLM Orchestration", proficiency: 0, category: "tech" },
-      { id: "tech-5", name: "RAG / Vector Stores", proficiency: 0, category: "tech" },
-      { id: "tech-6", name: "Multi-Agent Systems", proficiency: 0, category: "tech" },
-      { id: "tech-7", name: "API Design", proficiency: 0, category: "tech" },
-      { id: "tech-8", name: "Robotics / IoT", proficiency: 0, category: "tech" },
-      { id: "tech-9", name: "Product Strategy", proficiency: 0, category: "tech" },
+      { id: "tech-3", name: "MCP / tools", proficiency: 0, category: "tech" },
+      { id: "tech-4", name: "LLM orchestration", proficiency: 0, category: "tech" },
+      { id: "tech-5", name: "RAG / evals", proficiency: 0, category: "tech" },
+      { id: "tech-6", name: "multi-agent systems", proficiency: 0, category: "tech" },
+      { id: "tech-7", name: "SDK/API design", proficiency: 0, category: "tech" },
+      { id: "tech-8", name: "observability", proficiency: 0, category: "tech" },
+      { id: "tech-9", name: "product strategy", proficiency: 0, category: "tech" },
     ];
 
     this.videosRu = [
@@ -285,23 +285,23 @@ export class MemStorage implements IStorage {
     ];
 
     this.articlesRu = [
+      { id: "0", title: "Truth as a Compression Artifact in Language Model Training", url: "https://arxiv.org/abs/2603.11749", date: "2026", platform: "arXiv", badge: "new research" },
       { id: "1", title: "AI-агент на GigaChat и LangGraph: от архитектуры до валидации — полный гайд на примере Lean Canvas", url: "https://habr.com/ru/companies/sberbank/articles/941340/", date: "2025", platform: "Habr" },
       { id: "2", title: "Разработка и применение мультиагентных систем в корпоративной среде", url: "https://sberlabs.com/publications?publication=4605", date: "2025", platform: "Sber Labs" },
       { id: "3", title: "Какой плащ был у Понтия Пилата? Отвечает GigaChat — тестируем возможности LLM", url: "https://habr.com/ru/companies/sberdevices/articles/794773/", date: "2024", platform: "Habr" },
       { id: "4", title: "Приделываем руки к ChatGPT: бот, который исполняет код в рантайме", url: "https://habr.com/ru/articles/724012/", date: "2023", platform: "Habr", badge: "\uD83C\uDFC6 Победитель Сезона ML на Habr" },
       { id: "5", title: "Переносим свою картину мира в чат-бота на базе GPT-3", url: "https://habr.com/ru/articles/712534/", date: "01.2023", platform: "Habr" },
       { id: "6", title: "Черное Зеркало своими руками — обучаем бота на базе истории чатов", url: "https://habr.com/ru/articles/453314/", date: "05.2019", platform: "Habr" },
-      { id: "7", title: "Compression Favors Consistency, Not Truth: When and Why Language Models Prefer Correct Information", url: "https://arxiv.org/abs/2603.11749", date: "2026", platform: "arXiv" },
     ];
 
     this.articlesEn = [
+      { id: "0", title: "Truth as a Compression Artifact in Language Model Training", url: "https://arxiv.org/abs/2603.11749", date: "2026", platform: "arXiv", badge: "new research" },
       { id: "1", title: "AI Agent on GigaChat & LangGraph: from architecture to validation — full guide using Lean Canvas", url: "https://habr.com/ru/companies/sberbank/articles/941340/", date: "2025", platform: "Habr" },
       { id: "2", title: "Development and application of multi-agent systems in enterprise", url: "https://sberlabs.com/publications?publication=4605", date: "2025", platform: "Sber Labs" },
       { id: "3", title: "What cloak did Pontius Pilate wear? GigaChat answers — testing LLM capabilities", url: "https://habr.com/ru/companies/sberdevices/articles/794773/", date: "2024", platform: "Habr" },
       { id: "4", title: "Giving ChatGPT hands: a bot that executes code at runtime", url: "https://habr.com/ru/articles/724012/", date: "2023", platform: "Habr", badge: "\uD83C\uDFC6 ML Season Winner on Habr" },
       { id: "5", title: "Transferring your worldview into a GPT-3 chatbot", url: "https://habr.com/ru/articles/712534/", date: "01.2023", platform: "Habr" },
       { id: "6", title: "Black Mirror DIY — training a bot on your chat history", url: "https://habr.com/ru/articles/453314/", date: "05.2019", platform: "Habr" },
-      { id: "7", title: "Compression Favors Consistency, Not Truth: When and Why Language Models Prefer Correct Information", url: "https://arxiv.org/abs/2603.11749", date: "2026", platform: "arXiv" },
     ];
 
     this.githubActivity = {

@@ -10,10 +10,10 @@ export function NavigationBar() {
   const [activeSection, setActiveSection] = useState("");
 
   const navLinks = [
-    { label: "Impact", href: "#impact" },
-    { label: t("nav_vision"), href: "#vision" },
+    { label: t("nav_impact"), href: "#impact" },
+    { label: t("nav_services"), href: "#services" },
     { label: t("nav_products"), href: "#projects" },
-    { label: t("nav_media"), href: "#media" },
+    { label: t("nav_research"), href: "#research" },
     { label: t("nav_contacts"), href: "#contact" },
   ];
 
@@ -48,8 +48,8 @@ export function NavigationBar() {
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "glass-strong shadow-lg shadow-black/20"
-            : "bg-transparent"
+            ? "bg-background/95 border-b border-border/70 shadow-lg shadow-black/20 backdrop-blur"
+            : "bg-background/70 border-b border-border/30 backdrop-blur"
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -63,7 +63,7 @@ export function NavigationBar() {
               className="flex items-center gap-2 group"
               whileHover={{ scale: 1.02 }}
             >
-              <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:glow-sm transition-all">
+              <div className="w-8 h-8 rounded-md bg-primary/10 border border-primary/40 flex items-center justify-center transition-all">
                 <span className="text-primary font-mono font-bold text-sm">KK</span>
               </div>
               <span className="font-mono text-sm font-semibold text-foreground hidden sm:block">
@@ -77,10 +77,10 @@ export function NavigationBar() {
                   <button
                     key={link.href}
                     onClick={() => scrollTo(link.href)}
-                    className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                    className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                       activeSection === link.href.slice(1)
                         ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                        : "text-muted-foreground hover:text-foreground hover:bg-card"
                     }`}
                   >
                     {link.label}
@@ -89,7 +89,7 @@ export function NavigationBar() {
               </nav>
               <button
                 onClick={toggleLang}
-                className="ml-2 flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/40 bg-white/[0.02] text-muted-foreground text-xs font-mono hover:text-primary hover:border-primary/40 transition-all duration-300"
+                className="ml-2 flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-border/60 bg-card text-muted-foreground text-xs font-mono hover:text-primary hover:border-primary/40 transition-colors"
               >
                 <Globe className="w-3.5 h-3.5" />
                 {lang === "ru" ? "EN" : "RU"}
@@ -117,7 +117,7 @@ export function NavigationBar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 glass-strong md:hidden"
+            className="fixed inset-0 z-40 bg-background/95 backdrop-blur md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
