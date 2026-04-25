@@ -28,4 +28,4 @@ The built site will be in `dist/public` directory.
 
 ## Analytics
 
-The production build supports Google Analytics 4. Set the GitHub Actions repository variable `GA_MEASUREMENT_ID` to your GA4 measurement ID, for example `G-XXXXXXXXXX`.
+The production build includes Google Analytics 4 with measurement ID `G-RY8EJ63KRL`.

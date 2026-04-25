@@ -33,8 +33,6 @@ jobs:
       
       - name: Build
         run: npm run build
-        env:
-          VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
       
       - name: Add .nojekyll file
         run: touch ./dist/public/.nojekyll
