@@ -34,7 +34,8 @@ export const getQueryFn: <T>(options: {
 
     let url: string;
     if (import.meta.env.PROD) {
-      url = `${base}.json`;
+      const langSuffix = params?.lang && params.lang !== "ru" ? `.${params.lang}` : "";
+      url = `${base}${langSuffix}.json`;
     } else {
       url = base;
       if (params) {
