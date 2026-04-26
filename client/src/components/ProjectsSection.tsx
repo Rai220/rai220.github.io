@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Star, ExternalLink, GitFork } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { trackEvent } from "@/lib/analytics";
 import type { Project } from "@shared/schema";
 
 interface ProjectsSectionProps {
@@ -57,6 +58,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent("external_link_click", { label: "GitHub", project: project.title })}
             className="group card-premium p-6 flex flex-col cursor-pointer"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

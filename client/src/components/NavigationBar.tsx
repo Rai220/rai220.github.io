@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Globe } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { trackEvent } from "@/lib/analytics";
 
 export function NavigationBar() {
   const { lang, setLang, t } = useLanguage();
@@ -41,7 +42,11 @@ export function NavigationBar() {
     el?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const toggleLang = () => setLang(lang === "ru" ? "en" : "ru");
+  const toggleLang = () => {
+    const nextLang = lang === "ru" ? "en" : "ru";
+    trackEvent("language_switch", { from: lang, to: nextLang });
+    setLang(nextLang);
+  };
 
   return (
     <>

@@ -8,6 +8,8 @@ import { CustomCursor } from "@/components/CustomCursor";
 import { LanguageProvider } from "@/lib/i18n";
 import { initAnalytics, trackPageView } from "@/lib/analytics";
 import Home from "@/pages/Home";
+import Intake from "@/pages/Intake";
+import IntakeThanks from "@/pages/IntakeThanks";
 import NotFound from "@/pages/not-found";
 
 initAnalytics();
@@ -26,6 +28,8 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/intake" component={Intake} />
+      <Route path="/intake/thanks" component={IntakeThanks} />
       <Route component={NotFound} />
     </Switch>
   );

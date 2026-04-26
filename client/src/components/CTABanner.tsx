@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { trackEvent } from "@/lib/analytics";
 
 export function CTABanner() {
   const { t } = useLanguage();
@@ -26,8 +27,8 @@ export function CTABanner() {
             </p>
           </div>
           <a
-            href="#contact"
-            onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
+            href="/intake"
+            onClick={() => trackEvent("cta_services_click", { label: "cta_banner" })}
             className="group inline-flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors whitespace-nowrap"
           >
             {t("cta_button")}

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Github, Send, Youtube, FileText, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { trackEvent } from "@/lib/analytics";
 
 const socialLinks = [
   { icon: Github, label: "GitHub", href: "https://github.com/Rai220", color: "hover:border-primary/60 hover:text-primary" },
@@ -15,7 +16,7 @@ export function HeroSection() {
   const metrics = [
     { value: "top 1.5%", label: "PyPI" },
     { value: "77K+", label: t("hero_metric_downloads") },
-    { value: "arXiv 2026", label: "LLM research" },
+    { value: "arXiv 2026", label: t("hero_metric_research") },
   ];
 
   return (
@@ -35,10 +36,10 @@ export function HeroSection() {
               {t("hero_badge")}
             </div>
 
-            <p className="font-mono text-sm text-muted-foreground mb-4">&gt; whoami</p>
+            <p className="font-mono text-sm text-muted-foreground mb-4">&gt; {t("hero_whoami_command")}</p>
             <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight leading-[0.95] mb-6">
               Konstantin Krestnikov
-              <span className="block text-primary">AI systems architect</span>
+              <span className="block text-primary">{t("hero_profile_badge")}</span>
             </h1>
 
             <p className="text-xl md:text-2xl font-semibold text-foreground mb-4 max-w-3xl">
@@ -53,8 +54,8 @@ export function HeroSection() {
 
             <div className="flex flex-wrap gap-3 mb-8">
               <a
-                href="#contact"
-                onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
+                href="/intake"
+                onClick={() => trackEvent("cta_hero_click")}
                 className="group flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
               >
                 {t("hero_cta")}
@@ -72,6 +73,7 @@ export function HeroSection() {
             <div className="flex flex-wrap gap-2.5 items-center">
               {socialLinks.map(({ icon: Icon, label, href, color }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  onClick={() => trackEvent("external_link_click", { label })}
                   className={`group flex items-center gap-2 px-3 py-2 rounded-md border border-border/60 bg-card/60 text-muted-foreground text-sm transition-colors ${color}`}>
                   <Icon className="w-4 h-4" />
                   <span className="font-medium">{label}</span>
@@ -93,7 +95,7 @@ export function HeroSection() {
               <span className="ml-2">harness://expert-profile</span>
             </div>
             <div className="space-y-4 font-mono">
-              <div className="text-sm text-muted-foreground">&gt; load proof</div>
+              <div className="text-sm text-muted-foreground">&gt; {t("hero_proof_command")}</div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {metrics.map(m => (
                   <div key={m.label} className="rounded-md border border-border/70 bg-background/70 p-4">
@@ -104,9 +106,9 @@ export function HeroSection() {
               </div>
               <div className="space-y-3 text-sm text-muted-foreground">
                 {[
-                  "agentic AI architecture",
-                  "LLM SDK / platform engineering",
-                  "consulting & team mentorship",
+                  t("hero_capability_1"),
+                  t("hero_capability_2"),
+                  t("hero_capability_3"),
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-primary" />

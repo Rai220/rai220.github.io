@@ -28,27 +28,21 @@ export class MemStorage implements IStorage {
   constructor() {
     this.statsRu = [
       { id: "1", label: "PyPI worldwide", value: 15, icon: "stars", displayValue: "top 1.5%" },
-      { id: "2", label: "SDK downloads / mo", value: 77000, icon: "activity", displayValue: "77K+" },
-      { id: "3", label: "GigaChain stars", value: 543, icon: "stars", displayValue: "543" },
-      { id: "4", label: "arXiv paper", value: 2026, icon: "repos", displayValue: "2026" },
-      { id: "5", label: "product funding", value: 680000, icon: "activity", displayValue: "$680K+" },
-      { id: "6", label: "Cubic sales countries", value: 40, icon: "activity", displayValue: "40" },
+      { id: "2", label: "SDK downloads / мес", value: 77000, icon: "activity", displayValue: "77K+" },
+      { id: "3", label: "arXiv 2026", value: 2026, icon: "repos", displayValue: "Truth as a Compression Artifact" },
     ];
 
     this.statsEn = [
       { id: "1", label: "PyPI worldwide", value: 15, icon: "stars", displayValue: "top 1.5%" },
       { id: "2", label: "SDK downloads / mo", value: 77000, icon: "activity", displayValue: "77K+" },
-      { id: "3", label: "GigaChain stars", value: 543, icon: "stars", displayValue: "543" },
-      { id: "4", label: "arXiv paper", value: 2026, icon: "repos", displayValue: "2026" },
-      { id: "5", label: "product funding", value: 680000, icon: "activity", displayValue: "$680K+" },
-      { id: "6", label: "Cubic sales countries", value: 40, icon: "activity", displayValue: "40" },
+      { id: "3", label: "arXiv 2026", value: 2026, icon: "repos", displayValue: "Truth as a Compression Artifact" },
     ];
 
     this.projectsRu = [
       {
         id: "1",
         title: "gigachat",
-        description: "Official Python SDK for GigaChat API. A developer platform example: clear API, documentation, stability, and 77K+ monthly downloads.",
+        description: "Официальный Python SDK для GigaChat API. Пример developer platform: понятный API, документация, стабильность и 77K+ загрузок в месяц.",
         tech: ["Python", "SDK", "API", "PyPI Top 1.5%"],
         stars: 136,
         language: "Python",
@@ -58,7 +52,7 @@ export class MemStorage implements IStorage {
       {
         id: "2",
         title: "GigaChain",
-        description: "Platform for LLM applications and AI agents. Architecture for enterprise workflows: tools, memory, orchestration, integrations.",
+        description: "Платформа для LLM-приложений и AI-агентов. Архитектура для enterprise-сценариев: инструменты, память, оркестрация, интеграции.",
         tech: ["Python", "LangChain", "LLM", "Agents"],
         stars: 543,
         language: "Python",
@@ -68,7 +62,7 @@ export class MemStorage implements IStorage {
       {
         id: "3",
         title: "langchain-gigachat",
-        description: "GigaChat integration with LangChain. Speeds up LLM adoption in existing agent pipelines and lowers the cost of a first production prototype.",
+        description: "Интеграция GigaChat с LangChain. Ускоряет внедрение LLM в существующие агентные пайплайны и снижает стоимость первого production-прототипа.",
         tech: ["Python", "LangChain", "Integration"],
         stars: 40,
         language: "Python",

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Send, Github, Linkedin, ArrowUpRight, Terminal } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { trackEvent } from "@/lib/analytics";
 
 const contacts = [
   { icon: Mail, label: "Email", value: "k.krestnikov@gmail.com", href: "mailto:k.krestnikov@gmail.com", color: "text-primary", borderColor: "hover:border-primary/40", hoverBg: "hover:bg-primary/5" },
@@ -85,6 +86,7 @@ export function ContactSection() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent("external_link_click", { label })}
                 className={`group flex items-center gap-4 p-5 rounded-md border border-border/60 bg-background/60 ${borderColor} ${hoverBg} transition-colors cursor-pointer`}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}

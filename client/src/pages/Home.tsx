@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { SkillsSection } from "@/components/SkillsSection";
+import { ServicesSection } from "@/components/ServicesSection";
 import { ContactSection } from "@/components/ContactSection";
 import { PublicationsSection } from "@/components/PublicationsSection";
 import { CTABanner } from "@/components/CTABanner";
@@ -58,6 +59,10 @@ export default function Home() {
 
       <Section id="services">
         {skillsLoading ? <LoadingSkeleton /> : <SkillsSection skills={skills} />}
+      </Section>
+
+      <Section id="formats" className="pt-0">
+        <ServicesSection />
       </Section>
 
       <CTABanner />

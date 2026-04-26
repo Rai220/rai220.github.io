@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FileText, ExternalLink, Trophy } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { trackEvent } from "@/lib/analytics";
 import type { Article } from "@shared/schema";
 
 interface PublicationsSectionProps {
@@ -40,6 +41,7 @@ export function PublicationsSection({ articles }: PublicationsSectionProps) {
             href={article.url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent("external_link_click", { label: article.platform })}
             className={`group terminal-panel p-5 flex flex-col cursor-pointer ${
               article.badge ? "border-primary/40" : ""
             }`}

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Youtube, Send, Eye, Calendar, Play, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { trackEvent } from "@/lib/analytics";
 import type { Video, Post } from "@shared/schema";
 
 interface ContentSectionProps {
@@ -57,6 +58,7 @@ export function ContentSection({ videos, posts }: ContentSectionProps) {
               href={video.url}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("external_link_click", { label: "YouTube" })}
               className="group card-premium overflow-hidden cursor-pointer"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -113,6 +115,7 @@ export function ContentSection({ videos, posts }: ContentSectionProps) {
               href={post.url}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("external_link_click", { label: "Telegram" })}
               className="group card-premium p-6 flex flex-col cursor-pointer"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

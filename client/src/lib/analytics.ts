@@ -28,3 +28,13 @@ export function trackPageView(path: string) {
     page_title: document.title,
   });
 }
+
+export function trackEvent(name: string, params?: Record<string, unknown>): void {
+  initAnalytics();
+
+  if (!isAnalyticsEnabled() || typeof window === "undefined" || !window.gtag) {
+    return;
+  }
+
+  window.gtag("event", name, params);
+}
