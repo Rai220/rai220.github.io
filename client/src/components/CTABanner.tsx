@@ -27,8 +27,8 @@ export function CTABanner() {
             </p>
           </div>
           <a
-            href="/intake"
-            onClick={() => trackEvent("cta_services_click", { label: "cta_banner" })}
+            href="#contact"
+            onClick={(e) => { e.preventDefault(); trackEvent("cta_services_click", { label: "cta_banner" }); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
             className="group inline-flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors whitespace-nowrap"
           >
             {t("cta_button")}

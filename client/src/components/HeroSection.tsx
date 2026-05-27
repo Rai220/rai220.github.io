@@ -54,8 +54,8 @@ export function HeroSection() {
 
             <div className="flex flex-wrap gap-3 mb-8">
               <a
-                href="/intake"
-                onClick={() => trackEvent("cta_hero_click")}
+                href="#contact"
+                onClick={(e) => { e.preventDefault(); trackEvent("cta_hero_click"); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
                 className="group flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
               >
                 {t("hero_cta")}
