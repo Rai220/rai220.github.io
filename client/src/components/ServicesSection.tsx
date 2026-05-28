@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, XCircle } from "lucide-react";
-import { Link } from "wouter";
 import { useLanguage } from "@/lib/i18n";
 import { trackEvent } from "@/lib/analytics";
 
@@ -65,14 +64,14 @@ export function ServicesSection() {
         </div>
       </div>
 
-      <Link
-        href="/intake"
-        onClick={() => trackEvent("cta_services_click")}
+      <a
+        href="#contact"
+        onClick={(e) => { e.preventDefault(); trackEvent("cta_services_click"); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
         className="group inline-flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
       >
         {t("services_cta")}
         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-      </Link>
+      </a>
     </>
   );
 }
