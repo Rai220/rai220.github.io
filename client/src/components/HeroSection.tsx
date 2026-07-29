@@ -15,7 +15,7 @@ export function HeroSection() {
 
   const metrics = [
     { value: "top 1.5%", label: "PyPI" },
-    { value: "110K+", label: t("hero_metric_downloads") },
+    { value: "1M+", label: t("hero_metric_downloads") },
     { value: "arXiv 2026", label: t("hero_metric_research") },
   ];
 

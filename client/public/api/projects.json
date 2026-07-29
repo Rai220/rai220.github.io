@@ -2,7 +2,7 @@
   {
     "id": "1",
     "title": "gigachat",
-    "description": "Официальный Python SDK для GigaChat API. Понятный API, документация, стабильность и 110K+ загрузок в месяц.",
+    "description": "Официальный Python SDK для GigaChat API. Понятный API, документация, стабильность и более 1M загрузок.",
     "tech": [
       "Python",
       "SDK",

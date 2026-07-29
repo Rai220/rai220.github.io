@@ -8,10 +8,10 @@
   },
   {
     "id": "2",
-    "label": "SDK downloads / mo",
-    "value": 110000,
+    "label": "gigachat downloads",
+    "value": 1000000,
     "icon": "activity",
-    "displayValue": "110K+"
+    "displayValue": "1M+"
   },
   {
     "id": "3",

@@ -6,9 +6,10 @@ import { ProjectsSection } from "@/components/ProjectsSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { ContactSection } from "@/components/ContactSection";
 import { PublicationsSection } from "@/components/PublicationsSection";
+import { ContentSection } from "@/components/ContentSection";
 import { CTABanner } from "@/components/CTABanner";
 import { useLanguage } from "@/lib/i18n";
-import type { Project, Stat, Article } from "@shared/schema";
+import type { Project, Stat, Article, Video, Post } from "@shared/schema";
 
 function Section({ id, children, className = "" }: { id?: string; children: React.ReactNode; className?: string }) {
   return (
@@ -40,6 +41,8 @@ export default function Home() {
   const { data: stats = [], isLoading: statsLoading } = useQuery<Stat[]>({ queryKey: ["/api/stats", langParam] });
   const { data: projects = [], isLoading: projectsLoading } = useQuery<Project[]>({ queryKey: ["/api/projects", langParam] });
   const { data: articles = [], isLoading: articlesLoading } = useQuery<Article[]>({ queryKey: ["/api/articles", langParam] });
+  const { data: videos = [], isLoading: videosLoading } = useQuery<Video[]>({ queryKey: ["/api/videos", langParam] });
+  const { data: posts = [], isLoading: postsLoading } = useQuery<Post[]>({ queryKey: ["/api/posts", langParam] });
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -65,6 +68,12 @@ export default function Home() {
 
       <Section id="projects">
         {projectsLoading ? <LoadingSkeleton /> : <ProjectsSection projects={projects} />}
+      </Section>
+
+      <SectionDivider />
+
+      <Section id="content">
+        {videosLoading || postsLoading ? <LoadingSkeleton /> : <ContentSection videos={videos} posts={posts} />}
       </Section>
 
       <SectionDivider />

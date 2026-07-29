@@ -28,13 +28,13 @@ export class MemStorage implements IStorage {
   constructor() {
     this.statsRu = [
       { id: "1", label: "PyPI worldwide", value: 15, icon: "stars", displayValue: "top 1.5%" },
-      { id: "2", label: "SDK downloads / мес", value: 110000, icon: "activity", displayValue: "110K+" },
+      { id: "2", label: "загрузок gigachat", value: 1000000, icon: "activity", displayValue: "1M+" },
       { id: "3", label: "arXiv 2026", value: 2026, icon: "repos", displayValue: "Truth as a Compression Artifact" },
     ];
 
     this.statsEn = [
       { id: "1", label: "PyPI worldwide", value: 15, icon: "stars", displayValue: "top 1.5%" },
-      { id: "2", label: "SDK downloads / mo", value: 110000, icon: "activity", displayValue: "110K+" },
+      { id: "2", label: "gigachat downloads", value: 1000000, icon: "activity", displayValue: "1M+" },
       { id: "3", label: "arXiv 2026", value: 2026, icon: "repos", displayValue: "Truth as a Compression Artifact" },
     ];
 
@@ -42,7 +42,7 @@ export class MemStorage implements IStorage {
       {
         id: "1",
         title: "gigachat",
-        description: "Официальный Python SDK для GigaChat API. Понятный API, документация, стабильность и 110K+ загрузок в месяц.",
+        description: "Официальный Python SDK для GigaChat API. Понятный API, документация, стабильность и более 1M загрузок.",
         tech: ["Python", "SDK", "API", "PyPI Top 1.5%"],
         stars: 164,
         language: "Python",
@@ -105,7 +105,7 @@ export class MemStorage implements IStorage {
       {
         id: "1",
         title: "gigachat",
-        description: "Official Python SDK for the GigaChat API. Clear API, docs, stability, and 110K+ monthly downloads.",
+        description: "Official Python SDK for the GigaChat API. Clear API, docs, stability, and 1M+ downloads.",
         tech: ["Python", "SDK", "API", "PyPI Top 1.5%"],
         stars: 164,
         language: "Python",
@@ -187,27 +187,27 @@ export class MemStorage implements IStorage {
     ];
 
     this.videosRu = [
-      { id: "1", title: "Универсальный AI-агент = ReAct + REPL. Архитектура, которая работает", thumbnail: "https://i.ytimg.com/vi/s3Ynz436Swc/mqdefault.jpg", url: "https://youtu.be/s3Ynz436Swc", date: "12.09.2025", views: 1200 },
-      { id: "2", title: "MCP и Think-Tool: добавляем мышление и инструменты любому AI-агенту", thumbnail: "https://i.ytimg.com/vi/kwpBP2-ZtAc/mqdefault.jpg", url: "https://youtu.be/kwpBP2-ZtAc", date: "01.07.2025", views: 2500 },
-      { id: "3", title: "AI-агенты — что это, зачем и как их строить (GigaConf 2024)", thumbnail: "https://i.ytimg.com/vi/9QXRAC8G89I/mqdefault.jpg", url: "https://www.youtube.com/watch?v=9QXRAC8G89I", date: "27.12.2024", views: 3800 },
+      { id: "1", title: "Скиллы на базе git — новая память AI-агентов. Мой опыт", thumbnail: "https://i.ytimg.com/vi/a-NIeMB-Hj8/mqdefault.jpg", url: "https://youtu.be/a-NIeMB-Hj8", date: "04.07.2026", views: 46000 },
+      { id: "2", title: "Harness и Ralph Loop: тип AI-агентов, который вытесняет всё остальное", thumbnail: "https://i.ytimg.com/vi/OSG05Xq7np4/mqdefault.jpg", url: "https://youtu.be/OSG05Xq7np4", date: "27.05.2026", views: 29000 },
+      { id: "3", title: "Мы заперли ИИ в цикле и нашли сознание", thumbnail: "https://i.ytimg.com/vi/DAbTMw8vn04/mqdefault.jpg", url: "https://youtu.be/DAbTMw8vn04", date: "21.05.2026", views: 5700 },
     ];
 
     this.videosEn = [
-      { id: "1", title: "Universal AI Agent = ReAct + REPL. An architecture that works", thumbnail: "https://i.ytimg.com/vi/s3Ynz436Swc/mqdefault.jpg", url: "https://youtu.be/s3Ynz436Swc", date: "12.09.2025", views: 1200 },
-      { id: "2", title: "MCP & Think-Tool: adding reasoning and tools to any AI agent", thumbnail: "https://i.ytimg.com/vi/kwpBP2-ZtAc/mqdefault.jpg", url: "https://youtu.be/kwpBP2-ZtAc", date: "01.07.2025", views: 2500 },
-      { id: "3", title: "AI Agents — what, why, and how to build them (GigaConf 2024)", thumbnail: "https://i.ytimg.com/vi/9QXRAC8G89I/mqdefault.jpg", url: "https://www.youtube.com/watch?v=9QXRAC8G89I", date: "27.12.2024", views: 3800 },
+      { id: "1", title: "Git-based skills — a new kind of memory for AI agents", thumbnail: "https://i.ytimg.com/vi/a-NIeMB-Hj8/mqdefault.jpg", url: "https://youtu.be/a-NIeMB-Hj8", date: "04.07.2026", views: 46000 },
+      { id: "2", title: "Harness & Ralph Loop: the agent type pushing everything else aside", thumbnail: "https://i.ytimg.com/vi/OSG05Xq7np4/mqdefault.jpg", url: "https://youtu.be/OSG05Xq7np4", date: "27.05.2026", views: 29000 },
+      { id: "3", title: "We locked an AI in a loop and found consciousness", thumbnail: "https://i.ytimg.com/vi/DAbTMw8vn04/mqdefault.jpg", url: "https://youtu.be/DAbTMw8vn04", date: "21.05.2026", views: 5700 },
     ];
 
     this.postsRu = [
-      { id: "1", title: "Главные боли AI-агентов на конец 2025 — разбор интервью Карпатого", excerpt: "Андрей аккуратно, но жёстко сбивает хайп. Что реально работает в агентах, а что — маркетинговый шум. Must-watch для тех, кто строит агентные системы.", date: "31.10.2025", views: 101, url: "https://t.me/robofuture" },
-      { id: "2", title: "nanochat — обучаем чатовую GPT-модель с нуля за $100", excerpt: "Новый пример от Karpathy. Показывает, что обучение LLM стало доступным каждому разработчику. Разбираю архитектуру и выводы для индустрии.", date: "16.10.2025", views: 51, url: "https://t.me/robofuture" },
-      { id: "3", title: "Agent Breaker — тестируем AI-агентов как хакеры", excerpt: "Игра от Lakera: взломайте 10 AI-приложений. Идеальный тест на robustness ваших агентных систем. Нашёл уязвимости, о которых не пишут в документации.", date: "19.09.2025", views: 22, url: "https://t.me/robofuture" },
+      { id: "1", title: "AI + генетика — личный генетический консультант на базе агента", excerpt: "Сырые FASTQ, AlphaMissense и Claude Code: как собрать персонального консультанта по ДНК и задавать вопросы прямо из Telegram.", date: "07.2026", views: 14200, url: "https://t.me/robofuture/157" },
+      { id: "2", title: "Truth as a Compression Artifact — почему модели предпочитают «правду»", excerpt: "210+ трансформеров с нуля: модель тянется не к истине, а к сжимаемой картине мира. Первая самостоятельная статья на arXiv.", date: "04.2026", views: 6530, url: "https://t.me/robofuture/147" },
+      { id: "3", title: "korovany_bench — самый честный бенчмарк кодовых моделей", excerpt: "Fable 5, Kimi K3 и GPT-5.6-Sol: кто смог с одного промпта сделать игру, в которой можно грабить корованы.", date: "07.2026", views: 2210, url: "https://t.me/robofuture/162" },
     ];
 
     this.postsEn = [
-      { id: "1", title: "Top AI agent pain points in late 2025 — Karpathy interview breakdown", excerpt: "Andrej carefully but firmly deflates the hype. What actually works in agents vs. marketing noise. Must-watch for anyone building agent systems.", date: "31.10.2025", views: 101, url: "https://t.me/robofuture" },
-      { id: "2", title: "nanochat — training a chat GPT model from scratch for $100", excerpt: "New example from Karpathy. Shows that LLM training is now accessible to every developer. Breaking down the architecture and industry takeaways.", date: "16.10.2025", views: 51, url: "https://t.me/robofuture" },
-      { id: "3", title: "Agent Breaker — testing AI agents like hackers", excerpt: "A game by Lakera: hack 10 AI applications. The perfect robustness test for your agent systems. Found vulnerabilities not covered in the docs.", date: "19.09.2025", views: 22, url: "https://t.me/robofuture" },
+      { id: "1", title: "AI + genetics — a personal genome consultant built with agents", excerpt: "Raw FASTQ, AlphaMissense, and Claude Code: building a personal DNA consultant you can query from Telegram.", date: "07.2026", views: 14200, url: "https://t.me/robofuture/157" },
+      { id: "2", title: "Truth as a Compression Artifact — why models prefer “truth”", excerpt: "210+ transformers from scratch: models prefer compressible world models, not truth per se. First solo arXiv paper.", date: "04.2026", views: 6530, url: "https://t.me/robofuture/147" },
+      { id: "3", title: "korovany_bench — the most honest coding-model benchmark", excerpt: "Fable 5, Kimi K3, and GPT-5.6-Sol: who can build a playable “raid the caravans” game from a single prompt.", date: "07.2026", views: 2210, url: "https://t.me/robofuture/162" },
     ];
 
     this.articlesRu = [

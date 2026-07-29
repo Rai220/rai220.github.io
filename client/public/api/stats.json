@@ -8,10 +8,10 @@
   },
   {
     "id": "2",
-    "label": "SDK downloads / мес",
-    "value": 110000,
+    "label": "загрузок gigachat",
+    "value": 1000000,
     "icon": "activity",
-    "displayValue": "110K+"
+    "displayValue": "1M+"
   },
   {
     "id": "3",

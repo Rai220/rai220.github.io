@@ -1,26 +1,26 @@
 [
   {
     "id": "1",
-    "title": "Top AI agent pain points in late 2025 — Karpathy interview breakdown",
-    "excerpt": "Andrej carefully but firmly deflates the hype. What actually works in agents vs. marketing noise. Must-watch for anyone building agent systems.",
-    "date": "31.10.2025",
-    "views": 101,
-    "url": "https://t.me/robofuture"
+    "title": "AI + genetics — a personal genome consultant built with agents",
+    "excerpt": "Raw FASTQ, AlphaMissense, and Claude Code: building a personal DNA consultant you can query from Telegram.",
+    "date": "07.2026",
+    "views": 14200,
+    "url": "https://t.me/robofuture/157"
   },
   {
     "id": "2",
-    "title": "nanochat — training a chat GPT model from scratch for $100",
-    "excerpt": "New example from Karpathy. Shows that LLM training is now accessible to every developer. Breaking down the architecture and industry takeaways.",
-    "date": "16.10.2025",
-    "views": 51,
-    "url": "https://t.me/robofuture"
+    "title": "Truth as a Compression Artifact — why models prefer “truth”",
+    "excerpt": "210+ transformers from scratch: models prefer compressible world models, not truth per se. First solo arXiv paper.",
+    "date": "04.2026",
+    "views": 6530,
+    "url": "https://t.me/robofuture/147"
   },
   {
     "id": "3",
-    "title": "Agent Breaker — testing AI agents like hackers",
-    "excerpt": "A game by Lakera: hack 10 AI applications. The perfect robustness test for your agent systems. Found vulnerabilities not covered in the docs.",
-    "date": "19.09.2025",
-    "views": 22,
-    "url": "https://t.me/robofuture"
+    "title": "korovany_bench — the most honest coding-model benchmark",
+    "excerpt": "Fable 5, Kimi K3, and GPT-5.6-Sol: who can build a playable “raid the caravans” game from a single prompt.",
+    "date": "07.2026",
+    "views": 2210,
+    "url": "https://t.me/robofuture/162"
   }
 ]
