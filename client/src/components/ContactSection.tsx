@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Mail, Send, Github, Linkedin, ArrowUpRight, Terminal } from "lucide-react";
+import { Mail, Send, Github, Linkedin, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { trackEvent } from "@/lib/analytics";
 
@@ -13,19 +12,13 @@ const contacts = [
 
 export function ContactSection() {
   const { t } = useLanguage();
-  const [showCursor, setShowCursor] = useState(true);
-
-  useEffect(() => {
-    const timer = setInterval(() => setShowCursor(p => !p), 530);
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <section className="py-20 px-4 relative overflow-hidden" id="contact">
       <div className="absolute inset-0 console-grid opacity-20" />
 
       <div className="container mx-auto max-w-4xl relative z-10">
-        <div className="mb-16 text-center">
+        <div className="mb-12 text-center">
           <motion.div
             className="flex items-center justify-center gap-3 mb-4"
             initial={{ opacity: 0 }}
@@ -52,31 +45,20 @@ export function ContactSection() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            external AI/R&D architect &middot; {t("contact_subtitle")}
+            {t("contact_subtitle")}
           </motion.p>
         </div>
 
         <motion.div
-          className="terminal-panel p-6 md:p-10"
-          initial={{ opacity: 0, y: 30 }}
+          className="terminal-panel p-6 md:p-8"
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          transition={{ delay: 0.15, duration: 0.5 }}
         >
-          <div className="mb-8">
-            <div className="flex items-center gap-2 text-sm font-mono text-muted-foreground/60 mb-3">
-              <Terminal className="w-4 h-4" />
-              <span className="text-primary/70">guest@rai220</span>
-              <span>~</span>
-              <span className="text-secondary/70">$</span>
-            </div>
-            <div className="rounded-md border border-border/70 bg-background/80 p-4">
-              <div className="text-primary/80 text-sm font-mono mb-1">&gt; contact --mode consulting --mentor teams</div>
-              <div className="text-muted-foreground/50 text-xs font-mono space-y-0.5">
-                <div>{t("contact_init")}</div>
-                <div className="text-primary/60">&#10003; {t("contact_loaded")}</div>
-              </div>
-            </div>
+          <div className="mb-6 font-mono text-sm text-muted-foreground">
+            <span className="text-primary/80">&gt;</span> {t("contact_init")}
+            <div className="text-primary/70 text-xs mt-1">✓ {t("contact_loaded")}</div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -88,13 +70,13 @@ export function ContactSection() {
                 rel="noopener noreferrer"
                 onClick={() => trackEvent("external_link_click", { label })}
                 className={`group flex items-center gap-4 p-5 rounded-md border border-border/60 bg-background/60 ${borderColor} ${hoverBg} transition-colors cursor-pointer`}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.3 + i * 0.1 }}
+                transition={{ delay: 0.2 + i * 0.08 }}
               >
-                <div className="w-11 h-11 rounded-md bg-card border border-border/70 flex items-center justify-center flex-shrink-0 group-hover:border-white/20 transition-colors">
-                  <Icon className={`w-5 h-5 ${color} opacity-70 group-hover:opacity-100 transition-opacity`} />
+                <div className="w-11 h-11 rounded-md bg-card border border-border/70 flex items-center justify-center flex-shrink-0">
+                  <Icon className={`w-5 h-5 ${color} opacity-80 group-hover:opacity-100 transition-opacity`} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-xs text-muted-foreground/50 font-mono uppercase tracking-wider mb-0.5">{label}</div>
@@ -103,14 +85,6 @@ export function ContactSection() {
                 <ArrowUpRight className="w-4 h-4 text-muted-foreground/20 group-hover:text-foreground/50 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0" />
               </motion.a>
             ))}
-          </div>
-
-          <div className="mt-8 rounded-md border border-primary/20 bg-primary/5 p-4 font-mono text-sm">
-            <div className="flex items-center gap-2 text-muted-foreground/40">
-              <span className="text-primary/50">&gt;</span>
-              <span>status: <span className="text-primary/70">ready_to_connect</span></span>
-              <span className={`inline-block w-[7px] h-4 bg-primary/60 ml-1 rounded-sm ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100`} />
-            </div>
           </div>
         </motion.div>
       </div>

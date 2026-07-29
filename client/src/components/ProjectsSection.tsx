@@ -60,15 +60,13 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             rel="noopener noreferrer"
             onClick={() => trackEvent("external_link_click", { label: "GitHub", project: project.title })}
             className="group card-premium p-6 flex flex-col cursor-pointer"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 * i, duration: 0.5 }}
+            transition={{ delay: 0.08 * i, duration: 0.45 }}
           >
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
             <div className="flex items-start justify-between mb-4">
-              <div className="w-10 h-10 rounded-xl bg-primary/5 border border-primary/10 flex items-center justify-center group-hover:border-primary/30 transition-colors">
+              <div className="w-10 h-10 rounded-md bg-primary/5 border border-primary/10 flex items-center justify-center group-hover:border-primary/30 transition-colors">
                 <GitFork className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
               </div>
               <ExternalLink className="w-4 h-4 text-muted-foreground/40 group-hover:text-primary transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

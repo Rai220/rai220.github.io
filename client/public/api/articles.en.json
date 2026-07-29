@@ -9,43 +9,43 @@
   },
   {
     "id": "1",
-    "title": "AI-агент на GigaChat и LangGraph: от архитектуры до валидации — полный гайд на примере Lean Canvas",
+    "title": "AI Agent on GigaChat & LangGraph: from architecture to validation — full guide using Lean Canvas",
     "url": "https://habr.com/ru/companies/sberbank/articles/941340/",
     "date": "2025",
     "platform": "Habr"
   },
   {
     "id": "2",
-    "title": "Разработка и применение мультиагентных систем в корпоративной среде",
+    "title": "Development and application of multi-agent systems in enterprise",
     "url": "https://sberlabs.com/publications?publication=4605",
     "date": "2025",
     "platform": "Sber Labs"
   },
   {
     "id": "3",
-    "title": "Какой плащ был у Понтия Пилата? Отвечает GigaChat — тестируем возможности LLM",
+    "title": "What cloak did Pontius Pilate wear? GigaChat answers — testing LLM capabilities",
     "url": "https://habr.com/ru/companies/sberdevices/articles/794773/",
     "date": "2024",
     "platform": "Habr"
   },
   {
     "id": "4",
-    "title": "Приделываем руки к ChatGPT: бот, который исполняет код в рантайме",
+    "title": "Giving ChatGPT hands: a bot that executes code at runtime",
     "url": "https://habr.com/ru/articles/724012/",
     "date": "2023",
     "platform": "Habr",
-    "badge": "🏆 Победитель Сезона ML на Habr"
+    "badge": "🏆 ML Season Winner on Habr"
   },
   {
     "id": "5",
-    "title": "Переносим свою картину мира в чат-бота на базе GPT-3",
+    "title": "Transferring your worldview into a GPT-3 chatbot",
     "url": "https://habr.com/ru/articles/712534/",
     "date": "01.2023",
     "platform": "Habr"
   },
   {
     "id": "6",
-    "title": "Черное Зеркало своими руками — обучаем бота на базе истории чатов",
+    "title": "Black Mirror DIY — training a bot on your chat history",
     "url": "https://habr.com/ru/articles/453314/",
     "date": "05.2019",
     "platform": "Habr"

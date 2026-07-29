@@ -3,13 +3,12 @@ import { NavigationBar } from "@/components/NavigationBar";
 import { HeroSection } from "@/components/HeroSection";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
-import { SkillsSection } from "@/components/SkillsSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { ContactSection } from "@/components/ContactSection";
 import { PublicationsSection } from "@/components/PublicationsSection";
 import { CTABanner } from "@/components/CTABanner";
 import { useLanguage } from "@/lib/i18n";
-import type { Project, Stat, Skill, Article } from "@shared/schema";
+import type { Project, Stat, Article } from "@shared/schema";
 
 function Section({ id, children, className = "" }: { id?: string; children: React.ReactNode; className?: string }) {
   return (
@@ -40,7 +39,6 @@ export default function Home() {
 
   const { data: stats = [], isLoading: statsLoading } = useQuery<Stat[]>({ queryKey: ["/api/stats", langParam] });
   const { data: projects = [], isLoading: projectsLoading } = useQuery<Project[]>({ queryKey: ["/api/projects", langParam] });
-  const { data: skills = [], isLoading: skillsLoading } = useQuery<Skill[]>({ queryKey: ["/api/skills", langParam] });
   const { data: articles = [], isLoading: articlesLoading } = useQuery<Article[]>({ queryKey: ["/api/articles", langParam] });
 
   return (
@@ -58,10 +56,6 @@ export default function Home() {
       <SectionDivider />
 
       <Section id="services">
-        {skillsLoading ? <LoadingSkeleton /> : <SkillsSection skills={skills} />}
-      </Section>
-
-      <Section id="formats" className="pt-0">
         <ServicesSection />
       </Section>
 
@@ -93,7 +87,7 @@ export default function Home() {
               <span className="text-sm text-muted-foreground/70 font-mono">Konstantin Krestnikov</span>
             </div>
             <p className="text-xs text-muted-foreground/50 font-mono">
-              &copy; {new Date().getFullYear()} &middot; AI architecture &middot; consulting & mentorship
+              &copy; {new Date().getFullYear()}
             </p>
           </div>
         </div>

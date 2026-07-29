@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "title": "Top AI agent pain points in late 2025 — Karpathy interview breakdown",
+    "excerpt": "Andrej carefully but firmly deflates the hype. What actually works in agents vs. marketing noise. Must-watch for anyone building agent systems.",
+    "date": "31.10.2025",
+    "views": 101,
+    "url": "https://t.me/robofuture"
+  },
+  {
+    "id": "2",
+    "title": "nanochat — training a chat GPT model from scratch for $100",
+    "excerpt": "New example from Karpathy. Shows that LLM training is now accessible to every developer. Breaking down the architecture and industry takeaways.",
+    "date": "16.10.2025",
+    "views": 51,
+    "url": "https://t.me/robofuture"
+  },
+  {
+    "id": "3",
+    "title": "Agent Breaker — testing AI agents like hackers",
+    "excerpt": "A game by Lakera: hack 10 AI applications. The perfect robustness test for your agent systems. Found vulnerabilities not covered in the docs.",
+    "date": "19.09.2025",
+    "views": 22,
+    "url": "https://t.me/robofuture"
+  }
+]

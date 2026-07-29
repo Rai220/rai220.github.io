@@ -2,7 +2,7 @@
   {
     "id": "1",
     "title": "gigachat",
-    "description": "Официальный Python SDK для GigaChat API. Понятный API, документация, стабильность и 110K+ загрузок в месяц.",
+    "description": "Official Python SDK for the GigaChat API. Clear API, docs, stability, and 110K+ monthly downloads.",
     "tech": [
       "Python",
       "SDK",
@@ -22,7 +22,7 @@
   {
     "id": "2",
     "title": "GigaChain",
-    "description": "Платформа для LLM-приложений и AI-агентов: инструменты, память, оркестрация, интеграции.",
+    "description": "Platform for LLM apps and AI agents: tools, memory, orchestration, integrations.",
     "tech": [
       "Python",
       "LangChain",
@@ -41,7 +41,7 @@
   {
     "id": "3",
     "title": "gpt2giga",
-    "description": "Прокси: любой инструмент с OpenAI API получает поддержку GigaChat.",
+    "description": "Proxy that adds GigaChat support to any tool using the OpenAI API.",
     "tech": [
       "Python",
       "Proxy",
@@ -59,7 +59,7 @@
   {
     "id": "4",
     "title": "langchain-gigachat",
-    "description": "Интеграция GigaChat с LangChain для агентных пайплайнов.",
+    "description": "GigaChat integration with LangChain for agent pipelines.",
     "tech": [
       "Python",
       "LangChain",
@@ -76,7 +76,7 @@
   {
     "id": "5",
     "title": "gigachain_telegram_bot",
-    "description": "Telegram-бот техподдержки на GigaChain. Мультиагентный шаблон с GigaGraph.",
+    "description": "Support Telegram bot on GigaChain. Multi-agent template with GigaGraph.",
     "tech": [
       "Python",
       "Telegram",
@@ -94,7 +94,7 @@
   {
     "id": "6",
     "title": "agents_debates",
-    "description": "Мультиагентная система дебатов — AI-агенты ведут аргументированную дискуссию.",
+    "description": "Multi-agent debate system — AI agents argue a given topic.",
     "tech": [
       "Python",
       "Multi-Agent",

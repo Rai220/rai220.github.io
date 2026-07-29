@@ -3,6 +3,17 @@ import { ArrowRight, Clock, XCircle } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { trackEvent } from "@/lib/analytics";
 
+const STACK = [
+  "Python",
+  "LangChain / LangGraph",
+  "MCP / tools",
+  "LLM orchestration",
+  "RAG / evals",
+  "multi-agent systems",
+  "SDK/API design",
+  "observability",
+];
+
 export function ServicesSection() {
   const { t } = useLanguage();
 
@@ -27,15 +38,15 @@ export function ServicesSection() {
         </motion.p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
         {packages.map((item, index) => (
           <motion.div
             key={item.name}
             className="terminal-panel p-6"
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: index * 0.08 }}
+            transition={{ delay: index * 0.06 }}
           >
             <div className="flex items-center justify-between gap-4 mb-4">
               <span className="text-xs font-mono text-primary">{t("services_package_prefix")}_{index + 1}</span>
@@ -52,7 +63,7 @@ export function ServicesSection() {
 
       <p className="text-xs text-muted-foreground/70 font-mono mb-10">{t("services_price_note")}</p>
 
-      <div className="terminal-panel p-6 mb-8">
+      <div className="terminal-panel p-6 mb-10">
         <h3 className="text-lg font-bold text-foreground mb-4">{t("services_not_doing_title")}</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {[1, 2, 3].map((index) => (
@@ -60,6 +71,20 @@ export function ServicesSection() {
               <XCircle className="w-4 h-4 text-muted-foreground/60 mt-0.5 flex-shrink-0" />
               <span>{t(`services_not_doing_${index}`)}</span>
             </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-10">
+        <h3 className="text-lg font-bold text-foreground mb-4">{t("services_stack_title")}</h3>
+        <div className="flex flex-wrap gap-2">
+          {STACK.map((tech) => (
+            <span
+              key={tech}
+              className="px-3 py-1.5 rounded-md border border-border/70 bg-card text-sm font-mono text-foreground/70"
+            >
+              {tech}
+            </span>
           ))}
         </div>
       </div>

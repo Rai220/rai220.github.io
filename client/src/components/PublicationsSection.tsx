@@ -13,7 +13,7 @@ export function PublicationsSection({ articles }: PublicationsSectionProps) {
 
   return (
     <>
-      <div className="mb-12">
+      <div className="mb-10">
         <motion.div
           className="flex items-center gap-3 mb-4"
           initial={{ opacity: 0, x: -20 }}
@@ -24,7 +24,7 @@ export function PublicationsSection({ articles }: PublicationsSectionProps) {
           <span className="text-xs font-mono text-primary uppercase tracking-[0.25em]">research</span>
         </motion.div>
         <motion.h2
-          className="text-3xl md:text-5xl font-bold tracking-tight"
+          className="text-3xl md:text-5xl font-bold tracking-tight mb-3"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
