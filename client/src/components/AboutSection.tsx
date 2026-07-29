@@ -19,7 +19,7 @@ export function AboutSection({ stats }: AboutSectionProps) {
       icon: Rocket,
       badge: t("about_now"),
       badgeColor: "text-primary border-primary/30 bg-primary/5",
-      title: "GigaChat / Sber",
+      title: "SDK & agent platform",
       org: t("about_org1"),
       items: [t("about_item1_1"), t("about_item1_2"), t("about_item1_3")],
       borderColor: "border-primary/25",
